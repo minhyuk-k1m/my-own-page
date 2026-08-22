@@ -1775,6 +1775,10 @@ button {
     padding-top: 4.8rem;
   }
 
+  .nav-actions {
+    display: none;
+  }
+
   .nav-links {
     position: fixed;
     top: 0;
@@ -1915,7 +1919,7 @@ button {
   }
 }
 
-/* 초소형 스마트폰 (360px ~ 480px) 전용 극상 레이아웃 정돈 */
+/* 초소형 스마트폰 (360px ~ 480px) 전용 레이아웃 정돈 */
 @media (max-width: 480px) {
   .hero-slider-container {
     height: 380px;
@@ -1936,10 +1940,11 @@ button {
 
   .hero-controls {
     bottom: 0.85rem;
-    right: 50%;
-    transform: translateX(50%);
+    right: 1.25rem;
+    left: auto;
+    transform: none;
     width: max-content;
-    padding: 0.35rem 0.8rem;
+    padding: 0.35rem 0.85rem;
   }
 
   .hero-btn-nav {
