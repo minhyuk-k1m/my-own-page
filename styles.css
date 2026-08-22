@@ -808,7 +808,7 @@ button {
 }
 
 
-/* Mobile Toggle */
+/* Mobile Toggle & Backdrop Overlay */
 .mobile-toggle {
   display: none;
   flex-direction: column;
@@ -823,6 +823,34 @@ button {
   background-color: var(--text-primary);
   border-radius: 2px;
   transition: all var(--transition-fast);
+}
+
+.mobile-toggle.active span:nth-child(1) {
+  transform: translateY(8.5px) rotate(45deg);
+}
+
+.mobile-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-toggle.active span:nth-child(3) {
+  transform: translateY(-8.5px) rotate(-45deg);
+}
+
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(17, 42, 44, 0.45);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-fast);
+}
+
+.nav-overlay.active {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* 4. Full Width Infinite Loop Hero Banner (영원히 밀어내는 5개 슬라이드 트랙) */
@@ -1720,18 +1748,45 @@ button {
   }
 }
 
+/* Responsive Breakpoints (PC 화면 100% 보존 & 스마트폰 모바일 화면 완벽 최적화) */
+@media (max-width: 1024px) {
+  .features-grid,
+  .works-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .about-img-wrapper {
+    margin: 0 auto;
+  }
+  .contact-card {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .hero-slider-container {
+    height: 460px;
+  }
+}
+
 @media (max-width: 768px) {
+  .hero {
+    padding-top: 4.8rem;
+  }
+
   .nav-links {
     position: fixed;
     top: 0;
     right: -100%;
-    width: 80%;
-    max-width: 320px;
+    width: 75%;
+    max-width: 300px;
     height: 100vh;
     background-color: var(--bg-primary);
     flex-direction: column;
     justify-content: center;
-    gap: 2rem;
+    align-items: center;
+    gap: 1.75rem;
     box-shadow: var(--shadow-lg);
     transition: right var(--transition-normal);
     z-index: 1000;
@@ -1748,29 +1803,156 @@ button {
   .features-grid,
   .works-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
   .hero-slider-container {
-    height: 360px;
+    height: 420px;
   }
 
   .hero-slide-overlay {
-    padding: 2rem 1.5rem;
+    padding: 2rem 1.5rem 4.5rem;
+    background: linear-gradient(180deg, rgba(17, 42, 44, 0.2) 0%, rgba(17, 42, 44, 0.85) 100%);
+  }
+
+  .hero-badge {
+    font-size: 0.78rem;
+    padding: 0.28rem 0.85rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .hero-slide-title {
+    font-size: clamp(1.4rem, 5.5vw, 2.2rem);
+    margin-bottom: 0.5rem;
+    line-height: 1.25;
+  }
+
+  .hero-slide-desc {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .hero-controls {
-    bottom: 1.5rem;
-    right: 1.5rem;
-    padding: 0.4rem 0.85rem;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    padding: 0.4rem 0.9rem;
+    gap: 0.85rem;
+    background: rgba(17, 42, 44, 0.8);
+  }
+
+  .hero-progress-bar {
+    width: 60px;
+  }
+
+  .about-img-wrapper {
+    max-width: 280px;
+  }
+
+  .about-lead {
+    font-size: 1.125rem;
+  }
+
+  .about-body {
+    font-size: 0.98rem;
+  }
+
+  .skills-tags-wrapper {
+    gap: 0.45rem;
+  }
+
+  .skill-tag {
+    padding: 0.45rem 0.95rem;
+    font-size: 0.82rem;
+  }
+
+  .timeline {
+    padding-left: 1.5rem;
+  }
+
+  .timeline-dot {
+    left: -1.5rem;
+    width: 14px;
+    height: 14px;
+  }
+
+  .timeline-content {
+    padding: 1.35rem;
+  }
+
+  .timeline-role {
+    font-size: 1.05rem;
   }
 
   .contact-card {
     padding: 2.5rem 1.5rem;
   }
 
+  .modal-box {
+    max-height: 85vh;
+  }
+
+  .modal-body-content {
+    padding: 1.5rem;
+  }
+
+  .modal-title {
+    font-size: 1.4rem;
+  }
+
+  .modal-details-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
   .footer-container {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.25rem;
     text-align: center;
+  }
+}
+
+/* 초소형 스마트폰 (360px ~ 480px) 전용 극상 레이아웃 정돈 */
+@media (max-width: 480px) {
+  .hero-slider-container {
+    height: 380px;
+  }
+
+  .hero-slide-overlay {
+    padding: 1.5rem 1.1rem 4rem;
+  }
+
+  .hero-slide-title {
+    font-size: 1.35rem;
+  }
+
+  .hero-slide-desc {
+    font-size: 0.88rem;
+    -webkit-line-clamp: 2;
+  }
+
+  .hero-controls {
+    bottom: 0.85rem;
+    right: 50%;
+    transform: translateX(50%);
+    width: max-content;
+    padding: 0.35rem 0.8rem;
+  }
+
+  .hero-btn-nav {
+    width: 30px;
+    height: 30px;
+    font-size: 0.95rem;
+  }
+
+  .hero-counter {
+    font-size: 0.85rem;
+  }
+
+  .hero-progress-bar {
+    width: 45px;
   }
 }

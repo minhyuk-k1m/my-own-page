@@ -316,6 +316,46 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
+  // Mobile Touch Swipe Gesture Support
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const sliderContainer = document.querySelector('.hero-slider-container');
+
+  if (sliderContainer) {
+    sliderContainer.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    sliderContainer.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+  }
+
+  function handleSwipe() {
+    const realTotal = (portfolioData.heroSlides || []).length;
+    const swipeThreshold = 35;
+    if (touchStartX - touchEndX > swipeThreshold) {
+      // Swipe Left -> Next Slide
+      goToSlide(currentSlideIndex + 1, realTotal);
+      startAutoPlay(realTotal);
+    } else if (touchEndX - touchStartX > swipeThreshold) {
+      // Swipe Right -> Prev Slide
+      if (currentSlideIndex === 0) {
+        const track = document.getElementById('sliderTrack');
+        const slideWidthPercent = 100 / (realTotal + 1);
+        track.style.transition = 'none';
+        track.style.transform = `translateX(-${realTotal * slideWidthPercent}%)`;
+        currentSlideIndex = realTotal;
+        void track.offsetWidth;
+        goToSlide(realTotal - 1, realTotal);
+      } else {
+        goToSlide(currentSlideIndex - 1, realTotal);
+      }
+      startAutoPlay(realTotal);
+    }
+  }
+
   // 2) ABOUT SECTION RENDER
   function renderAbout() {
     const container = document.getElementById('aboutContainer');
@@ -549,9 +589,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const mobileToggle = document.getElementById('mobileToggle');
   const navMenu = document.querySelector('.nav-links');
-  if (mobileToggle && navMenu) {
-    mobileToggle.onclick = () => navMenu.classList.toggle('mobile-active');
+  const navOverlay = document.getElementById('navOverlay');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  function closeMobileDrawer() {
+    if (navMenu) navMenu.classList.remove('mobile-active');
+    if (mobileToggle) mobileToggle.classList.remove('active');
+    if (navOverlay) navOverlay.classList.remove('active');
+    document.body.style.overflow = '';
   }
+
+  if (mobileToggle && navMenu) {
+    mobileToggle.onclick = () => {
+      const isExpanded = navMenu.classList.toggle('mobile-active');
+      mobileToggle.classList.toggle('active', isExpanded);
+      if (navOverlay) navOverlay.classList.toggle('active', isExpanded);
+      document.body.style.overflow = isExpanded ? 'hidden' : '';
+    };
+  }
+
+  if (navOverlay) {
+    navOverlay.onclick = closeMobileDrawer;
+  }
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', closeMobileDrawer);
+  });
 
   // Init Site
   renderSite();
