@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ]
   };
 
-  const STORAGE_KEY = 'minhyuk_portfolio_cms_v101_todaymenu';
+  const STORAGE_KEY = 'minhyuk_portfolio_cms_v105_todaymenu_forced_v3';
   let portfolioData = loadData();
 
   function sanitizeImgPath(pathStr, defaultPath) {
@@ -141,9 +141,11 @@ document.addEventListener('DOMContentLoaded', () => {
             s.img = sanitizeImgPath(s.img, DEFAULT_DATA.heroSlides[idx % 4]?.img || 'assets/images/hero-1.jpg');
           });
         }
-        if (parsed.works) {
+        if (!parsed.works || parsed.works.length < DEFAULT_DATA.works.length) {
+          parsed.works = JSON.parse(JSON.stringify(DEFAULT_DATA.works));
+        } else {
           parsed.works.forEach((w, idx) => {
-            w.img = sanitizeImgPath(w.img, DEFAULT_DATA.works[idx % 2]?.img || 'assets/images/seoultourguide.jpg');
+            w.img = sanitizeImgPath(w.img, DEFAULT_DATA.works[idx % 3]?.img || 'assets/images/today_menu.jpg');
           });
         }
         if (parsed.about) {
