@@ -84,6 +84,17 @@ document.addEventListener('DOMContentLoaded', () => {
         client: 'VocabMaster Project',
         year: '2026.07',
         role: 'Web Application Dev'
+      },
+      {
+        id: '3',
+        category: 'Web App',
+        title: '오늘 뭐 먹지?',
+        img: 'assets/images/today_menu.jpg',
+        desc: '사소하지만 제일 고통스러운 일상의 고민을 해결하세요.',
+        link: 'https://minhyuk-k1m.github.io/menu-recommender/',
+        client: 'Menu Recommender Project',
+        year: '2026.08',
+        role: 'AI Web Application Dev'
       }
     ],
     timeline: [
@@ -108,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ]
   };
 
-  const STORAGE_KEY = 'minhyuk_portfolio_cms_v100_final';
+  const STORAGE_KEY = 'minhyuk_portfolio_cms_v101_todaymenu';
   let portfolioData = loadData();
 
   function sanitizeImgPath(pathStr, defaultPath) {
