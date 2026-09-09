@@ -188,6 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderWorks();
     renderTimeline();
     initScrollObserve();
+    initScrollSpy();
   }
 
   // 1) HERO SLIDER RENDER
@@ -510,6 +511,82 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.1 });
 
     revealElements.forEach(el => revealObserver.observe(el));
+  }
+
+  /* ==========================================
+     SCROLL SPY & NAVBAR ACTIVE SYNC
+     Smoothly highlights Home, About, Philosophy, Works, Experience, Contact
+     ========================================== */
+  function initScrollSpy() {
+    const navLinks = document.querySelectorAll('.nav-links .nav-link');
+    const sections = [
+      document.getElementById('hero'),
+      document.getElementById('about'),
+      document.getElementById('features'),
+      document.getElementById('works'),
+      document.getElementById('timeline'),
+      document.getElementById('contact')
+    ].filter(Boolean);
+
+    const navbar = document.querySelector('.navbar');
+    let ticking = false;
+
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateActiveNav();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    function updateActiveNav() {
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+
+      // Navbar scrolled state
+      if (navbar) {
+        if (scrollY > 30) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      }
+
+      // If scrolled to the bottom of the page, activate Contact
+      if (windowHeight + scrollY >= documentHeight - 60) {
+        setActiveLink('contact');
+        return;
+      }
+
+      let currentSectionId = 'hero';
+      const offset = 180; // Offset for navbar height and early visual activation
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - offset) {
+          currentSectionId = section.getAttribute('id');
+        }
+      });
+
+      setActiveLink(currentSectionId);
+    }
+
+    function setActiveLink(sectionId) {
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === `#${sectionId}`) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    updateActiveNav();
   }
 
 
