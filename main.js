@@ -629,6 +629,79 @@ document.addEventListener('DOMContentLoaded', () => {
     link.addEventListener('click', closeMobileDrawer);
   });
 
+  /* ==========================================
+     9. DUAL THEME MANAGER (AUTO-DETECTION & TOGGLE)
+     Light: White, Light Green, Sky Blue, Cool Gray
+     Dark: Deep Black, Dark Slate Gray, Electric Blue, Mystic Purple
+     ========================================== */
+  const THEME_STORAGE_KEY = 'minhyuk_portfolio_theme';
+  const themeToggleBtn = document.getElementById('themeToggle');
+  const themeToggleIcon = document.getElementById('themeToggleIcon');
+  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+  function applyTheme(theme, save = true) {
+    if (theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      if (themeToggleIcon) {
+        themeToggleIcon.className = 'fa-solid fa-sun';
+      }
+      if (themeColorMeta) {
+        themeColorMeta.setAttribute('content', '#07080E');
+      }
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      if (themeToggleIcon) {
+        themeToggleIcon.className = 'fa-solid fa-moon';
+      }
+      if (themeColorMeta) {
+        themeColorMeta.setAttribute('content', '#F8FAFC');
+      }
+    }
+    if (save) {
+      try {
+        localStorage.setItem(THEME_STORAGE_KEY, theme);
+      } catch (e) {}
+    }
+  }
+
+  function initTheme() {
+    let savedTheme = null;
+    try {
+      savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+    } catch (e) {}
+
+    if (savedTheme === 'dark' || savedTheme === 'light') {
+      applyTheme(savedTheme, false);
+    } else {
+      // Auto-detect system preference
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(prefersDark ? 'dark' : 'light', false);
+    }
+
+    // Listen for OS system theme changes
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        let hasSaved = null;
+        try { hasSaved = localStorage.getItem(THEME_STORAGE_KEY); } catch (err) {}
+        if (!hasSaved) {
+          applyTheme(e.matches ? 'dark' : 'light', false);
+        }
+      });
+    }
+  }
+
+  if (themeToggleBtn) {
+    themeToggleBtn.onclick = () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme, true);
+      showToast(nextTheme === 'dark' ? '🌙 다크 모드로 전환되었습니다.' : '☀️ 라이트 모드로 전환되었습니다.');
+    };
+  }
+
+  // Initialize theme
+  initTheme();
+
   // Init Site
   renderSite();
 
