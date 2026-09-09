@@ -1,5 +1,5 @@
 /**
- * SKY & MINT GREEN PORTFOLIO CMS & INTERACTIVE LOGIC
+ * MODERN MONOCHROME PORTFOLIO CMS & INTERACTIVE LOGIC (BLACK - GRAY - WHITE)
  * Standardized Subpath-compatible Image Paths & Self-Healing Cache Sync
  */
 
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ]
   };
 
-  const STORAGE_KEY = 'minhyuk_portfolio_cms_v105_todaymenu_forced_v3';
+  const STORAGE_KEY = 'minhyuk_portfolio_cms_v106_monochrome';
   let portfolioData = loadData();
 
   function sanitizeImgPath(pathStr, defaultPath) {
