@@ -646,7 +646,7 @@ document.addEventListener('DOMContentLoaded', () => {
         themeToggleIcon.className = 'fa-solid fa-sun';
       }
       if (themeColorMeta) {
-        themeColorMeta.setAttribute('content', '#07080E');
+        themeColorMeta.setAttribute('content', '#212530');
       }
     } else {
       document.documentElement.setAttribute('data-theme', 'light');

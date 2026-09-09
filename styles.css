@@ -74,41 +74,41 @@
   --max-width: 1280px;
 }
 
-/* 2. Dark Mode Tokens (Deep Black, Dark Slate Gray, Electric Blue, Mystic Purple) */
+/* 2. Dark Mode Tokens (주 배경: 모던 쿨 슬레이트 그레이, 부 색: 딥 옵시디언 블랙, 포인트: 블루 & 퍼플) */
 [data-theme="dark"] {
-  --bg-primary: #07080E;       /* Deep Cosmic Space Black */
-  --bg-secondary: #0E1019;     /* Midnight Dark Charcoal */
-  --bg-card: #131624;          /* Slate-Indigo Dark Card */
-  --bg-card-hover: #1A1E2F;    /* Elevated Surface Hover */
-  --bg-glass: rgba(7, 8, 14, 0.88); /* Frosted Dark Glass */
+  --bg-primary: #212530;       /* Refined Slate Gray Main Canvas (전체 메인 배경: 회색) */
+  --bg-secondary: #191C24;     /* Deep Slate Charcoal (섹션 구분 배경: 다크 차콜 회색) */
+  --bg-card: #0D0F14;          /* Deep Obsidian Black (카드 & 패널 표면: 검은색) */
+  --bg-card-hover: #141720;    /* Elevated Black Surface on Hover */
+  --bg-glass: rgba(33, 37, 48, 0.88); /* Frosted Slate Gray Navbar */
   
-  --text-primary: #F8FAFC;     /* Luminous Crisp White */
-  --text-secondary: #94A3B8;   /* Refined Cool Slate Gray */
-  --text-muted: #64748B;       /* Muted Zinc Gray */
+  --text-primary: #FFFFFF;     /* Pure Crisp White for Titles & Key Text */
+  --text-secondary: #CBD5E1;   /* High-Contrast Clear Silver Gray for Body */
+  --text-muted: #94A3B8;       /* Muted Slate Gray */
 
   --accent-blue: #38BDF8;      /* Electric Cyan Blue */
   --accent-purple: #A855F7;    /* Mystic Neon Purple / Violet */
   --accent-gradient: linear-gradient(135deg, #38BDF8 0%, #A855F7 100%);
   --accent-primary: #8B5CF6;   /* Electric Violet/Purple */
   --accent-hover: #7C3AED;
-  --accent-soft: rgba(168, 85, 247, 0.14);
-  --accent-blue-soft: rgba(56, 189, 248, 0.14);
+  --accent-soft: rgba(168, 85, 247, 0.16);
+  --accent-blue-soft: rgba(56, 189, 248, 0.16);
   --accent-glow: rgba(168, 85, 247, 0.35);
 
-  --border-light: rgba(255, 255, 255, 0.08);
-  --border-medium: rgba(255, 255, 255, 0.16);
+  --border-light: rgba(255, 255, 255, 0.12);
+  --border-medium: rgba(255, 255, 255, 0.2);
   --border-focus: #A855F7;
 
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 10px 28px -4px rgba(0, 0, 0, 0.6);
-  --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.75);
+  --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 10px 28px -4px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.65);
   --shadow-glow: 0 0 24px rgba(168, 85, 247, 0.3);
 
-  --hero-overlay: linear-gradient(180deg, rgba(7, 8, 14, 0.25) 0%, rgba(7, 8, 14, 0.88) 100%);
-  --contact-card-bg: linear-gradient(135deg, #0F121C 0%, #1A192B 100%);
-  --contact-card-border: rgba(168, 85, 247, 0.25);
+  --hero-overlay: linear-gradient(180deg, rgba(33, 37, 48, 0.25) 0%, rgba(33, 37, 48, 0.9) 100%);
+  --contact-card-bg: linear-gradient(135deg, #0A0C10 0%, #12141C 100%);
+  --contact-card-border: rgba(168, 85, 247, 0.3);
   --contact-text: #FFFFFF;
-  --contact-subtext: #94A3B8;
+  --contact-subtext: #CBD5E1;
 
   --badge-bg: linear-gradient(135deg, rgba(56, 189, 248, 0.9) 0%, rgba(168, 85, 247, 0.9) 100%);
   --badge-color: #FFFFFF;
@@ -119,9 +119,9 @@
   --btn-cta-bg: linear-gradient(135deg, #38BDF8 0%, #A855F7 100%);
   --btn-cta-color: #FFFFFF;
 
-  --theme-toggle-bg: #151824;
-  --theme-toggle-color: #F8FAFC;
-  --theme-toggle-border: rgba(255, 255, 255, 0.16);
+  --theme-toggle-bg: #0D0F14;
+  --theme-toggle-color: #FFFFFF;
+  --theme-toggle-border: rgba(255, 255, 255, 0.2);
 }
 
 /* 3. Base & Reset with Global Transition */
@@ -478,7 +478,7 @@ button {
   margin-right: -50vw;
   height: 520px;
   overflow: hidden;
-  background-color: #0F172A;
+  background-color: var(--bg-secondary);
   border-top: 1px solid var(--border-light);
   border-bottom: 1px solid var(--border-light);
   box-shadow: var(--shadow-lg);
@@ -498,7 +498,7 @@ button {
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
-  background-color: #0F172A;
+  background-color: var(--bg-secondary);
 }
 
 .hero-slide-img {
