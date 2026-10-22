@@ -95,6 +95,17 @@ document.addEventListener('DOMContentLoaded', () => {
         client: 'Menu Recommender Project',
         year: '2026.08',
         role: 'AI Web Application Dev'
+      },
+      {
+        id: '4',
+        category: 'Web App',
+        title: '금호고 스쿨메이트(KUMHO SCHOOLMATE)',
+        img: 'assets/images/kumho_schoolmate.jpg',
+        desc: '금호고등학교 학생과 교실 전자칠판을 위한 올인원 학사·시간표·급식·날씨 플랫폼',
+        link: 'https://kumho-schoolmate.com',
+        client: 'Kumho High School',
+        year: '2026.10',
+        role: 'All-in-One Smart School Platform Dev'
       }
     ],
     timeline: [
@@ -119,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ]
   };
 
-  const STORAGE_KEY = 'minhyuk_portfolio_cms_v106_monochrome';
+  const STORAGE_KEY = 'minhyuk_portfolio_cms_v108_kumho_schoolmate';
   let portfolioData = loadData();
 
   function sanitizeImgPath(pathStr, defaultPath) {
@@ -145,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
           parsed.works = JSON.parse(JSON.stringify(DEFAULT_DATA.works));
         } else {
           parsed.works.forEach((w, idx) => {
-            w.img = sanitizeImgPath(w.img, DEFAULT_DATA.works[idx % 3]?.img || 'assets/images/today_menu.jpg');
+            w.img = sanitizeImgPath(w.img, DEFAULT_DATA.works[idx % DEFAULT_DATA.works.length]?.img || 'assets/images/kumho_schoolmate.jpg');
           });
         }
         if (parsed.about) {
@@ -441,7 +452,8 @@ document.addEventListener('DOMContentLoaded', () => {
     list.forEach((w, idx) => {
       const targetLink = w.link ? w.link : '#';
       const createdDate = w.year || '2026.08';
-      const cleanImg = sanitizeImgPath(w.img, idx === 0 ? 'assets/images/seoultourguide.jpg' : 'assets/images/vocabmaster.jpg');
+      const defaultImg = DEFAULT_DATA.works[idx % DEFAULT_DATA.works.length]?.img || 'assets/images/kumho_schoolmate.jpg';
+      const cleanImg = sanitizeImgPath(w.img, defaultImg);
 
       html += `
         <div class="work-card reveal delay-${(idx % 3) + 1}" data-category="${w.category}" data-id="${w.id}" data-link="${targetLink}">
