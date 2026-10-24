@@ -1,6 +1,7 @@
 /**
- * MODERN MONOCHROME PORTFOLIO CMS & INTERACTIVE LOGIC (BLACK - GRAY - WHITE)
- * Standardized Subpath-compatible Image Paths & Self-Healing Cache Sync
+ * MINHYUK PORTFOLIO — EDDIEEDDIE.COM EDITORIAL INTERACTIVE ENGINE
+ * Preserves 100% of Portfolio Data (Hero 4 Slides, About, 3 Core Values, 4 Works, 3 Timeline Items)
+ * + Hero Mouse Parallax, Interactive Philosophy Stage, 3D Mockup Cards, Scroll Ring & Pixel-Cat Runner
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -40,24 +41,30 @@ document.addEventListener('DOMContentLoaded', () => {
       avatarFallback: 'assets/images/profile_ava.svg',
       titlePrefix: '나는 ',
       highlightTxt: '성장',
-      titleSuffix: '합니다.',
+      titleSuffix: '합니다',
       lead: '만나서 반갑습니다. 저는 AI기술을 토대로 미래를 향한 비전을 세우고 하나하나 배우며 성장하고 있는 고등학생 김민혁입니다.',
       body: '저의 비전은 단순한 구상에서 끝나는 것이 아닌 실질적 구현을 통해 세상 밖으로 나옵니다. 아직 미숙하지만 수많은 연습을 통해 사람들에게 긍정적인 영향을 주는 것이 목표입니다.',
       tags: ['AI 비전', '고등학생 크리에이터', '지속적인 성장', '실질적 구현', '긍정적 영향력']
     },
     features: [
       {
-        icon: 'fa-award',
+        step: '01',
+        eyebrow: '01 · WORKETHIC (성실함)',
+        stageHtml: '어떤 일을 하든지 <span class="stage-pill-highlight">성실함</span>은 반드시 필요한 덕목이며, 모든 일에 책임을 다합니다<span class="accent-period">.</span><i class="stage-caret" aria-hidden="true"></i>',
         title: '1. 성실함(WORKETHIC)',
         desc: '어떤 일을 하든지 성실함은 반드시 필요한 덕목 중 하나라고 생각합니다. 저는 제가 참여하는 모든 일에 책임을 가지고 성실히 업무를 수행해 나가는 장점을 가지고 있습니다.'
       },
       {
-        icon: 'fa-handshake-angle',
+        step: '02',
+        eyebrow: '02 · RESPECT (상호 존중)',
+        stageHtml: '모든 갈등은 존중의 부재에서 시작됩니다. 나와 다른 의견에도 귀 기울이는 <span class="stage-pill-highlight">상호 존중</span>의 자세를 가집니다<span class="accent-period">.</span><i class="stage-caret" aria-hidden="true"></i>',
         title: '2. 상호 존중(RESPECT)',
         desc: '비욘 나티코 린네블라드의 "내가 틀릴 수도 있습니다" 라는 책을 읽고 깊은 감명을 받은 기억이 있습니다. 모든 갈등은 상호 존중의 부재에서 일어난다는 것을 인지하고 나와 다른 의견에도 귀 기울이고 존중하는 자세를 가집니다.'
       },
       {
-        icon: 'fa-seedling',
+        step: '03',
+        eyebrow: '03 · RESILIENCE (회복 탄력성)',
+        stageHtml: '계획대로 되지 않더라도 실패를 통해 배우고 다시 도약하는 <span class="stage-pill-highlight">회복 탄력성</span>으로 성장합니다<span class="accent-period">.</span><i class="stage-caret" aria-hidden="true"></i>',
         title: '3. 회복 탄력성(RESILIENCE)',
         desc: '실패를 통해 배우고 성장하는 것 또한 매우 중요하다고 생각합니다. 저는 제가 계획한 일이 예상대로 되지 않더라도 이를 통해 배우고 앞으로를 기약합니다.'
       }
@@ -66,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         id: '1',
         category: 'Web App',
+        chromeTitle: 'SEOUL TOUR GUIDE',
         title: '서울 투어 가이드(SEOUL TOUR GUIDE)',
         img: 'assets/images/seoultourguide.jpg',
         desc: '서울특별시를 관광하고자 하는 모든 사람들에게 관광 정보를 제공합니다.',
@@ -77,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         id: '2',
         category: 'Web App',
+        chromeTitle: 'VOCABMASTER',
         title: 'VOCABMASTER(보캅마스터)',
         img: 'assets/images/vocabmaster.jpg',
         desc: '언제나 함께하는 나만의 작은 단어장',
@@ -88,6 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         id: '3',
         category: 'Web App',
+        chromeTitle: '오늘 뭐 먹지?',
         title: '오늘 뭐 먹지?',
         img: 'assets/images/today_menu.jpg',
         desc: '사소하지만 제일 고통스러운 일상의 고민을 해결하세요.',
@@ -99,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         id: '4',
         category: 'Web App',
+        chromeTitle: 'KUMHO SCHOOLMATE',
         title: '금호고 스쿨메이트(KUMHO SCHOOLMATE)',
         img: 'assets/images/kumho_schoolmate.jpg',
         desc: '금호고등학교 학생과 교실 전자칠판을 위한 올인원 학사·시간표·급식·날씨 플랫폼',
@@ -110,18 +121,21 @@ document.addEventListener('DOMContentLoaded', () => {
     ],
     timeline: [
       {
+        step: '01',
         date: '2018 - 2020',
         role: '취미로 첫 코딩 시작, 엔트리를 이용한 프로그램 만들기',
         company: '태봉초등학교 (Taebong Elementary School)',
         desc: '초등학교 2학년 때 취미로 코딩을 시작하였고, 엔트리를 이용한 블록코딩으로 작품을 만든 후 공유하였음.'
       },
       {
+        step: '02',
         date: '2021 - 2025',
         role: 'MICROBIT, C언어 학습 및 심화 구현하기',
         company: '금호중앙중학교 (Kumho Jungang Middle School)',
         desc: 'microbit를 이용하여 회로의 기본적 원리를 학습했고 그 후 C언어를 배워 기본 코딩 능력을 배양하였음.'
       },
       {
+        step: '03',
         date: '2026 - Present',
         role: '인공지능을 활용한 웹 앱 개발하기',
         company: '금호고등학교 (Kumho High School)',
@@ -130,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ]
   };
 
-  const STORAGE_KEY = 'minhyuk_portfolio_cms_v108_kumho_schoolmate';
+  const STORAGE_KEY = 'minhyuk_portfolio_cms_v200_eddie_style';
   let portfolioData = loadData();
 
   function sanitizeImgPath(pathStr, defaultPath) {
@@ -140,6 +154,14 @@ document.addEventListener('DOMContentLoaded', () => {
       return defaultPath;
     }
     return clean;
+  }
+
+  function formatTitleWithAccentPeriod(titleStr) {
+    if (!titleStr) return '';
+    if (titleStr.endsWith('.')) {
+      return titleStr.slice(0, -1) + '<span class="accent-period">.</span>';
+    }
+    return titleStr + '<span class="accent-period">.</span>';
   }
 
   function loadData() {
@@ -170,67 +192,47 @@ document.addEventListener('DOMContentLoaded', () => {
     return JSON.parse(JSON.stringify(DEFAULT_DATA));
   }
 
-  function saveData() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(portfolioData));
-      renderSite();
-      showToast('성공적으로 모든 수정사항이 저장되었습니다!');
-    } catch (e) {
-      console.error('Failed to save storage data:', e);
-      showToast('저장 중 용량 초과 또는 오류가 발생했습니다.');
-    }
-  }
-
-  function resetData() {
-    portfolioData = JSON.parse(JSON.stringify(DEFAULT_DATA));
-    localStorage.removeItem(STORAGE_KEY);
-    renderSite();
-    showToast('기본 데이터로 원상복원 되었습니다.');
-  }
-
 
   /* ==========================================
-     2. DYNAMIC SITE RENDERING
+     2. DYNAMIC SITE RENDERING (eddieeddie.com Markup)
      ========================================== */
   function renderSite() {
     renderHero();
-    renderAbout();
     renderFeatures();
     renderWorks();
+    renderAbout();
     renderTimeline();
     initScrollObserve();
     initScrollSpy();
   }
 
-  // 1) HERO SLIDER RENDER
+  // 1) HERO VISION SLIDER RENDER
   let currentSlideIndex = 0;
   let slideTimer = null;
   let isAnimating = false;
+  let isMotionPaused = false;
 
   function renderHero() {
     const track = document.getElementById('sliderTrack');
     const counterTotal = document.getElementById('carouselTotal');
     if (!track) return;
 
-    const slides = portfolioData.heroSlides || [];
+    const slides = portfolioData.heroSlides || DEFAULT_DATA.heroSlides;
     const realTotal = slides.length;
     if (counterTotal) counterTotal.textContent = String(realTotal).padStart(2, '0');
 
-    if (realTotal === 0) {
-      track.innerHTML = '<div class="hero-slide active"><div class="hero-slide-overlay"><h2 class="hero-slide-title">배너가 없습니다</h2></div></div>';
-      return;
-    }
+    if (realTotal === 0) return;
 
     let html = '';
-    slides.forEach(s => {
+    slides.forEach((s, idx) => {
       const cleanImg = sanitizeImgPath(s.img, 'assets/images/hero-1.jpg');
       html += `
-        <div class="hero-slide">
+        <div class="hero-slide ${idx === 0 ? 'active' : ''}">
           <img src="${cleanImg}" alt="${s.title}" class="hero-slide-img">
           <div class="hero-slide-overlay">
             <div class="hero-slide-content">
               <span class="hero-badge">${s.badge}</span>
-              <h2 class="hero-slide-title">${s.title}</h2>
+              <h2 class="hero-slide-title">${formatTitleWithAccentPeriod(s.title)}</h2>
               <p class="hero-slide-desc">${s.desc}</p>
             </div>
           </div>
@@ -246,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="hero-slide-overlay">
           <div class="hero-slide-content">
             <span class="hero-badge">${firstSlide.badge}</span>
-            <h2 class="hero-slide-title">${firstSlide.title}</h2>
+            <h2 class="hero-slide-title">${formatTitleWithAccentPeriod(firstSlide.title)}</h2>
             <p class="hero-slide-desc">${firstSlide.desc}</p>
           </div>
         </div>
@@ -289,10 +291,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function startAutoPlay(realTotal) {
     stopAutoPlay();
+    if (isMotionPaused) return;
     resetProgressBar();
     if (realTotal <= 1) return;
     slideTimer = setInterval(() => {
-      goToSlide(currentSlideIndex + 1, realTotal);
+      if (!isMotionPaused) {
+        goToSlide(currentSlideIndex + 1, realTotal);
+      }
     }, 4500);
   }
 
@@ -307,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function resetProgressBar() {
     const progressFill = document.getElementById('carouselProgress');
-    if (!progressFill) return;
+    if (!progressFill || isMotionPaused) return;
     progressFill.style.transition = 'none';
     progressFill.style.width = '0%';
     void progressFill.offsetWidth;
@@ -361,11 +366,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const realTotal = (portfolioData.heroSlides || []).length;
     const swipeThreshold = 35;
     if (touchStartX - touchEndX > swipeThreshold) {
-      // Swipe Left -> Next Slide
       goToSlide(currentSlideIndex + 1, realTotal);
       startAutoPlay(realTotal);
     } else if (touchEndX - touchStartX > swipeThreshold) {
-      // Swipe Right -> Prev Slide
       if (currentSlideIndex === 0) {
         const track = document.getElementById('sliderTrack');
         const slideWidthPercent = 100 / (realTotal + 1);
@@ -381,47 +384,63 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 2) ABOUT SECTION RENDER
-  function renderAbout() {
-    const container = document.getElementById('aboutContainer');
-    if (!container) return;
-    const a = portfolioData.about || DEFAULT_DATA.about;
 
-    let tagsHtml = '';
-    (a.tags || []).forEach(t => {
-      tagsHtml += `<span class="skill-tag"><i class="fa-solid fa-sparkles"></i> ${t}</span>`;
+  /* ==========================================
+     2B. HERO STAGE PARALLAX & MOTION TOGGLE
+     ========================================== */
+  const heroStage = document.getElementById('eddieHeroStage');
+  const visitorCursor = document.getElementById('visitorCursor');
+  const motionToggleBtn = document.getElementById('motionToggleBtn');
+
+  if (heroStage) {
+    heroStage.addEventListener('mousemove', (e) => {
+      if (isMotionPaused) return;
+      const rect = heroStage.getBoundingClientRect();
+      const relX = e.clientX - rect.left;
+      const relY = e.clientY - rect.top;
+      const normX = (relX / rect.width - 0.5) * 2;
+      const normY = (relY / rect.height - 0.5) * 2;
+
+      heroStage.style.setProperty('--portrait-x', `${(normX * 14).toFixed(1)}px`);
+      heroStage.style.setProperty('--portrait-y', `${(normY * 10).toFixed(1)}px`);
+
+      if (visitorCursor && window.innerWidth > 768) {
+        visitorCursor.classList.add('visible');
+        visitorCursor.style.transform = `translate3d(${relX + 14}px, ${relY + 14}px, 0)`;
+      }
     });
 
-    const primaryImg = sanitizeImgPath(a.avatarImg, 'assets/images/profile_ava.jpg');
-
-    container.innerHTML = `
-      <div class="about-img-wrapper reveal">
-        <div class="about-img-card">
-          <img src="${primaryImg}" id="profileAvatarImg" alt="김민혁 프로필 캐릭터">
-        </div>
-      </div>
-
-      <div class="about-text-content reveal delay-1">
-        <div class="section-tag">
-          <i class="fa-solid fa-user-sparkles"></i>
-          <span>About Me</span>
-        </div>
-
-        <h2 class="section-title">
-          ${a.titlePrefix || '나는 '}<span class="highlight-txt">${a.highlightTxt || '성장'}</span>${a.titleSuffix || '합니다.'}
-        </h2>
-
-        <p class="about-lead">${a.lead || ''}</p>
-        <p class="about-body">${a.body || ''}</p>
-
-        <div class="skills-tags-wrapper">
-          ${tagsHtml}
-        </div>
-      </div>
-    `;
+    heroStage.addEventListener('mouseleave', () => {
+      heroStage.style.setProperty('--portrait-x', '0px');
+      heroStage.style.setProperty('--portrait-y', '0px');
+      if (visitorCursor) {
+        visitorCursor.classList.remove('visible');
+      }
+    });
   }
 
-  // 3) FEATURES RENDER
+  if (motionToggleBtn) {
+    motionToggleBtn.addEventListener('click', () => {
+      isMotionPaused = !isMotionPaused;
+      document.body.classList.toggle('motion-paused', isMotionPaused);
+      motionToggleBtn.setAttribute('aria-pressed', String(isMotionPaused));
+      motionToggleBtn.textContent = isMotionPaused ? 'Resume motion' : 'Pause motion';
+
+      const realTotal = (portfolioData.heroSlides || []).length;
+      if (isMotionPaused) {
+        stopAutoPlay();
+      } else {
+        startAutoPlay(realTotal);
+      }
+    });
+  }
+
+
+  /* ==========================================
+     3. PHILOSOPHY / CORE VALUES RENDER & INTERACTIVE STAGE
+     ========================================== */
+  let activePhilosophyStep = 0;
+
   function renderFeatures() {
     const container = document.getElementById('featuresContainer');
     if (!container) return;
@@ -429,20 +448,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let html = '';
     list.forEach((f, idx) => {
+      const stepNum = f.step || String(idx + 1).padStart(2, '0');
+      const isActive = idx === activePhilosophyStep;
       html += `
-        <div class="feature-card reveal delay-${(idx % 3) + 1}">
-          <div class="feature-icon">
-            <i class="fa-solid ${f.icon}"></i>
-          </div>
+        <div class="feature-card ${isActive ? 'active' : ''} reveal delay-${(idx % 3) + 1}" role="tab" aria-selected="${isActive}" tabindex="0" data-step="${idx}">
+          <span class="step-number">${stepNum}</span>
           <h3 class="feature-title">${f.title}</h3>
           <p class="feature-desc">${f.desc}</p>
+          <i class="step-bar" aria-hidden="true"></i>
         </div>
       `;
     });
     container.innerHTML = html;
+
+    const cards = container.querySelectorAll('.feature-card');
+    cards.forEach((card) => {
+      const activateStep = () => {
+        const idx = parseInt(card.getAttribute('data-step'), 10) || 0;
+        activePhilosophyStep = idx;
+        cards.forEach((c, cIdx) => {
+          const selected = cIdx === idx;
+          c.classList.toggle('active', selected);
+          c.setAttribute('aria-selected', String(selected));
+        });
+        updatePhilosophyStage(idx);
+      };
+
+      card.addEventListener('click', activateStep);
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          activateStep();
+        }
+      });
+    });
+
+    updatePhilosophyStage(activePhilosophyStep);
   }
 
-  // 4) WORKS RENDER
+  function updatePhilosophyStage(stepIndex) {
+    const list = portfolioData.features || DEFAULT_DATA.features;
+    const item = list[stepIndex] || DEFAULT_DATA.features[stepIndex] || DEFAULT_DATA.features[0];
+    const defaultItem = DEFAULT_DATA.features[stepIndex] || DEFAULT_DATA.features[0];
+
+    const eyebrowEl = document.getElementById('stageEyebrow');
+    const sentenceEl = document.getElementById('stageSentence');
+
+    if (eyebrowEl) {
+      eyebrowEl.textContent = item.eyebrow || defaultItem.eyebrow;
+    }
+    if (sentenceEl) {
+      sentenceEl.innerHTML = item.stageHtml || defaultItem.stageHtml;
+    }
+  }
+
+
+  /* ==========================================
+     4. SELECTED WORKS RENDER (3D Browser Mockup Cards)
+     ========================================== */
   function renderWorks() {
     const container = document.getElementById('worksContainer');
     if (!container) return;
@@ -452,24 +515,44 @@ document.addEventListener('DOMContentLoaded', () => {
     list.forEach((w, idx) => {
       const targetLink = w.link ? w.link : '#';
       const createdDate = w.year || '2026.08';
-      const defaultImg = DEFAULT_DATA.works[idx % DEFAULT_DATA.works.length]?.img || 'assets/images/kumho_schoolmate.jpg';
-      const cleanImg = sanitizeImgPath(w.img, defaultImg);
+      const defaultWork = DEFAULT_DATA.works[idx % DEFAULT_DATA.works.length] || DEFAULT_DATA.works[0];
+      const cleanImg = sanitizeImgPath(w.img, defaultWork.img);
+      const chromeTitle = w.chromeTitle || defaultWork.chromeTitle || w.title;
 
       html += `
-        <div class="work-card reveal delay-${(idx % 3) + 1}" data-category="${w.category}" data-id="${w.id}" data-link="${targetLink}">
+        <article class="work-card reveal delay-${(idx % 2) + 1}" data-category="${w.category}" data-id="${w.id}" data-link="${targetLink}">
           <div class="work-img-box">
-            <span class="work-date-badge"><i class="fa-regular fa-calendar-days" style="margin-right:0.25rem;"></i>${createdDate}</span>
-            <img src="${cleanImg}" alt="${w.title}">
-            <div class="work-overlay">
-              <div class="work-view-icon" title="작품 링크로 접속"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+            <img src="${cleanImg}" alt="" class="mockup-backdrop" aria-hidden="true">
+            <div class="mockup-screen">
+              <div class="mockup-chrome" aria-hidden="true">
+                <i></i><i></i><i></i>
+                <span>${chromeTitle}</span>
+              </div>
+              <div class="mockup-viewport">
+                <img src="${cleanImg}" alt="${w.title}">
+              </div>
             </div>
+            <span class="work-date-badge">${createdDate}</span>
           </div>
           <div class="work-info">
-            <span class="work-category">${w.category}</span>
-            <h3 class="work-title">${w.title}</h3>
-            <p class="work-desc">${w.desc}</p>
+            <div class="work-title-row">
+              <h3 class="work-title">
+                ${w.title}
+                <span class="work-arrow">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(-45deg)">
+                    <path d="M4 12h15M13 6l6 6-6 6"></path>
+                  </svg>
+                </span>
+              </h3>
+              <p class="work-desc">${w.desc}</p>
+            </div>
+            <div class="work-meta-row">
+              <span class="work-category">${w.category}</span>
+              <span>${createdDate}</span>
+              <span>Live deployed</span>
+            </div>
           </div>
-        </div>
+        </article>
       `;
     });
     container.innerHTML = html;
@@ -479,7 +562,7 @@ document.addEventListener('DOMContentLoaded', () => {
       card.addEventListener('click', () => {
         const linkUrl = card.getAttribute('data-link');
         if (linkUrl && linkUrl !== '#' && linkUrl.trim() !== '') {
-          window.open(linkUrl, '_blank');
+          window.open(linkUrl, '_blank', 'noopener,noreferrer');
         } else {
           const id = card.getAttribute('data-id');
           openWorkModal(id);
@@ -488,7 +571,61 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5) TIMELINE RENDER
+
+  /* ==========================================
+     5. ABOUT ME SECTION RENDER ("About Minhyuk.")
+     ========================================== */
+  function renderAbout() {
+    const container = document.getElementById('aboutContainer');
+    if (!container) return;
+    const a = portfolioData.about || DEFAULT_DATA.about;
+
+    let tagsHtml = '';
+    (a.tags || []).forEach(t => {
+      tagsHtml += `<span class="skill-tag">${t}</span>`;
+    });
+
+    const primaryImg = sanitizeImgPath(a.avatarImg, 'assets/images/profile_ava.jpg');
+    const avatarEl = document.getElementById('profileAvatarImg');
+    if (avatarEl) {
+      avatarEl.src = primaryImg;
+    }
+
+    const suffixClean = (a.titleSuffix || '합니다').replace(/\.$/, '');
+
+    container.innerHTML = `
+      <div class="about-left-heading reveal">
+        <span class="stage-eyebrow">ABOUT ME</span>
+        <h2 id="about-title" class="about-big-title">
+          About<br>Minhyuk<span class="accent-period">.</span>
+        </h2>
+        <p class="about-subtitle-motto">
+          ${a.titlePrefix || '나는 '}<span class="highlight-txt">${a.highlightTxt || '성장'}</span>${suffixClean}<span class="accent-period">.</span>
+        </p>
+      </div>
+
+      <div class="about-text-content reveal delay-1">
+        <p class="about-lead">${a.lead || ''}</p>
+        <p class="about-body">${a.body || ''}</p>
+
+        <div class="skills-tags-wrapper">
+          ${tagsHtml}
+        </div>
+
+        <a href="#timeline" class="editorial-text-link">
+          나의 성장과정 보기
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(-45deg)">
+            <path d="M4 12h15M13 6l6 6-6 6"></path>
+          </svg>
+        </a>
+      </div>
+    `;
+  }
+
+
+  /* ==========================================
+     6. TIMELINE / ROADMAP RENDER (Editorial Grid)
+     ========================================== */
   function renderTimeline() {
     const container = document.getElementById('timelineContainer');
     if (!container) return;
@@ -496,13 +633,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let html = '';
     list.forEach((t, idx) => {
+      const stepNum = t.step || String(idx + 1).padStart(2, '0');
       html += `
         <div class="timeline-item reveal delay-${(idx % 3) + 1}">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
+          <div class="timeline-meta-col">
+            <span class="timeline-step-num">${stepNum}</span>
             <div class="timeline-date">${t.date}</div>
-            <h3 class="timeline-role">${t.role}</h3>
             <div class="timeline-company">${t.company}</div>
+          </div>
+          <div class="timeline-content">
+            <h3 class="timeline-role">${t.role}</h3>
             <p class="timeline-desc">${t.desc}</p>
           </div>
         </div>
@@ -511,6 +651,10 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = html;
   }
 
+
+  /* ==========================================
+     7. SCROLL REVEAL, SCROLL SPY & CIRCULAR PROGRESS RING
+     ========================================== */
   function initScrollObserve() {
     const revealElements = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -525,22 +669,20 @@ document.addEventListener('DOMContentLoaded', () => {
     revealElements.forEach(el => revealObserver.observe(el));
   }
 
-  /* ==========================================
-     SCROLL SPY & NAVBAR ACTIVE SYNC
-     Smoothly highlights Home, About, Philosophy, Works, Experience, Contact
-     ========================================== */
   function initScrollSpy() {
     const navLinks = document.querySelectorAll('.nav-links .nav-link');
     const sections = [
       document.getElementById('hero'),
-      document.getElementById('about'),
       document.getElementById('features'),
       document.getElementById('works'),
+      document.getElementById('about'),
       document.getElementById('timeline'),
       document.getElementById('contact')
     ].filter(Boolean);
 
     const navbar = document.querySelector('.navbar');
+    const scrollProgressBtn = document.getElementById('scrollProgressBtn');
+    const scrollProgressRing = document.getElementById('scrollProgressRing');
     let ticking = false;
 
     function onScroll() {
@@ -557,24 +699,30 @@ document.addEventListener('DOMContentLoaded', () => {
       const scrollY = window.pageYOffset || document.documentElement.scrollTop;
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
+      const maxScroll = Math.max(1, documentHeight - windowHeight);
+      const progress = Math.min(1, Math.max(0, scrollY / maxScroll));
 
-      // Navbar scrolled state
+      // Navbar scrolled border
       if (navbar) {
-        if (scrollY > 30) {
-          navbar.classList.add('scrolled');
-        } else {
-          navbar.classList.remove('scrolled');
-        }
+        navbar.classList.toggle('scrolled', scrollY > 24);
       }
 
-      // If scrolled to the bottom of the page, activate Contact
+      // Circular scroll progress button
+      if (scrollProgressBtn) {
+        scrollProgressBtn.classList.toggle('visible', scrollY > 280);
+      }
+      if (scrollProgressRing) {
+        scrollProgressRing.style.strokeDashoffset = String((1 - progress).toFixed(4));
+      }
+
+      // Bottom of page -> Contact
       if (windowHeight + scrollY >= documentHeight - 60) {
         setActiveLink('contact');
         return;
       }
 
       let currentSectionId = 'hero';
-      const offset = 180; // Offset for navbar height and early visual activation
+      const offset = 200;
 
       sections.forEach(section => {
         const sectionTop = section.offsetTop;
@@ -589,11 +737,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function setActiveLink(sectionId) {
       navLinks.forEach(link => {
         const href = link.getAttribute('href');
-        if (href === `#${sectionId}`) {
-          link.classList.add('active');
-        } else {
-          link.classList.remove('active');
-        }
+        link.classList.toggle('active', href === `#${sectionId}`);
       });
     }
 
@@ -603,7 +747,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ==========================================
-     3. PORTFOLIO FILTERING & WORK MODAL
+     8. PORTFOLIO FILTERING & WORK MODAL
      ========================================== */
   const filterBtns = document.querySelectorAll('.filter-btn');
   filterBtns.forEach(btn => {
@@ -620,13 +764,13 @@ document.addEventListener('DOMContentLoaded', () => {
           setTimeout(() => {
             card.style.opacity = '1';
             card.style.transform = 'translateY(0) scale(1)';
-          }, 50);
+          }, 30);
         } else {
           card.style.opacity = '0';
-          card.style.transform = 'translateY(20px) scale(0.95)';
+          card.style.transform = 'translateY(16px) scale(0.98)';
           setTimeout(() => {
             card.style.display = 'none';
-          }, 300);
+          }, 260);
         }
       });
     });
@@ -660,7 +804,207 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   /* ==========================================
-     8. GENERAL UTILS & INITIALIZATION
+     9. PIXEL-CAT RUNNER MINI-GAME (eddieeddie.com Footer Signature)
+     ========================================== */
+  function initRunnerGame() {
+    const container = document.getElementById('runnerContainer');
+    const canvas = document.getElementById('runnerCanvas');
+    const overlay = document.getElementById('runnerOverlay');
+    if (!container || !canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width;
+    const H = canvas.height;
+    const GROUND_Y = H - 38;
+
+    let state = 'idle'; // 'idle' | 'running' | 'gameover'
+    let score = 0;
+    let highScore = 0;
+    let speed = 6.2;
+    let frameCount = 0;
+
+    const cat = {
+      x: 84,
+      y: GROUND_Y - 32,
+      w: 32,
+      h: 32,
+      vy: 0,
+      gravity: 0.72,
+      jumpPower: -13.2,
+      grounded: true
+    };
+
+    let obstacles = [];
+
+    function resetGame() {
+      score = 0;
+      speed = 6.2;
+      frameCount = 0;
+      cat.y = GROUND_Y - cat.h;
+      cat.vy = 0;
+      cat.grounded = true;
+      obstacles = [];
+    }
+
+    function jump() {
+      if (state === 'idle' || state === 'gameover') {
+        resetGame();
+        state = 'running';
+        container.setAttribute('data-state', 'running');
+        requestAnimationFrame(loop);
+        return;
+      }
+      if (state === 'running' && cat.grounded) {
+        cat.vy = cat.jumpPower;
+        cat.grounded = false;
+      }
+    }
+
+    function drawPixelCat(x, y, step) {
+      ctx.save();
+      ctx.fillStyle = '#eeeeee';
+      // Ears
+      ctx.fillRect(x + 4, y, 5, 5);
+      ctx.fillRect(x + 19, y, 5, 5);
+      // Head & Body
+      ctx.fillRect(x + 4, y + 5, 22, 18);
+      // Tail
+      const tailOffset = step % 2 === 0 ? -2 : 2;
+      ctx.fillRect(x - 4, y + 8 + tailOffset, 8, 4);
+      // Eyes (Pink accent)
+      ctx.fillStyle = '#dd83ad';
+      ctx.fillRect(x + 18, y + 9, 3, 3);
+      // Legs
+      ctx.fillStyle = '#eeeeee';
+      if (!cat.grounded) {
+        ctx.fillRect(x + 6, y + 23, 5, 7);
+        ctx.fillRect(x + 19, y + 21, 5, 7);
+      } else if (step % 2 === 0) {
+        ctx.fillRect(x + 6, y + 23, 5, 9);
+        ctx.fillRect(x + 18, y + 23, 5, 5);
+      } else {
+        ctx.fillRect(x + 6, y + 23, 5, 5);
+        ctx.fillRect(x + 18, y + 23, 5, 9);
+      }
+      ctx.restore();
+    }
+
+    function drawScene() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Ground line
+      ctx.strokeStyle = '#292929';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, GROUND_Y);
+      ctx.lineTo(W, GROUND_Y);
+      ctx.stroke();
+
+      // Score readout
+      ctx.font = '600 13px monospace';
+      ctx.fillStyle = '#a0a0a0';
+      ctx.textAlign = 'right';
+      const hiStr = String(Math.floor(highScore)).padStart(5, '0');
+      const scStr = String(Math.floor(score)).padStart(5, '0');
+      ctx.fillText(`HI ${hiStr}   ${scStr}`, W - 28, 34);
+
+      // Obstacles
+      obstacles.forEach(ob => {
+        ctx.fillStyle = ob.accent ? '#dd83ad' : '#eeeeee';
+        ctx.fillRect(ob.x, ob.y, ob.w, ob.h);
+      });
+
+      // Cat
+      const legStep = state === 'running' ? Math.floor(frameCount / 6) : 0;
+      drawPixelCat(cat.x, cat.y, legStep);
+    }
+
+    function loop() {
+      if (state !== 'running') return;
+      frameCount++;
+      score += 0.15;
+      speed = Math.min(13, 6.2 + score * 0.006);
+
+      // Cat physics
+      cat.vy += cat.gravity;
+      cat.y += cat.vy;
+      if (cat.y >= GROUND_Y - cat.h) {
+        cat.y = GROUND_Y - cat.h;
+        cat.vy = 0;
+        cat.grounded = true;
+      }
+
+      // Spawn obstacles
+      const lastOb = obstacles[obstacles.length - 1];
+      const minGap = 240 + Math.random() * 220;
+      if (!lastOb || W - lastOb.x > minGap) {
+        if (Math.random() < 0.045 || !lastOb) {
+          const h = 22 + Math.floor(Math.random() * 22);
+          const w = 14 + Math.floor(Math.random() * 12);
+          obstacles.push({
+            x: W + 20,
+            y: GROUND_Y - h,
+            w,
+            h,
+            accent: Math.random() < 0.35
+          });
+        }
+      }
+
+      // Move & check collisions
+      for (let i = obstacles.length - 1; i >= 0; i--) {
+        const ob = obstacles[i];
+        ob.x -= speed;
+
+        // AABB collision with slight forgiveness
+        if (
+          cat.x + 6 < ob.x + ob.w &&
+          cat.x + cat.w - 6 > ob.x &&
+          cat.y + 4 < ob.y + ob.h &&
+          cat.y + cat.h > ob.y
+        ) {
+          state = 'gameover';
+          if (score > highScore) highScore = score;
+          container.setAttribute('data-state', 'gameover');
+          if (overlay) {
+            overlay.innerHTML = `
+              <b>Game over · Score ${Math.floor(score)}</b>
+              <span>Tap or press space to run again.</span>
+            `;
+          }
+          drawScene();
+          return;
+        }
+
+        if (ob.x + ob.w < -20) {
+          obstacles.splice(i, 1);
+        }
+      }
+
+      drawScene();
+      requestAnimationFrame(loop);
+    }
+
+    // Initial idle render
+    drawScene();
+
+    container.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      canvas.focus({ preventScroll: true });
+      jump();
+    });
+
+    canvas.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' || e.code === 'ArrowUp') {
+        e.preventDefault();
+        jump();
+      }
+    });
+  }
+
+
+  /* ==========================================
+     10. GENERAL UTILS, CONTACT FORM & MOBILE DRAWER
      ========================================== */
   const toast = document.getElementById('toast');
   function showToast(message) {
@@ -718,80 +1062,8 @@ document.addEventListener('DOMContentLoaded', () => {
     link.addEventListener('click', closeMobileDrawer);
   });
 
-  /* ==========================================
-     9. DUAL THEME MANAGER (AUTO-DETECTION & TOGGLE)
-     Light: White, Light Green, Sky Blue, Cool Gray
-     Dark: Deep Black, Dark Slate Gray, Electric Blue, Mystic Purple
-     ========================================== */
-  const THEME_STORAGE_KEY = 'minhyuk_portfolio_theme';
-  const themeToggleBtn = document.getElementById('themeToggle');
-  const themeToggleIcon = document.getElementById('themeToggleIcon');
-  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-
-  function applyTheme(theme, save = true) {
-    if (theme === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      if (themeToggleIcon) {
-        themeToggleIcon.className = 'fa-solid fa-sun';
-      }
-      if (themeColorMeta) {
-        themeColorMeta.setAttribute('content', '#212530');
-      }
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-      if (themeToggleIcon) {
-        themeToggleIcon.className = 'fa-solid fa-moon';
-      }
-      if (themeColorMeta) {
-        themeColorMeta.setAttribute('content', '#F8FAFC');
-      }
-    }
-    if (save) {
-      try {
-        localStorage.setItem(THEME_STORAGE_KEY, theme);
-      } catch (e) {}
-    }
-  }
-
-  function initTheme() {
-    let savedTheme = null;
-    try {
-      savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-    } catch (e) {}
-
-    if (savedTheme === 'dark' || savedTheme === 'light') {
-      applyTheme(savedTheme, false);
-    } else {
-      // Auto-detect system preference
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      applyTheme(prefersDark ? 'dark' : 'light', false);
-    }
-
-    // Listen for OS system theme changes
-    if (window.matchMedia) {
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        let hasSaved = null;
-        try { hasSaved = localStorage.getItem(THEME_STORAGE_KEY); } catch (err) {}
-        if (!hasSaved) {
-          applyTheme(e.matches ? 'dark' : 'light', false);
-        }
-      });
-    }
-  }
-
-  if (themeToggleBtn) {
-    themeToggleBtn.onclick = () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      applyTheme(nextTheme, true);
-      showToast(nextTheme === 'dark' ? '🌙 다크 모드로 전환되었습니다.' : '☀️ 라이트 모드로 전환되었습니다.');
-    };
-  }
-
-  // Initialize theme
-  initTheme();
-
-  // Init Site
+  // Initialize Site & Runner Game
   renderSite();
+  initRunnerGame();
 
 });
