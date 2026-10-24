@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark-goldenrod">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,12 +8,12 @@
   <meta name="keywords" content="포트폴리오, 김민혁, AI비전, 고등학생크리에이터, 지속적인성장, 실질적구현, 긍정적영향력">
   <meta property="og:title" content="MINHYUK | 고등학생 김민혁 포트폴리오">
   <meta property="og:description" content="나는 성장합니다. AI기술을 토대로 미래를 향해 나아가는 고등학생 김민혁입니다.">
-  <meta name="theme-color" content="#090A0F">
+  <meta name="theme-color" content="#000000">
   
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Cinzel, Cormorant Garamond, Outfit, Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -21,43 +21,72 @@
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="scene-mode" data-active-scene="0">
 
   <!-- ==========================================
-       1. NAVIGATION BAR
+       0. LUXURY AMBIENT OVERLAYS & SCENE TRANSITION SHUTTER
        ========================================== -->
-  <header class="navbar">
+  <!-- Custom Golden Cursor Ring (Desktop) -->
+  <div class="luxury-cursor-dot" id="luxuryCursorDot" aria-hidden="true"></div>
+  <div class="luxury-cursor-ring" id="luxuryCursorRing" aria-hidden="true"></div>
+
+  <!-- Golden Shutter Slash for Scene Transitions -->
+  <div class="scene-shutter" id="sceneShutter" aria-hidden="true">
+    <div class="shutter-line"></div>
+    <div class="shutter-glow"></div>
+  </div>
+
+  <!-- Right-Side Vertical Stage Progress Indicator -->
+  <aside class="stage-rail" id="stageRail" aria-label="화면 전환 인디케이터">
+    <button class="rail-dot active" data-target-scene="0" aria-label="Intro Logo">
+      <span class="rail-num">00</span>
+      <span class="rail-label">LOGO</span>
+    </button>
+    <button class="rail-dot" data-target-scene="1" aria-label="About">
+      <span class="rail-num">01</span>
+      <span class="rail-label">ABOUT</span>
+    </button>
+    <button class="rail-dot" data-target-scene="2" aria-label="Philosophy">
+      <span class="rail-num">02</span>
+      <span class="rail-label">PHILOSOPHY</span>
+    </button>
+    <button class="rail-dot" data-target-scene="3" aria-label="Experience">
+      <span class="rail-num">03</span>
+      <span class="rail-label">ROADMAP</span>
+    </button>
+    <button class="rail-dot" data-target-scene="4" aria-label="Works">
+      <span class="rail-num">04</span>
+      <span class="rail-label">WORKS</span>
+    </button>
+    <button class="rail-dot" data-target-scene="5" aria-label="Contact">
+      <span class="rail-num">05</span>
+      <span class="rail-label">CONTACT</span>
+    </button>
+  </aside>
+
+
+  <!-- ==========================================
+       1. NAVIGATION BAR (Home 삭제 & 우측 상단에 메뉴 배치)
+       ========================================== -->
+  <header class="navbar" id="mainNavbar">
     <div class="container nav-container">
       
-      <!-- MINHYUK 로고 -->
-      <a href="#" class="logo" id="mainLogo" onclick="window.location.reload(); return false;">
+      <!-- 좌측 상단: MINHYUK 시그니처 (클릭 시 첫 번째 로고 화면으로 이동) -->
+      <a href="#hero" class="logo" id="mainLogo" data-scene-link="0" aria-label="첫 로고 화면으로 이동">
         <img src="assets/images/logo_real.jpg" id="logoSignImg" alt="MINHYUK Signature Symbol" class="logo-symbol-img">
         <span class="logo-text">MINHYUK</span><span class="logo-dot"></span>
       </a>
 
-      <nav>
-        <ul class="nav-links">
-          <li><a href="#hero" class="nav-link active">Home</a></li>
-          <li><a href="#about" class="nav-link">About</a></li>
-          <li><a href="#features" class="nav-link">Philosophy</a></li>
-          <li><a href="#works" class="nav-link">Works</a></li>
-          <li><a href="#timeline" class="nav-link">Experience</a></li>
-          <li><a href="#contact" class="nav-link">Contact</a></li>
+      <!-- 우측 상단: 기존 테마 전환 버튼 & Connect 버튼 자리에 위치 (Home 삭제) -->
+      <nav class="nav-right-Menu" aria-label="주요 메뉴">
+        <ul class="nav-links" id="navLinksList">
+          <li><a href="#about" class="nav-link" data-scene-link="1">About</a></li>
+          <li><a href="#features" class="nav-link" data-scene-link="2">Philosophy</a></li>
+          <li><a href="#timeline" class="nav-link" data-scene-link="3">Experience</a></li>
+          <li><a href="#works" class="nav-link" data-scene-link="4">Works</a></li>
+          <li><a href="#contact" class="nav-link" data-scene-link="5">Contact</a></li>
         </ul>
       </nav>
-
-      <!-- Right Action Group -->
-      <div class="nav-actions">
-        <!-- Theme Toggle Button (Light/Dark Mode) -->
-        <button id="themeToggle" class="btn-theme-toggle" aria-label="테마 전환" title="테마 전환">
-          <i class="fa-solid fa-moon" id="themeToggleIcon"></i>
-        </button>
-
-        <a href="#contact" class="btn-cta">
-          <span>Connect</span>
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
 
       <!-- Mobile Menu Toggle -->
       <div class="mobile-toggle" id="mobileToggle" aria-label="메뉴 열기">
@@ -73,375 +102,472 @@
 
 
   <!-- ==========================================
-       2. HERO SECTION & INFINITE PUSH TRACK SLIDER (GitHub Pages 서브디렉토리 100% 호환 표준 경로)
+       FULL-VIEWPORT SCENE DECK (스크롤 시 화면 전환 구조)
        ========================================== -->
-  <section class="hero" id="hero">
-    <div class="hero-slider-container">
-      
-      <div class="hero-slider-track" id="sliderTrack">
+  <main class="scene-viewport" id="sceneViewport">
+
+    <!-- ==========================================
+         SCENE 0: GRAND LOGO GATE (접속 시 첨부 로고 대형 표시 + 무브먼트 제스처)
+         ========================================== -->
+    <section class="scene scene-intro active" id="hero" data-scene-index="0" aria-label="MINHYUK 메인 로고 화면">
+      <!-- Ambient Goldenrod Spotlight & Particles -->
+      <div class="intro-ambient" aria-hidden="true">
+        <div class="gold-radial-stage"></div>
+        <div class="gold-grid-lines"></div>
+        <div class="gold-particles">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+      </div>
+
+      <div class="scene-inner intro-stage-inner">
+        <!-- Architectural Frame Corners -->
+        <div class="luxury-frame-corners" aria-hidden="true">
+          <span class="corner tl"></span>
+          <span class="corner tr"></span>
+          <span class="corner bl"></span>
+          <span class="corner br"></span>
+        </div>
+
+        <div class="intro-eyebrow-row">
+          <span class="gold-roman">EDITION · 2026</span>
+          <span class="gold-divider-line"></span>
+          <span class="gold-roman">AI CREATOR &amp; PIONEER</span>
+        </div>
+
+        <!-- Centerpiece: Attached MINHYUK Logo (Large & Interactive 3D Poise) -->
+        <div class="grand-logo-stage" id="grandLogoStage">
+          <div class="grand-logo-aura" aria-hidden="true"></div>
+          <img src="assets/images/minhyuk_logo.png" alt="MINHYUK Signature Logo" class="grand-logo-img" id="grandLogoImg">
+        </div>
+
+        <p class="intro-manifesto">
+          나는 성장합니다. AI기술을 토대로 미래를 향해 나아가는 고등학생 김민혁입니다.
+        </p>
+
+        <!-- Scroll Movement Gesture Indicator -->
+        <button type="button" class="scroll-gesture-trigger" id="scrollUnlockBtn" aria-label="다음 화면으로 전환">
+          <span class="gesture-label">SCROLL TO ENTER</span>
+          <span class="gesture-mouse">
+            <span class="gesture-wheel"></span>
+          </span>
+          <span class="gesture-line"></span>
+        </button>
+      </div>
+    </section>
+
+
+    <!-- ==========================================
+         SCENE 1: ABOUT ME & VISION SLIDER (내 소개 + 4대 비전 배너)
+         ========================================== -->
+    <section class="scene" id="about" data-scene-index="1" aria-label="About Me">
+      <div class="scene-inner container">
         
-        <!-- Slide 1 -->
-        <div class="hero-slide active">
-          <img src="assets/images/hero-1.jpg" alt="환영합니다." class="hero-slide-img">
-          <div class="hero-slide-overlay">
-            <div class="hero-slide-content">
-              <span class="hero-badge">Welcome 01</span>
-              <h2 class="hero-slide-title">환영합니다.</h2>
-              <p class="hero-slide-desc">이곳은 고등학생 김민혁 개인이 제작한 포트폴리오 겸 작업물 공유 사이트입니다.</p>
-            </div>
-          </div>
+        <div class="scene-header-bar">
+          <span class="scene-index-tag">CHAPTER I · IDENTITY &amp; VISION</span>
+          <span class="scene-line-accent"></span>
         </div>
 
-        <!-- Slide 2 -->
-        <div class="hero-slide">
-          <img src="assets/images/hero-2.jpg" alt="AI와 인간은 서로에게 적이 아니다." class="hero-slide-img">
-          <div class="hero-slide-overlay">
-            <div class="hero-slide-content">
-              <span class="hero-badge">Coexistence 02</span>
-              <h2 class="hero-slide-title">AI와 인간은 서로에게 적이 아니다.</h2>
-              <p class="hero-slide-desc">AI가 모든걸 대체하는 세상에서, 저는 AI를 두려워하기보다 AI와 공존할 방법을 찾았습니다.</p>
+        <div class="about-vision-layout">
+          <!-- Left: About Me Content (Injected/Synced by main.js) -->
+          <div class="about-grid" id="aboutContainer">
+            <div class="about-img-wrapper">
+              <div class="about-img-card">
+                <img src="assets/images/profile_ava.jpg" id="profileAvatarImg" alt="고등학생 김민혁 프로필 캐릭터">
+              </div>
+            </div>
+
+            <div class="about-text-content">
+              <div class="section-tag">
+                <i class="fa-solid fa-crown"></i>
+                <span>About Me</span>
+              </div>
+
+              <h2 class="section-title">
+                나는 <span class="highlight-txt">성장</span>합니다.
+              </h2>
+
+              <p class="about-lead">
+                만나서 반갑습니다. 저는 AI기술을 토대로 미래를 향한 비전을 세우고 하나하나 배우며 성장하고 있는 고등학생 김민혁입니다.
+              </p>
+
+              <p class="about-body">
+                저의 비전은 단순한 구상에서 끝나는 것이 아닌 실질적 구현을 통해 세상 밖으로 나옵니다. 아직 미숙하지만 수많은 연습을 통해 사람들에게 긍정적인 영향을 주는 것이 목표입니다.
+              </p>
+
+              <div class="skills-tags-wrapper">
+                <span class="skill-tag"><i class="fa-solid fa-sparkles"></i> AI 비전</span>
+                <span class="skill-tag"><i class="fa-solid fa-sparkles"></i> 고등학생 크리에이터</span>
+                <span class="skill-tag"><i class="fa-solid fa-sparkles"></i> 지속적인 성장</span>
+                <span class="skill-tag"><i class="fa-solid fa-sparkles"></i> 실질적 구현</span>
+                <span class="skill-tag"><i class="fa-solid fa-sparkles"></i> 긍정적 영향력</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Slide 3 -->
-        <div class="hero-slide">
-          <img src="assets/images/hero-3.jpg" alt="공존을 뛰어넘어 삶의 일부가 되도록" class="hero-slide-img">
-          <div class="hero-slide-overlay">
-            <div class="hero-slide-content">
-              <span class="hero-badge">Vision 03</span>
-              <h2 class="hero-slide-title">공존을 뛰어넘어 삶의 일부가 되도록</h2>
-              <p class="hero-slide-desc">AI기술의 발전에 힘 입어 전보다 더 나은 삶을 꿈 꿉니다.</p>
+          <!-- Right: 4-Slide Vision Showcase (Preserving all 4 Hero Slides & Images) -->
+          <div class="hero-slider-container">
+            <div class="hero-slider-track" id="sliderTrack">
+              
+              <!-- Slide 1 -->
+              <div class="hero-slide active">
+                <img src="assets/images/hero-1.jpg" alt="환영합니다." class="hero-slide-img">
+                <div class="hero-slide-overlay">
+                  <div class="hero-slide-content">
+                    <span class="hero-badge">Welcome 01</span>
+                    <h2 class="hero-slide-title">환영합니다.</h2>
+                    <p class="hero-slide-desc">이곳은 고등학생 김민혁 개인이 제작한 포트폴리오 겸 작업물 공유 사이트입니다.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 2 -->
+              <div class="hero-slide">
+                <img src="assets/images/hero-2.jpg" alt="AI와 인간은 서로에게 적이 아니다." class="hero-slide-img">
+                <div class="hero-slide-overlay">
+                  <div class="hero-slide-content">
+                    <span class="hero-badge">Coexistence 02</span>
+                    <h2 class="hero-slide-title">AI와 인간은 서로에게 적이 아니다.</h2>
+                    <p class="hero-slide-desc">AI가 모든걸 대체하는 세상에서, 저는 AI를 두려워하기보다 AI와 공존할 방법을 찾았습니다.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 3 -->
+              <div class="hero-slide">
+                <img src="assets/images/hero-3.jpg" alt="공존을 뛰어넘어 삶의 일부가 되도록" class="hero-slide-img">
+                <div class="hero-slide-overlay">
+                  <div class="hero-slide-content">
+                    <span class="hero-badge">Vision 03</span>
+                    <h2 class="hero-slide-title">공존을 뛰어넘어 삶의 일부가 되도록</h2>
+                    <p class="hero-slide-desc">AI기술의 발전에 힘 입어 전보다 더 나은 삶을 꿈 꿉니다.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 4 -->
+              <div class="hero-slide">
+                <img src="assets/images/hero-4.jpg" alt="미래 사회를 이끄는 선구자" class="hero-slide-img">
+                <div class="hero-slide-overlay">
+                  <div class="hero-slide-content">
+                    <span class="hero-badge">Pioneer 04</span>
+                    <h2 class="hero-slide-title">미래 사회를 이끄는 선구자</h2>
+                    <p class="hero-slide-desc">기술 발전은 그냥 이루어지지 않습니다. 저는 이런 미래를 먼저 개척하는 선구자가 되고 싶습니다.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 1 Clone -->
+              <div class="hero-slide">
+                <img src="assets/images/hero-1.jpg" alt="환영합니다." class="hero-slide-img">
+                <div class="hero-slide-overlay">
+                  <div class="hero-slide-content">
+                    <span class="hero-badge">Welcome 01</span>
+                    <h2 class="hero-slide-title">환영합니다.</h2>
+                    <p class="hero-slide-desc">이곳은 고등학생 김민혁 개인이 제작한 포트폴리오 겸 작업물 공유 사이트입니다.</p>
+                  </div>
+                </div>
+              </div>
+
             </div>
-          </div>
-        </div>
 
-        <!-- Slide 4 -->
-        <div class="hero-slide">
-          <img src="assets/images/hero-4.jpg" alt="미래 사회를 이끄는 선구자" class="hero-slide-img">
-          <div class="hero-slide-overlay">
-            <div class="hero-slide-content">
-              <span class="hero-badge">Pioneer 04</span>
-              <h2 class="hero-slide-title">미래 사회를 이끄는 선구자</h2>
-              <p class="hero-slide-desc">기술 발전은 그냥 이루어지지 않습니다. 저는 이런 미래를 먼저 개척하는 선구자가 되고 싶습니다.</p>
-            </div>
-          </div>
-        </div>
+            <div class="hero-controls">
+              <div class="hero-counter">
+                <span id="carouselCurrent">01</span> / <span id="carouselTotal">04</span>
+              </div>
 
-        <!-- Slide 1 Clone -->
-        <div class="hero-slide">
-          <img src="assets/images/hero-1.jpg" alt="환영합니다." class="hero-slide-img">
-          <div class="hero-slide-overlay">
-            <div class="hero-slide-content">
-              <span class="hero-badge">Welcome 01</span>
-              <h2 class="hero-slide-title">환영합니다.</h2>
-              <p class="hero-slide-desc">이곳은 고등학생 김민혁 개인이 제작한 포트폴리오 겸 작업물 공유 사이트입니다.</p>
+              <div class="hero-progress-bar">
+                <div class="hero-progress-fill" id="carouselProgress"></div>
+              </div>
+
+              <button class="hero-btn-nav" id="carouselPrev" aria-label="이전 사진">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+              <button class="hero-btn-nav" id="carouselNext" aria-label="다음 사진">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
             </div>
           </div>
         </div>
 
       </div>
-
-      <div class="hero-controls">
-        <div class="hero-counter">
-          <span id="carouselCurrent">01</span> / <span id="carouselTotal">04</span>
-        </div>
-
-        <div class="hero-progress-bar">
-          <div class="hero-progress-fill" id="carouselProgress"></div>
-        </div>
-
-        <button class="hero-btn-nav" id="carouselPrev" aria-label="이전 사진">
-          <i class="fa-solid fa-chevron-left"></i>
-        </button>
-        <button class="hero-btn-nav" id="carouselNext" aria-label="다음 사진">
-          <i class="fa-solid fa-chevron-right"></i>
-        </button>
-      </div>
-
-    </div>
-  </section>
+    </section>
 
 
-  <!-- ==========================================
-       3. ABOUT ME SECTION
-       ========================================== -->
-  <section class="section-padding about-section" id="about">
-    <div class="container">
-      <div class="about-grid" id="aboutContainer">
+    <!-- ==========================================
+         SCENE 2: PHILOSOPHY / CORE VALUES (나의 철학)
+         ========================================== -->
+    <section class="scene" id="features" data-scene-index="2" aria-label="Philosophy">
+      <div class="scene-inner container">
         
-        <div class="about-img-wrapper reveal">
-          <div class="about-img-card">
-            <img src="assets/images/profile_ava.jpg" id="profileAvatarImg" alt="고등학생 김민혁 프로필 캐릭터">
-          </div>
+        <div class="scene-header-bar">
+          <span class="scene-index-tag">CHAPTER II · PHILOSOPHY</span>
+          <span class="scene-line-accent"></span>
         </div>
 
-        <div class="about-text-content reveal delay-1">
+        <div class="text-center center-block scene-title-block">
           <div class="section-tag">
-            <i class="fa-solid fa-user-sparkles"></i>
-            <span>About Me</span>
+            <i class="fa-solid fa-compass"></i>
+            <span>Core Values</span>
+          </div>
+          <h2 class="section-title">내가 생각하는 가치 3가지</h2>
+          <p class="section-subtitle center-block">항상 마음에 새기고 실천하는 저의 핵심 가치관입니다.</p>
+        </div>
+
+        <div class="features-grid" id="featuresContainer">
+          <!-- Card 1 -->
+          <div class="feature-card">
+            <span class="card-roman-num">I</span>
+            <div class="feature-icon">
+              <i class="fa-solid fa-award"></i>
+            </div>
+            <h3 class="feature-title">1. 성실함(WORKETHIC)</h3>
+            <p class="feature-desc">어떤 일을 하든지 성실함은 반드시 필요한 덕목 중 하나라고 생각합니다. 저는 제가 참여하는 모든 일에 책임을 가지고 성실히 업무를 수행해 나가는 장점을 가지고 있습니다.</p>
           </div>
 
-          <h2 class="section-title">
-            나는 <span class="highlight-txt">성장</span>합니다.
-          </h2>
+          <!-- Card 2 -->
+          <div class="feature-card">
+            <span class="card-roman-num">II</span>
+            <div class="feature-icon">
+              <i class="fa-solid fa-handshake-angle"></i>
+            </div>
+            <h3 class="feature-title">2. 상호 존중(RESPECT)</h3>
+            <p class="feature-desc">비욘 나티코 린네블라드의 "내가 틀릴 수도 있습니다" 라는 책을 읽고 깊은 감명을 받은 기억이 있습니다. 모든 갈등은 상호 존중의 부재에서 일어난다는 것을 인지하고 나와 다른 의견에도 귀 기울이고 존중하는 자세를 가집니다.</p>
+          </div>
 
-          <p class="about-lead">
-            만나서 반갑습니다. 저는 AI기술을 토대로 미래를 향한 비전을 세우고 하나하나 배우며 성장하고 있는 고등학생 김민혁입니다.
-          </p>
-
-          <p class="about-body">
-            저의 비전은 단순한 구상에서 끝나는 것이 아닌 실질적 구현을 통해 세상 밖으로 나옵니다. 아직 미숙하지만 수많은 연습을 통해 사람들에게 긍정적인 영향을 주는 것이 목표입니다.
-          </p>
-
-          <div class="skills-tags-wrapper">
-            <span class="skill-tag"><i class="fa-solid fa-sparkles"></i> AI 비전</span>
-            <span class="skill-tag"><i class="fa-solid fa-sparkles"></i> 고등학생 크리에이터</span>
-            <span class="skill-tag"><i class="fa-solid fa-sparkles"></i> 지속적인 성장</span>
-            <span class="skill-tag"><i class="fa-solid fa-sparkles"></i> 실질적 구현</span>
-            <span class="skill-tag"><i class="fa-solid fa-sparkles"></i> 긍정적 영향력</span>
+          <!-- Card 3 -->
+          <div class="feature-card">
+            <span class="card-roman-num">III</span>
+            <div class="feature-icon">
+              <i class="fa-solid fa-seedling"></i>
+            </div>
+            <h3 class="feature-title">3. 회복 탄력성(RESILIENCE)</h3>
+            <p class="feature-desc">실패를 통해 배우고 성장하는 것 또한 매우 중요하다고 생각합니다. 저는 제가 계획한 일이 예상대로 되지 않더라도 이를 통해 배우고 앞으로를 기약합니다.</p>
           </div>
         </div>
 
       </div>
-    </div>
-  </section>
+    </section>
 
 
-  <!-- ==========================================
-       4. PHILOSOPHY / CORE VALUES
-       ========================================== -->
-  <section class="section-padding" id="features">
-    <div class="container">
-      
-      <div class="text-center center-block reveal">
-        <div class="section-tag">
-          <i class="fa-solid fa-compass"></i>
-          <span>Core Values</span>
-        </div>
-        <h2 class="section-title">내가 생각하는 가치 3가지</h2>
-        <p class="section-subtitle center-block">항상 마음에 새기고 실천하는 저의 핵심 가치관입니다.</p>
-      </div>
-
-      <div class="features-grid" id="featuresContainer">
-        <!-- Card 1 -->
-        <div class="feature-card reveal delay-1">
-          <div class="feature-icon">
-            <i class="fa-solid fa-award"></i>
-          </div>
-          <h3 class="feature-title">1. 성실함(WORKETHIC)</h3>
-          <p class="feature-desc">어떤 일을 하든지 성실함은 반드시 필요한 덕목 중 하나라고 생각합니다. 저는 제가 참여하는 모든 일에 책임을 가지고 성실히 업무를 수행해 나가는 장점을 가지고 있습니다.</p>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="feature-card reveal delay-2">
-          <div class="feature-icon">
-            <i class="fa-solid fa-handshake-angle"></i>
-          </div>
-          <h3 class="feature-title">2. 상호 존중(RESPECT)</h3>
-          <p class="feature-desc">비욘 나티코 린네블라드의 "내가 틀릴 수도 있습니다" 라는 책을 읽고 깊은 감명을 받은 기억이 있습니다. 모든 갈등은 상호 존중의 부재에서 일어난다는 것을 인지하고 나와 다른 의견에도 귀 기울이고 존중하는 자세를 가집니다.</p>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="feature-card reveal delay-3">
-          <div class="feature-icon">
-            <i class="fa-solid fa-seedling"></i>
-          </div>
-          <h3 class="feature-title">3. 회복 탄력성(RESILIENCE)</h3>
-          <p class="feature-desc">실패를 통해 배우고 성장하는 것 또한 매우 중요하다고 생각합니다. 저는 제가 계획한 일이 예상대로 되지 않더라도 이를 통해 배우고 앞으로를 기약합니다.</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- ==========================================
-       5. WORKS / PORTFOLIO SHOWCASE
-       ========================================== -->
-  <section class="section-padding works-section" id="works">
-    <div class="container">
-      
-      <div class="text-center center-block reveal">
-        <div class="section-tag">
-          <i class="fa-solid fa-briefcase"></i>
-          <span>Featured Works</span>
-        </div>
-        <h2 class="section-title">작품 전시관</h2>
-        <p class="section-subtitle center-block">제가 자체 제작한 모든 작업물들을 공유합니다.</p>
-      </div>
-
-      <div class="filter-bar reveal delay-1" id="filterBar">
-        <button class="filter-btn active" data-filter="all">All Works</button>
-        <button class="filter-btn" data-filter="Web App">Web App</button>
-      </div>
-
-      <div class="works-grid" id="worksContainer">
+    <!-- ==========================================
+         SCENE 3: TIMELINE / ROADMAP (나의 성장과정 로드맵)
+         ========================================== -->
+    <section class="scene" id="timeline" data-scene-index="3" aria-label="Experience Roadmap">
+      <div class="scene-inner container">
         
-        <!-- Work Card 1: 서울 투어 가이드 -->
-        <div class="work-card reveal delay-1" data-category="Web App" data-id="1" data-link="https://minhyuk-k1m.github.io/SEOUL-TOUR-GUIDE/">
-          <div class="work-img-box">
-            <span class="work-date-badge"><i class="fa-regular fa-calendar-days" style="margin-right:0.25rem;"></i>2026.06</span>
-            <img src="assets/images/seoultourguide.jpg" alt="서울 투어 가이드(SEOUL TOUR GUIDE)">
-            <div class="work-overlay">
-              <div class="work-view-icon" title="작품 링크로 접속"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-            </div>
-          </div>
-          <div class="work-info">
-            <span class="work-category">Web App</span>
-            <h3 class="work-title">서울 투어 가이드(SEOUL TOUR GUIDE)</h3>
-            <p class="work-desc">서울특별시를 관광하고자 하는 모든 사람들에게 관광 정보를 제공합니다.</p>
-          </div>
+        <div class="scene-header-bar">
+          <span class="scene-index-tag">CHAPTER III · ROADMAP &amp; JOURNEY</span>
+          <span class="scene-line-accent"></span>
         </div>
 
-        <!-- Work Card 2: VOCABMASTER(보캅마스터) -->
-        <div class="work-card reveal delay-2" data-category="Web App" data-id="2" data-link="https://minhyuk-k1m.github.io/Vocabmaster/">
-          <div class="work-img-box">
-            <span class="work-date-badge"><i class="fa-regular fa-calendar-days" style="margin-right:0.25rem;"></i>2026.07</span>
-            <img src="assets/images/vocabmaster.jpg" alt="VOCABMASTER(보캅마스터)">
-            <div class="work-overlay">
-              <div class="work-view-icon" title="작품 링크로 접속"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-            </div>
+        <div class="text-center center-block scene-title-block">
+          <div class="section-tag">
+            <i class="fa-solid fa-timeline"></i>
+            <span>Career Journey</span>
           </div>
-          <div class="work-info">
-            <span class="work-category">Web App</span>
-            <h3 class="work-title">VOCABMASTER(보캅마스터)</h3>
-            <p class="work-desc">언제나 함께하는 나만의 작은 단어장</p>
-          </div>
+          <h2 class="section-title">나의 성장과정</h2>
+          <p class="section-subtitle center-block">다양한 경험을 통해 계속 성장해왔습니다.</p>
         </div>
 
-        <!-- Work Card 3: 오늘 뭐 먹지? -->
-        <div class="work-card reveal delay-3" data-category="Web App" data-id="3" data-link="https://minhyuk-k1m.github.io/menu-recommender/">
-          <div class="work-img-box">
-            <span class="work-date-badge"><i class="fa-regular fa-calendar-days" style="margin-right:0.25rem;"></i>2026.08</span>
-            <img src="assets/images/today_menu.jpg" alt="오늘 뭐 먹지?">
-            <div class="work-overlay">
-              <div class="work-view-icon" title="작품 링크로 접속"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        <div class="timeline" id="timelineContainer">
+          
+          <!-- Item 1: 태봉초등학교 -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">2018 - 2020</div>
+              <h3 class="timeline-role">취미로 첫 코딩 시작, 엔트리를 이용한 프로그램 만들기</h3>
+              <div class="timeline-company">태봉초등학교 (Taebong Elementary School)</div>
+              <p class="timeline-desc">초등학교 2학년 때 취미로 코딩을 시작하였고, 엔트리를 이용한 블록코딩으로 작품을 만든 후 공유하였음.</p>
             </div>
           </div>
-          <div class="work-info">
-            <span class="work-category">Web App</span>
-            <h3 class="work-title">오늘 뭐 먹지?</h3>
-            <p class="work-desc">사소하지만 제일 고통스러운 일상의 고민을 해결하세요.</p>
-          </div>
-        </div>
 
-        <!-- Work Card 4: 금호고 스쿨메이트(KUMHO SCHOOLMATE) -->
-        <div class="work-card reveal delay-1" data-category="Web App" data-id="4" data-link="https://kumho-schoolmate.com">
-          <div class="work-img-box">
-            <span class="work-date-badge"><i class="fa-regular fa-calendar-days" style="margin-right:0.25rem;"></i>2026.10</span>
-            <img src="assets/images/kumho_schoolmate.jpg" alt="금호고 스쿨메이트(KUMHO SCHOOLMATE)">
-            <div class="work-overlay">
-              <div class="work-view-icon" title="작품 링크로 접속"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+          <!-- Item 2: 금호중앙중학교 -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">2021 - 2025</div>
+              <h3 class="timeline-role">MICROBIT, C언어 학습 및 심화 구현하기</h3>
+              <div class="timeline-company">금호중앙중학교 (Kumho Jungang Middle School)</div>
+              <p class="timeline-desc">microbit를 이용하여 회로의 기본적 원리를 학습했고 그 후 C언어를 배워 기본 코딩 능력을 배양하였음.</p>
             </div>
           </div>
-          <div class="work-info">
-            <span class="work-category">Web App</span>
-            <h3 class="work-title">금호고 스쿨메이트(KUMHO SCHOOLMATE)</h3>
-            <p class="work-desc">금호고등학교 학생과 교실 전자칠판을 위한 올인원 학사·시간표·급식·날씨 플랫폼</p>
+
+          <!-- Item 3: 금호고등학교 -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">2026 - Present</div>
+              <h3 class="timeline-role">인공지능을 활용한 웹 앱 개발하기</h3>
+              <div class="timeline-company">금호고등학교 (Kumho High School)</div>
+              <p class="timeline-desc">Google Antigravity를 이용한 웹 앱 개발을 통해 떠오르는 아이디어를 실제로 구현해내고 있음.</p>
+            </div>
           </div>
+
         </div>
 
       </div>
-
-    </div>
-  </section>
+    </section>
 
 
-  <!-- ==========================================
-       6. TIMELINE SECTION
-       ========================================== -->
-  <section class="section-padding" id="timeline">
-    <div class="container">
-      
-      <div class="text-center center-block reveal">
-        <div class="section-tag">
-          <i class="fa-solid fa-timeline"></i>
-          <span>Career Journey</span>
-        </div>
-        <h2 class="section-title">나의 성장과정</h2>
-        <p class="section-subtitle center-block">다양한 경험을 통해 계속 성장해왔습니다.</p>
-      </div>
-
-      <div class="timeline" id="timelineContainer">
+    <!-- ==========================================
+         SCENE 4: WORKS / PORTFOLIO SHOWCASE (작품 전시관)
+         ========================================== -->
+    <section class="scene works-section" id="works" data-scene-index="4" aria-label="Works Showcase">
+      <div class="scene-inner container">
         
-        <!-- Item 1: 태봉초등학교 -->
-        <div class="timeline-item reveal delay-1">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-date">2018 - 2020</div>
-            <h3 class="timeline-role">취미로 첫 코딩 시작, 엔트리를 이용한 프로그램 만들기</h3>
-            <div class="timeline-company">태봉초등학교 (Taebong Elementary School)</div>
-            <p class="timeline-desc">초등학교 2학년 때 취미로 코딩을 시작하였고, 엔트리를 이용한 블록코딩으로 작품을 만든 후 공유하였음.</p>
+        <div class="scene-header-bar">
+          <span class="scene-index-tag">CHAPTER IV · SELECTED WORKS</span>
+          <span class="scene-line-accent"></span>
+        </div>
+
+        <div class="works-top-header">
+          <div>
+            <div class="section-tag">
+              <i class="fa-solid fa-briefcase"></i>
+              <span>Featured Works</span>
+            </div>
+            <h2 class="section-title">작품 전시관</h2>
+            <p class="section-subtitle">제가 자체 제작한 모든 작업물들을 공유합니다.</p>
+          </div>
+
+          <div class="filter-bar" id="filterBar">
+            <button class="filter-btn active" data-filter="all">All Works</button>
+            <button class="filter-btn" data-filter="Web App">Web App</button>
           </div>
         </div>
 
-        <!-- Item 2: 금호중앙중학교 -->
-        <div class="timeline-item reveal delay-2">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-date">2021 - 2025</div>
-            <h3 class="timeline-role">MICROBIT, C언어 학습 및 심화 구현하기</h3>
-            <div class="timeline-company">금호중앙중학교 (Kumho Jungang Middle School)</div>
-            <p class="timeline-desc">microbit를 이용하여 회로의 기본적 원리를 학습했고 그 후 C언어를 배워 기본 코딩 능력을 배양하였음.</p>
+        <div class="works-grid" id="worksContainer">
+          
+          <!-- Work Card 1: 서울 투어 가이드 -->
+          <div class="work-card" data-category="Web App" data-id="1" data-link="https://minhyuk-k1m.github.io/SEOUL-TOUR-GUIDE/">
+            <div class="work-img-box">
+              <span class="work-date-badge"><i class="fa-regular fa-calendar-days" style="margin-right:0.25rem;"></i>2026.06</span>
+              <img src="assets/images/seoultourguide.jpg" alt="서울 투어 가이드(SEOUL TOUR GUIDE)">
+              <div class="work-overlay">
+                <div class="work-view-icon" title="작품 링크로 접속"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+              </div>
+            </div>
+            <div class="work-info">
+              <span class="work-category">Web App</span>
+              <h3 class="work-title">서울 투어 가이드(SEOUL TOUR GUIDE)</h3>
+              <p class="work-desc">서울특별시를 관광하고자 하는 모든 사람들에게 관광 정보를 제공합니다.</p>
+            </div>
           </div>
-        </div>
 
-        <!-- Item 3: 금호고등학교 -->
-        <div class="timeline-item reveal delay-3">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-date">2026 - Present</div>
-            <h3 class="timeline-role">인공지능을 활용한 웹 앱 개발하기</h3>
-            <div class="timeline-company">금호고등학교 (Kumho High School)</div>
-            <p class="timeline-desc">Google Antigravity를 이용한 웹 앱 개발을 통해 떠오르는 아이디어를 실제로 구현해내고 있음.</p>
+          <!-- Work Card 2: VOCABMASTER(보캅마스터) -->
+          <div class="work-card" data-category="Web App" data-id="2" data-link="https://minhyuk-k1m.github.io/Vocabmaster/">
+            <div class="work-img-box">
+              <span class="work-date-badge"><i class="fa-regular fa-calendar-days" style="margin-right:0.25rem;"></i>2026.07</span>
+              <img src="assets/images/vocabmaster.jpg" alt="VOCABMASTER(보캅마스터)">
+              <div class="work-overlay">
+                <div class="work-view-icon" title="작품 링크로 접속"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+              </div>
+            </div>
+            <div class="work-info">
+              <span class="work-category">Web App</span>
+              <h3 class="work-title">VOCABMASTER(보캅마스터)</h3>
+              <p class="work-desc">언제나 함께하는 나만의 작은 단어장</p>
+            </div>
           </div>
+
+          <!-- Work Card 3: 오늘 뭐 먹지? -->
+          <div class="work-card" data-category="Web App" data-id="3" data-link="https://minhyuk-k1m.github.io/menu-recommender/">
+            <div class="work-img-box">
+              <span class="work-date-badge"><i class="fa-regular fa-calendar-days" style="margin-right:0.25rem;"></i>2026.08</span>
+              <img src="assets/images/today_menu.jpg" alt="오늘 뭐 먹지?">
+              <div class="work-overlay">
+                <div class="work-view-icon" title="작품 링크로 접속"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+              </div>
+            </div>
+            <div class="work-info">
+              <span class="work-category">Web App</span>
+              <h3 class="work-title">오늘 뭐 먹지?</h3>
+              <p class="work-desc">사소하지만 제일 고통스러운 일상의 고민을 해결하세요.</p>
+            </div>
+          </div>
+
+          <!-- Work Card 4: 금호고 스쿨메이트(KUMHO SCHOOLMATE) -->
+          <div class="work-card" data-category="Web App" data-id="4" data-link="https://kumho-schoolmate.com">
+            <div class="work-img-box">
+              <span class="work-date-badge"><i class="fa-regular fa-calendar-days" style="margin-right:0.25rem;"></i>2026.10</span>
+              <img src="assets/images/kumho_schoolmate.jpg" alt="금호고 스쿨메이트(KUMHO SCHOOLMATE)">
+              <div class="work-overlay">
+                <div class="work-view-icon" title="작품 링크로 접속"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+              </div>
+            </div>
+            <div class="work-info">
+              <span class="work-category">Web App</span>
+              <h3 class="work-title">금호고 스쿨메이트(KUMHO SCHOOLMATE)</h3>
+              <p class="work-desc">금호고등학교 학생과 교실 전자칠판을 위한 올인원 학사·시간표·급식·날씨 플랫폼</p>
+            </div>
+          </div>
+
         </div>
 
       </div>
-
-    </div>
-  </section>
+    </section>
 
 
-  <!-- ==========================================
-       7. CONTACT SECTION
-       ========================================== -->
-  <section class="section-padding contact-section" id="contact">
-    <div class="container">
-      <div class="contact-card reveal">
-        <div class="contact-info">
-          <h2>새로운 프로젝트나<br>이야기를 나누어봐요.</h2>
-          <p>프로젝트 상담, 웹사이트 제작 관련 어떤 문의든 환영합니다. 아래 문의 폼으로 편하게 연락주세요.</p>
+    <!-- ==========================================
+         SCENE 5: CONTACT & FOOTER
+         ========================================== -->
+    <section class="scene contact-section" id="contact" data-scene-index="5" aria-label="Contact">
+      <div class="scene-inner container">
+        
+        <div class="scene-header-bar">
+          <span class="scene-index-tag">CHAPTER V · PRIVATE INQUIRY</span>
+          <span class="scene-line-accent"></span>
         </div>
 
-        <form class="contact-form" id="contactForm">
-          <div class="form-group">
-            <label class="form-label" for="senderName">이름 / 회사명</label>
-            <input type="text" id="senderName" class="form-input" placeholder="홍길동" required>
+        <div class="contact-card">
+          <div class="contact-info">
+            <div class="section-tag">
+              <i class="fa-solid fa-envelope-open-text"></i>
+              <span>Contact</span>
+            </div>
+            <h2>새로운 프로젝트나<br>이야기를 나누어봐요.</h2>
+            <p>프로젝트 상담, 웹사이트 제작 관련 어떤 문의든 환영합니다. 아래 문의 폼으로 편하게 연락주세요.</p>
+
+            <div class="contact-footer-meta">
+              <ul class="social-links">
+                <li><a href="https://github.com/minhyuk-k1m" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a></li>
+                <li><a href="https://www.instagram.com/minlnxuk_/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
+              </ul>
+              <p class="copyright-txt">&copy; 2026 MINHYUK Portfolio. All Rights Reserved.</p>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label class="form-label" for="senderEmail">이메일 주소</label>
-            <input type="email" id="senderEmail" class="form-input" placeholder="example@domain.com" required>
-          </div>
+          <form class="contact-form" id="contactForm">
+            <div class="form-group">
+              <label class="form-label" for="senderName">이름 / 회사명</label>
+              <input type="text" id="senderName" class="form-input" placeholder="홍길동" required>
+            </div>
 
-          <div class="form-group">
-            <label class="form-label" for="senderMessage">문의 내용</label>
-            <textarea id="senderMessage" class="form-textarea" placeholder="제작하고자 하시는 사이트 성격이나 구체적인 문의사항을 적어주세요." required></textarea>
-          </div>
+            <div class="form-group">
+              <label class="form-label" for="senderEmail">이메일 주소</label>
+              <input type="email" id="senderEmail" class="form-input" placeholder="example@domain.com" required>
+            </div>
 
-          <button type="submit" class="btn-submit">
-            메시지 보내기 <i class="fa-solid fa-paper-plane" style="margin-left: 0.5rem;"></i>
-          </button>
-        </form>
+            <div class="form-group">
+              <label class="form-label" for="senderMessage">문의 내용</label>
+              <textarea id="senderMessage" class="form-textarea" placeholder="제작하고자 하시는 사이트 성격이나 구체적인 문의사항을 적어주세요." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">
+              메시지 보내기 <i class="fa-solid fa-paper-plane" style="margin-left: 0.5rem;"></i>
+            </button>
+          </form>
+        </div>
+
       </div>
-    </div>
-  </section>
+    </section>
+
+  </main>
 
 
   <!-- ==========================================
-       8. WORK DETAILS MODAL
+       WORK DETAILS MODAL
        ========================================== -->
   <div class="modal-backdrop" id="portfolioModal" role="dialog" aria-modal="true">
     <div class="modal-box">
@@ -482,29 +608,12 @@
 
 
   <!-- ==========================================
-       12. TOAST NOTIFICATION
+       TOAST NOTIFICATION
        ========================================== -->
   <div class="toast" id="toast">
     <i class="fa-solid fa-circle-check toast-icon"></i>
     <span id="toastMsg">알림 메시지입니다.</span>
   </div>
-
-
-  <!-- ==========================================
-       13. FOOTER
-       ========================================== -->
-  <footer class="footer">
-    <div class="container footer-container">
-      <div>
-        <p>&copy; 2026 MINHYUK Portfolio. All Rights Reserved.</p>
-      </div>
-
-      <ul class="social-links">
-        <li><a href="https://github.com/minhyuk-k1m" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a></li>
-        <li><a href="https://www.instagram.com/minlnxuk_/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
-      </ul>
-    </div>
-  </footer>
 
   <!-- Main JavaScript File -->
   <script src="main.js"></script>

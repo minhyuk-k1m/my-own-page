@@ -1,6 +1,6 @@
 /**
- * MODERN MONOCHROME PORTFOLIO CMS & INTERACTIVE LOGIC (BLACK - GRAY - WHITE)
- * Standardized Subpath-compatible Image Paths & Self-Healing Cache Sync
+ * MINHYUK PORTFOLIO — DARKGOLDENROD (#B8860B) & BLACK SCENE SWITCHER ENGINE
+ * Preserves 100% of Portfolio Data & Powers Full-Screen Scene Transitions + Movement Gestures
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,16 +47,19 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     features: [
       {
+        roman: 'I',
         icon: 'fa-award',
         title: '1. 성실함(WORKETHIC)',
         desc: '어떤 일을 하든지 성실함은 반드시 필요한 덕목 중 하나라고 생각합니다. 저는 제가 참여하는 모든 일에 책임을 가지고 성실히 업무를 수행해 나가는 장점을 가지고 있습니다.'
       },
       {
+        roman: 'II',
         icon: 'fa-handshake-angle',
         title: '2. 상호 존중(RESPECT)',
         desc: '비욘 나티코 린네블라드의 "내가 틀릴 수도 있습니다" 라는 책을 읽고 깊은 감명을 받은 기억이 있습니다. 모든 갈등은 상호 존중의 부재에서 일어난다는 것을 인지하고 나와 다른 의견에도 귀 기울이고 존중하는 자세를 가집니다.'
       },
       {
+        roman: 'III',
         icon: 'fa-seedling',
         title: '3. 회복 탄력성(RESILIENCE)',
         desc: '실패를 통해 배우고 성장하는 것 또한 매우 중요하다고 생각합니다. 저는 제가 계획한 일이 예상대로 되지 않더라도 이를 통해 배우고 앞으로를 기약합니다.'
@@ -130,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ]
   };
 
-  const STORAGE_KEY = 'minhyuk_portfolio_cms_v108_kumho_schoolmate';
+  const STORAGE_KEY = 'minhyuk_portfolio_cms_v300_goldenrod_scene';
   let portfolioData = loadData();
 
   function sanitizeImgPath(pathStr, defaultPath) {
@@ -170,27 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
     return JSON.parse(JSON.stringify(DEFAULT_DATA));
   }
 
-  function saveData() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(portfolioData));
-      renderSite();
-      showToast('성공적으로 모든 수정사항이 저장되었습니다!');
-    } catch (e) {
-      console.error('Failed to save storage data:', e);
-      showToast('저장 중 용량 초과 또는 오류가 발생했습니다.');
-    }
-  }
-
-  function resetData() {
-    portfolioData = JSON.parse(JSON.stringify(DEFAULT_DATA));
-    localStorage.removeItem(STORAGE_KEY);
-    renderSite();
-    showToast('기본 데이터로 원상복원 되었습니다.');
-  }
-
 
   /* ==========================================
-     2. DYNAMIC SITE RENDERING
+     2. DYNAMIC CONTENT RENDERING
      ========================================== */
   function renderSite() {
     renderHero();
@@ -198,11 +183,9 @@ document.addEventListener('DOMContentLoaded', () => {
     renderFeatures();
     renderWorks();
     renderTimeline();
-    initScrollObserve();
-    initScrollSpy();
   }
 
-  // 1) HERO SLIDER RENDER
+  // 1) VISION SLIDER RENDER (Inside Scene 1)
   let currentSlideIndex = 0;
   let slideTimer = null;
   let isAnimating = false;
@@ -215,11 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const slides = portfolioData.heroSlides || [];
     const realTotal = slides.length;
     if (counterTotal) counterTotal.textContent = String(realTotal).padStart(2, '0');
-
-    if (realTotal === 0) {
-      track.innerHTML = '<div class="hero-slide active"><div class="hero-slide-overlay"><h2 class="hero-slide-title">배너가 없습니다</h2></div></div>';
-      return;
-    }
+    if (realTotal === 0) return;
 
     let html = '';
     slides.forEach(s => {
@@ -269,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const slideWidthPercent = 100 / (realTotal + 1);
     const offsetPercentage = -(currentSlideIndex * slideWidthPercent);
 
-    track.style.transition = 'transform 0.85s cubic-bezier(0.25, 1, 0.35, 1)';
+    track.style.transition = 'transform 0.85s cubic-bezier(0.16, 1, 0.3, 1)';
     track.style.transform = `translateX(${offsetPercentage}%)`;
 
     const displayIndex = (currentSlideIndex % realTotal) + 1;
@@ -341,46 +320,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  // Mobile Touch Swipe Gesture Support
-  let touchStartX = 0;
-  let touchEndX = 0;
-  const sliderContainer = document.querySelector('.hero-slider-container');
-
-  if (sliderContainer) {
-    sliderContainer.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    sliderContainer.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      handleSwipe();
-    }, { passive: true });
-  }
-
-  function handleSwipe() {
-    const realTotal = (portfolioData.heroSlides || []).length;
-    const swipeThreshold = 35;
-    if (touchStartX - touchEndX > swipeThreshold) {
-      // Swipe Left -> Next Slide
-      goToSlide(currentSlideIndex + 1, realTotal);
-      startAutoPlay(realTotal);
-    } else if (touchEndX - touchStartX > swipeThreshold) {
-      // Swipe Right -> Prev Slide
-      if (currentSlideIndex === 0) {
-        const track = document.getElementById('sliderTrack');
-        const slideWidthPercent = 100 / (realTotal + 1);
-        track.style.transition = 'none';
-        track.style.transform = `translateX(-${realTotal * slideWidthPercent}%)`;
-        currentSlideIndex = realTotal;
-        void track.offsetWidth;
-        goToSlide(realTotal - 1, realTotal);
-      } else {
-        goToSlide(currentSlideIndex - 1, realTotal);
-      }
-      startAutoPlay(realTotal);
-    }
-  }
-
   // 2) ABOUT SECTION RENDER
   function renderAbout() {
     const container = document.getElementById('aboutContainer');
@@ -395,15 +334,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const primaryImg = sanitizeImgPath(a.avatarImg, 'assets/images/profile_ava.jpg');
 
     container.innerHTML = `
-      <div class="about-img-wrapper reveal">
+      <div class="about-img-wrapper">
         <div class="about-img-card">
           <img src="${primaryImg}" id="profileAvatarImg" alt="김민혁 프로필 캐릭터">
         </div>
       </div>
 
-      <div class="about-text-content reveal delay-1">
+      <div class="about-text-content">
         <div class="section-tag">
-          <i class="fa-solid fa-user-sparkles"></i>
+          <i class="fa-solid fa-crown"></i>
           <span>About Me</span>
         </div>
 
@@ -421,16 +360,19 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // 3) FEATURES RENDER
+  // 3) FEATURES (PHILOSOPHY) RENDER
   function renderFeatures() {
     const container = document.getElementById('featuresContainer');
     if (!container) return;
     const list = portfolioData.features || DEFAULT_DATA.features;
+    const romans = ['I', 'II', 'III', 'IV'];
 
     let html = '';
     list.forEach((f, idx) => {
+      const roman = f.roman || romans[idx % romans.length];
       html += `
-        <div class="feature-card reveal delay-${(idx % 3) + 1}">
+        <div class="feature-card">
+          <span class="card-roman-num">${roman}</span>
           <div class="feature-icon">
             <i class="fa-solid ${f.icon}"></i>
           </div>
@@ -456,7 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const cleanImg = sanitizeImgPath(w.img, defaultImg);
 
       html += `
-        <div class="work-card reveal delay-${(idx % 3) + 1}" data-category="${w.category}" data-id="${w.id}" data-link="${targetLink}">
+        <div class="work-card" data-category="${w.category}" data-id="${w.id}" data-link="${targetLink}">
           <div class="work-img-box">
             <span class="work-date-badge"><i class="fa-regular fa-calendar-days" style="margin-right:0.25rem;"></i>${createdDate}</span>
             <img src="${cleanImg}" alt="${w.title}">
@@ -495,9 +437,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const list = portfolioData.timeline || DEFAULT_DATA.timeline;
 
     let html = '';
-    list.forEach((t, idx) => {
+    list.forEach((t) => {
       html += `
-        <div class="timeline-item reveal delay-${(idx % 3) + 1}">
+        <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-content">
             <div class="timeline-date">${t.date}</div>
@@ -511,99 +453,229 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = html;
   }
 
-  function initScrollObserve() {
-    const revealElements = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    revealElements.forEach(el => revealObserver.observe(el));
-  }
 
   /* ==========================================
-     SCROLL SPY & NAVBAR ACTIVE SYNC
-     Smoothly highlights Home, About, Philosophy, Works, Experience, Contact
+     3. FULL-SCREEN SCENE TRANSITION ENGINE & GESTURES
      ========================================== */
-  function initScrollSpy() {
-    const navLinks = document.querySelectorAll('.nav-links .nav-link');
-    const sections = [
-      document.getElementById('hero'),
-      document.getElementById('about'),
-      document.getElementById('features'),
-      document.getElementById('works'),
-      document.getElementById('timeline'),
-      document.getElementById('contact')
-    ].filter(Boolean);
+  const scenes = Array.from(document.querySelectorAll('.scene'));
+  const navLinks = Array.from(document.querySelectorAll('.nav-links .nav-link'));
+  const railDots = Array.from(document.querySelectorAll('.stage-rail .rail-dot'));
+  const mainLogo = document.getElementById('mainLogo');
+  const scrollUnlockBtn = document.getElementById('scrollUnlockBtn');
 
-    const navbar = document.querySelector('.navbar');
-    let ticking = false;
+  let currentSceneIndex = 0;
+  let isSceneTransitioning = false;
+  const TRANSITION_COOLDOWN_MS = 860;
 
-    function onScroll() {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateActiveNav();
-          ticking = false;
-        });
-        ticking = true;
-      }
+  function syncSceneStates(targetIndex, direction) {
+    document.body.setAttribute('data-active-scene', String(targetIndex));
+
+    // Trigger Golden Shutter Slash gesture
+    if (direction !== 0) {
+      document.body.classList.remove('is-transitioning-down', 'is-transitioning-up');
+      void document.body.offsetWidth;
+      document.body.classList.add(direction > 0 ? 'is-transitioning-down' : 'is-transitioning-up');
+      setTimeout(() => {
+        document.body.classList.remove('is-transitioning-down', 'is-transitioning-up');
+      }, TRANSITION_COOLDOWN_MS);
     }
 
-    function updateActiveNav() {
-      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-
-      // Navbar scrolled state
-      if (navbar) {
-        if (scrollY > 30) {
-          navbar.classList.add('scrolled');
-        } else {
-          navbar.classList.remove('scrolled');
-        }
+    scenes.forEach((scene, idx) => {
+      scene.classList.remove('active', 'is-above', 'is-below');
+      if (idx === targetIndex) {
+        scene.classList.add('active');
+        scene.scrollTop = 0;
+      } else if (idx < targetIndex) {
+        scene.classList.add('is-above');
+      } else {
+        scene.classList.add('is-below');
       }
+    });
 
-      // If scrolled to the bottom of the page, activate Contact
-      if (windowHeight + scrollY >= documentHeight - 60) {
-        setActiveLink('contact');
-        return;
-      }
+    // Update Top-Right Navigation Active State (No Home item; Scene 1..5 map to nav links)
+    navLinks.forEach(link => {
+      const linkScene = parseInt(link.getAttribute('data-scene-link'), 10);
+      link.classList.toggle('active', linkScene === targetIndex);
+    });
 
-      let currentSectionId = 'hero';
-      const offset = 180; // Offset for navbar height and early visual activation
-
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (scrollY >= sectionTop - offset) {
-          currentSectionId = section.getAttribute('id');
-        }
-      });
-
-      setActiveLink(currentSectionId);
-    }
-
-    function setActiveLink(sectionId) {
-      navLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href === `#${sectionId}`) {
-          link.classList.add('active');
-        } else {
-          link.classList.remove('active');
-        }
-      });
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    updateActiveNav();
+    // Update Right-Side Rail Dots
+    railDots.forEach(dot => {
+      const dotScene = parseInt(dot.getAttribute('data-target-scene'), 10);
+      dot.classList.toggle('active', dotScene === targetIndex);
+    });
   }
+
+  function goToScene(targetIndex) {
+    if (targetIndex < 0 || targetIndex >= scenes.length) return;
+    if (targetIndex === currentSceneIndex || isSceneTransitioning) return;
+
+    const portfolioModal = document.getElementById('portfolioModal');
+    if (portfolioModal && portfolioModal.classList.contains('active')) return;
+
+    isSceneTransitioning = true;
+    const direction = targetIndex > currentSceneIndex ? 1 : -1;
+    currentSceneIndex = targetIndex;
+
+    syncSceneStates(targetIndex, direction);
+
+    setTimeout(() => {
+      isSceneTransitioning = false;
+    }, TRANSITION_COOLDOWN_MS);
+  }
+
+  // Initialize Scene 0 (Intro Logo Gate)
+  syncSceneStates(0, 0);
+
+  // Wheel / Trackpad Gesture Handler
+  window.addEventListener('wheel', (e) => {
+    const portfolioModal = document.getElementById('portfolioModal');
+    if (portfolioModal && portfolioModal.classList.contains('active')) return;
+    if (isSceneTransitioning) return;
+
+    const deltaY = e.deltaY;
+    if (Math.abs(deltaY) < 18) return;
+
+    const activeScene = scenes[currentSceneIndex];
+    if (activeScene) {
+      const canScrollDownInternally = activeScene.scrollHeight - activeScene.clientHeight - activeScene.scrollTop > 6;
+      const canScrollUpInternally = activeScene.scrollTop > 6;
+
+      if (deltaY > 0 && canScrollDownInternally) return;
+      if (deltaY < 0 && canScrollUpInternally) return;
+    }
+
+    if (deltaY > 0 && currentSceneIndex < scenes.length - 1) {
+      e.preventDefault();
+      goToScene(currentSceneIndex + 1);
+    } else if (deltaY < 0 && currentSceneIndex > 0) {
+      e.preventDefault();
+      goToScene(currentSceneIndex - 1);
+    }
+  }, { passive: false });
+
+  // Touch Swipe Vertical Gesture Handler (Mobile / Tablet)
+  let touchStartY = 0;
+  let touchStartX = 0;
+
+  window.addEventListener('touchstart', (e) => {
+    if (!e.touches || e.touches.length === 0) return;
+    touchStartY = e.touches[0].clientY;
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+
+  window.addEventListener('touchend', (e) => {
+    if (!e.changedTouches || e.changedTouches.length === 0 || isSceneTransitioning) return;
+    const deltaY = touchStartY - e.changedTouches[0].clientY;
+    const deltaX = Math.abs(touchStartX - e.changedTouches[0].clientX);
+
+    // Ignore horizontal swipes (e.g., Vision slider)
+    if (deltaX > Math.abs(deltaY) || Math.abs(deltaY) < 48) return;
+
+    const activeScene = scenes[currentSceneIndex];
+    if (activeScene) {
+      const canScrollDownInternally = activeScene.scrollHeight - activeScene.clientHeight - activeScene.scrollTop > 8;
+      const canScrollUpInternally = activeScene.scrollTop > 8;
+
+      if (deltaY > 0 && canScrollDownInternally) return;
+      if (deltaY < 0 && canScrollUpInternally) return;
+    }
+
+    if (deltaY > 0 && currentSceneIndex < scenes.length - 1) {
+      goToScene(currentSceneIndex + 1);
+    } else if (deltaY < 0 && currentSceneIndex > 0) {
+      goToScene(currentSceneIndex - 1);
+    }
+  }, { passive: true });
+
+  // Keyboard Navigation
+  window.addEventListener('keydown', (e) => {
+    const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+    if (tag === 'input' || tag === 'textarea') return;
+
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+      e.preventDefault();
+      goToScene(currentSceneIndex + 1);
+    } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+      e.preventDefault();
+      goToScene(currentSceneIndex - 1);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      goToScene(0);
+    }
+  });
+
+  // Top-Left Logo Click -> Return to Scene 0 (Intro Logo Gate)
+  if (mainLogo) {
+    mainLogo.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeMobileDrawer();
+      goToScene(0);
+    });
+  }
+
+  // Intro Scroll Unlock Button Click -> Scene 1
+  if (scrollUnlockBtn) {
+    scrollUnlockBtn.addEventListener('click', () => {
+      goToScene(1);
+    });
+  }
+
+  // Top-Right Nav Links Click
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = parseInt(link.getAttribute('data-scene-link'), 10);
+      closeMobileDrawer();
+      if (!isNaN(target)) {
+        goToScene(target);
+      }
+    });
+  });
+
+  // Right-Side Rail Dots Click
+  railDots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const target = parseInt(dot.getAttribute('data-target-scene'), 10);
+      if (!isNaN(target)) {
+        goToScene(target);
+      }
+    });
+  });
 
 
   /* ==========================================
-     3. PORTFOLIO FILTERING & WORK MODAL
+     4. INTRO LOGO 3D POISE TILT & LUXURY CURSOR
+     ========================================== */
+  const grandLogoStage = document.getElementById('grandLogoStage');
+  const cursorDot = document.getElementById('luxuryCursorDot');
+  const cursorRing = document.getElementById('luxuryCursorRing');
+
+  window.addEventListener('mousemove', (e) => {
+    if (cursorDot && cursorRing) {
+      cursorDot.style.transform = `translate3d(${e.clientX - 3}px, ${e.clientY - 3}px, 0)`;
+      cursorRing.style.transform = `translate3d(${e.clientX - 18}px, ${e.clientY - 18}px, 0)`;
+    }
+
+    if (grandLogoStage && currentSceneIndex === 0) {
+      const normX = (e.clientX / window.innerWidth - 0.5) * 2;
+      const normY = (e.clientY / window.innerHeight - 0.5) * 2;
+      grandLogoStage.style.setProperty('--tilt-y', `${(normX * 7).toFixed(2)}deg`);
+      grandLogoStage.style.setProperty('--tilt-x', `${(-normY * 6).toFixed(2)}deg`);
+    }
+  }, { passive: true });
+
+  document.querySelectorAll('a, button, .work-card, .feature-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      if (cursorRing) cursorRing.classList.add('hovered');
+    });
+    el.addEventListener('mouseleave', () => {
+      if (cursorRing) cursorRing.classList.remove('hovered');
+    });
+  });
+
+
+  /* ==========================================
+     5. PORTFOLIO FILTERING & WORK MODAL
      ========================================== */
   const filterBtns = document.querySelectorAll('.filter-btn');
   filterBtns.forEach(btn => {
@@ -620,13 +692,13 @@ document.addEventListener('DOMContentLoaded', () => {
           setTimeout(() => {
             card.style.opacity = '1';
             card.style.transform = 'translateY(0) scale(1)';
-          }, 50);
+          }, 40);
         } else {
           card.style.opacity = '0';
-          card.style.transform = 'translateY(20px) scale(0.95)';
+          card.style.transform = 'translateY(16px) scale(0.95)';
           setTimeout(() => {
             card.style.display = 'none';
-          }, 300);
+          }, 260);
         }
       });
     });
@@ -648,19 +720,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('modalRole').textContent = work.role || 'Design & Development';
 
     portfolioModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
   }
 
   if (modalCloseBtn) {
     modalCloseBtn.onclick = () => {
       portfolioModal.classList.remove('active');
-      document.body.style.overflow = '';
     };
   }
 
 
   /* ==========================================
-     8. GENERAL UTILS & INITIALIZATION
+     6. CONTACT FORM, TOAST & MOBILE DRAWER
      ========================================== */
   const toast = document.getElementById('toast');
   function showToast(message) {
@@ -692,13 +762,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileToggle = document.getElementById('mobileToggle');
   const navMenu = document.querySelector('.nav-links');
   const navOverlay = document.getElementById('navOverlay');
-  const navLinks = document.querySelectorAll('.nav-links a');
 
   function closeMobileDrawer() {
     if (navMenu) navMenu.classList.remove('mobile-active');
     if (mobileToggle) mobileToggle.classList.remove('active');
     if (navOverlay) navOverlay.classList.remove('active');
-    document.body.style.overflow = '';
   }
 
   if (mobileToggle && navMenu) {
@@ -706,7 +774,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const isExpanded = navMenu.classList.toggle('mobile-active');
       mobileToggle.classList.toggle('active', isExpanded);
       if (navOverlay) navOverlay.classList.toggle('active', isExpanded);
-      document.body.style.overflow = isExpanded ? 'hidden' : '';
     };
   }
 
@@ -714,84 +781,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navOverlay.onclick = closeMobileDrawer;
   }
 
-  navLinks.forEach(link => {
-    link.addEventListener('click', closeMobileDrawer);
-  });
-
-  /* ==========================================
-     9. DUAL THEME MANAGER (AUTO-DETECTION & TOGGLE)
-     Light: White, Light Green, Sky Blue, Cool Gray
-     Dark: Deep Black, Dark Slate Gray, Electric Blue, Mystic Purple
-     ========================================== */
-  const THEME_STORAGE_KEY = 'minhyuk_portfolio_theme';
-  const themeToggleBtn = document.getElementById('themeToggle');
-  const themeToggleIcon = document.getElementById('themeToggleIcon');
-  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-
-  function applyTheme(theme, save = true) {
-    if (theme === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      if (themeToggleIcon) {
-        themeToggleIcon.className = 'fa-solid fa-sun';
-      }
-      if (themeColorMeta) {
-        themeColorMeta.setAttribute('content', '#212530');
-      }
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-      if (themeToggleIcon) {
-        themeToggleIcon.className = 'fa-solid fa-moon';
-      }
-      if (themeColorMeta) {
-        themeColorMeta.setAttribute('content', '#F8FAFC');
-      }
-    }
-    if (save) {
-      try {
-        localStorage.setItem(THEME_STORAGE_KEY, theme);
-      } catch (e) {}
-    }
-  }
-
-  function initTheme() {
-    let savedTheme = null;
-    try {
-      savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-    } catch (e) {}
-
-    if (savedTheme === 'dark' || savedTheme === 'light') {
-      applyTheme(savedTheme, false);
-    } else {
-      // Auto-detect system preference
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      applyTheme(prefersDark ? 'dark' : 'light', false);
-    }
-
-    // Listen for OS system theme changes
-    if (window.matchMedia) {
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        let hasSaved = null;
-        try { hasSaved = localStorage.getItem(THEME_STORAGE_KEY); } catch (err) {}
-        if (!hasSaved) {
-          applyTheme(e.matches ? 'dark' : 'light', false);
-        }
-      });
-    }
-  }
-
-  if (themeToggleBtn) {
-    themeToggleBtn.onclick = () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      applyTheme(nextTheme, true);
-      showToast(nextTheme === 'dark' ? '🌙 다크 모드로 전환되었습니다.' : '☀️ 라이트 모드로 전환되었습니다.');
-    };
-  }
-
-  // Initialize theme
-  initTheme();
-
-  // Init Site
+  // Render Site Content
   renderSite();
 
 });
