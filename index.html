@@ -21,7 +21,139 @@
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="scene-mode" data-active-scene="0">
+<body class="scene-mode maintenance-active" data-active-scene="0">
+
+  <!-- ==========================================
+       MAINTENANCE / UPDATE GATE (minhyuk.site 점검 및 업데이트 안내 화면)
+       ========================================== -->
+  <section class="maintenance-gate" id="maintenanceGate" aria-live="polite" aria-label="사이트 업데이트 및 점검 안내">
+    <div class="maintenance-ambient" aria-hidden="true">
+      <div class="gold-grid-lines"></div>
+      <div class="gold-particles">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+    </div>
+
+    <div class="maintenance-card">
+      <div class="luxury-frame-corners" aria-hidden="true">
+        <span class="corner tl"></span>
+        <span class="corner tr"></span>
+        <span class="corner bl"></span>
+        <span class="corner br"></span>
+      </div>
+
+      <!-- 1. 첨부한 MINHYUK 로고 -->
+      <div class="maintenance-logo-wrap">
+        <div class="maintenance-logo-aura" aria-hidden="true"></div>
+        <img src="assets/images/minhyuk_logo.png" alt="MINHYUK Logo" class="maintenance-logo-img">
+      </div>
+
+      <!-- 2. 망치 2개가 모루(Anvil)를 번갈아가며 때리는 애니메이션 일러스트 -->
+      <div class="forge-illustration" aria-hidden="true">
+        <svg class="forge-svg" viewBox="0 0 360 210" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#F5DF98" />
+              <stop offset="50%" stop-color="#B8860B" />
+              <stop offset="100%" stop-color="#7A5805" />
+            </linearGradient>
+            <linearGradient id="anvilGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#2E2A22" />
+              <stop offset="55%" stop-color="#171510" />
+              <stop offset="100%" stop-color="#0A0907" />
+            </linearGradient>
+            <linearGradient id="handleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#C8961E" />
+              <stop offset="100%" stop-color="#5C4004" />
+            </linearGradient>
+            <radialGradient id="sparkGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FFF2B2" stop-opacity="0.95" />
+              <stop offset="45%" stop-color="#B8860B" stop-opacity="0.55" />
+              <stop offset="100%" stop-color="#B8860B" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+
+          <!-- Anvil Shadow / Base Pedestal Line -->
+          <line x1="50" y1="186" x2="310" y2="186" stroke="url(#goldGrad)" stroke-width="1.5" stroke-opacity="0.5" />
+          <ellipse cx="180" cy="186" rx="76" ry="6" fill="#B8860B" fill-opacity="0.18" />
+
+          <!-- Impact Glow & Sparks at Anvil Center (x=180, y=114) -->
+          <g class="forge-impact-group">
+            <circle class="impact-halo" cx="180" cy="112" r="28" fill="url(#sparkGlow)" />
+            <g class="spark-burst">
+              <line x1="180" y1="110" x2="152" y2="82" stroke="#F5DF98" stroke-width="2.2" stroke-linecap="round" />
+              <line x1="180" y1="110" x2="208" y2="80" stroke="#F5DF98" stroke-width="2.2" stroke-linecap="round" />
+              <line x1="180" y1="110" x2="180" y2="72" stroke="#B8860B" stroke-width="2.4" stroke-linecap="round" />
+              <line x1="180" y1="110" x2="140" y2="102" stroke="#B8860B" stroke-width="1.8" stroke-linecap="round" />
+              <line x1="180" y1="110" x2="220" y2="102" stroke="#B8860B" stroke-width="1.8" stroke-linecap="round" />
+              <circle cx="158" cy="76" r="2.5" fill="#FFF6CC" />
+              <circle cx="202" cy="74" r="2.5" fill="#FFF6CC" />
+              <circle cx="180" cy="65" r="2" fill="#E8C86B" />
+              <circle cx="136" cy="96" r="2" fill="#B8860B" />
+              <circle cx="224" cy="96" r="2" fill="#B8860B" />
+            </g>
+          </g>
+
+          <!-- Left Hammer (망치 1 - 왼쪽에서 내려침) -->
+          <g class="hammer-left">
+            <!-- Handle -->
+            <rect x="68" y="88" width="88" height="9" rx="4.5" fill="url(#handleGrad)" stroke="#F5DF98" stroke-width="0.8" />
+            <rect x="64" y="86.5" width="12" height="12" rx="3" fill="#2A2419" stroke="#B8860B" stroke-width="1" />
+            <!-- Hammer Head -->
+            <g transform="translate(142, 68)">
+              <rect x="0" y="0" width="28" height="48" rx="4" fill="url(#anvilGrad)" stroke="url(#goldGrad)" stroke-width="1.8" />
+              <rect x="3" y="4" width="22" height="6" rx="1.5" fill="#B8860B" fill-opacity="0.45" />
+              <rect x="2" y="40" width="24" height="6" rx="1.5" fill="url(#goldGrad)" />
+            </g>
+          </g>
+
+          <!-- Right Hammer (망치 2 - 오른쪽에서 번갈아 내려침) -->
+          <g class="hammer-right">
+            <!-- Handle -->
+            <rect x="204" y="88" width="88" height="9" rx="4.5" fill="url(#handleGrad)" stroke="#F5DF98" stroke-width="0.8" />
+            <rect x="284" y="86.5" width="12" height="12" rx="3" fill="#2A2419" stroke="#B8860B" stroke-width="1" />
+            <!-- Hammer Head -->
+            <g transform="translate(190, 68)">
+              <rect x="0" y="0" width="28" height="48" rx="4" fill="url(#anvilGrad)" stroke="url(#goldGrad)" stroke-width="1.8" />
+              <rect x="3" y="4" width="22" height="6" rx="1.5" fill="#B8860B" fill-opacity="0.45" />
+              <rect x="2" y="40" width="24" height="6" rx="1.5" fill="url(#goldGrad)" />
+            </g>
+          </g>
+
+          <!-- Center Blacksmith Anvil (모루) -->
+          <g class="anvil-body">
+            <!-- Glowing Heated的金 Bar on Anvil Face -->
+            <rect class="heated-ingot" x="158" y="113" width="44" height="6" rx="3" fill="url(#goldGrad)" />
+            <!-- Anvil Horn (Left) & Top Face & Heel (Right) -->
+            <path d="M96 125 C112 119, 126 118, 134 118 L234 118 L234 130 L214 134 C202 138, 198 152, 206 164 L224 172 L224 184 L136 184 L136 172 L154 164 C162 152, 158 138, 144 134 L132 132 C118 131, 104 129, 96 125 Z"
+                  fill="url(#anvilGrad)"
+                  stroke="url(#goldGrad)"
+                  stroke-width="1.8"
+                  stroke-linejoin="round" />
+            <!-- Anvil Top Plate Highlight -->
+            <line x1="134" y1="120" x2="232" y2="120" stroke="#F5DF98" stroke-width="1.5" stroke-opacity="0.8" />
+            <!-- Anvil Waist Detail -->
+            <rect x="164" y="144" width="32" height="10" rx="2" fill="#0D0C09" stroke="#B8860B" stroke-width="1" stroke-opacity="0.65" />
+            <!-- Anvil Base Feet Highlights -->
+            <line x1="140" y1="182" x2="220" y2="182" stroke="#B8860B" stroke-width="1.2" stroke-opacity="0.7" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- 3. 사이트 업데이트 및 점검 안내 문구 -->
+      <div class="maintenance-copy">
+        <span class="maintenance-badge">
+          <i class="fa-solid fa-hammer"></i>
+          <span>MINHYUK.SITE · UNDER UPDATE</span>
+        </span>
+        <h1 class="maintenance-title">현재 사이트 업데이트 중입니다<span class="gold-dot">.</span></h1>
+        <p class="maintenance-desc">
+          접속해 주셔서 감사합니다. 현재 <strong>minhyuk.site</strong>는 더 완성도 높은 디자인과 콘텐츠를 선보이기 위해 전체 리뉴얼 및 점검 작업을 진행하고 있습니다.<br>
+          빠른 시일 내에 새로운 모습으로 찾아뵙겠습니다.
+        </p>
+      </div>
+    </div>
+  </section>
 
   <!-- ==========================================
        0. LUXURY AMBIENT OVERLAYS & SCENE TRANSITION SHUTTER

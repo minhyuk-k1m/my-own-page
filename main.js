@@ -457,6 +457,11 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ==========================================
      3. FULL-SCREEN SCENE TRANSITION ENGINE & GESTURES
      ========================================== */
+  // Allow local development preview bypass via ?preview=1 while live site shows Maintenance Gate
+  if (window.location.search.includes('preview=1')) {
+    document.body.classList.remove('maintenance-active');
+  }
+
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const navLinks = Array.from(document.querySelectorAll('.nav-links .nav-link'));
   const railDots = Array.from(document.querySelectorAll('.stage-rail .rail-dot'));
@@ -506,6 +511,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function goToScene(targetIndex) {
+    if (document.body.classList.contains('maintenance-active')) return;
     if (targetIndex < 0 || targetIndex >= scenes.length) return;
     if (targetIndex === currentSceneIndex || isSceneTransitioning) return;
 
@@ -528,6 +534,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Wheel / Trackpad Gesture Handler
   window.addEventListener('wheel', (e) => {
+    if (document.body.classList.contains('maintenance-active')) return;
     const portfolioModal = document.getElementById('portfolioModal');
     if (portfolioModal && portfolioModal.classList.contains('active')) return;
     if (isSceneTransitioning) return;
