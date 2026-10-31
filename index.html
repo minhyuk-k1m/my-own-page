@@ -1,697 +1,313 @@
 <!DOCTYPE html>
-<html lang="ko" data-theme="dark-goldenrod">
+<html lang="ko" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MINHYUK | 고등학생 김민혁 포트폴리오</title>
-  <meta name="description" content="AI 기술을 토대로 미래를 향한 비전을 세우고 성장하고 있는 고등학생 김민혁의 포트폴리오 웹사이트입니다.">
-  <meta name="keywords" content="포트폴리오, 김민혁, AI비전, 고등학생크리에이터, 지속적인성장, 실질적구현, 긍정적영향력">
-  <meta property="og:title" content="MINHYUK | 고등학생 김민혁 포트폴리오">
-  <meta property="og:description" content="나는 성장합니다. AI기술을 토대로 미래를 향해 나아가는 고등학생 김민혁입니다.">
-  <meta name="theme-color" content="#000000">
-  
-  <!-- Google Fonts: Cinzel, Cormorant Garamond, Outfit, Plus Jakarta Sans -->
+  <title>김민혁 (Minhyuk) | 문제를 해결하는 학생 포트폴리오</title>
+  <meta name="description" content="문제를 해결하는 학생, 김민혁입니다. 디자인, 개발, 프로젝트 경험을 통해 가치를 만듭니다.">
+  <meta name="keywords" content="민혁, 김민혁, 포트폴리오, 학생 개발자, 프로젝트, 웹 개발, AI 활용">
+  <meta property="og:title" content="민혁 (Minhyuk) | 개인 브랜딩 포트폴리오">
+  <meta property="og:description" content="디자인, 개발, 프로젝트 경험을 통해 가치를 만듭니다.">
+  <meta name="theme-color" content="#FAFAF8">
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Pretendard Font -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  
-  <!-- Main Stylesheet -->
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bgMain: '#FAFAF8',
+            bgSub: '#F3F3EE',
+            surface: '#FFFFFF',
+            ink: '#14181F',
+            inkSub: '#4B5563',
+            inkMuted: '#6B7280',
+            line: '#E6E6E1',
+            brand: {
+              DEFAULT: '#1B3A5C',
+              hover: '#132A44',
+              light: '#EEF3F8',
+              border: '#C7D6E6'
+            }
+          },
+          fontFamily: {
+            sans: ['Pretendard', 'Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'Pretendard', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom Component & Animation Styles -->
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="scene-mode maintenance-active" data-active-scene="0">
+<body class="bg-bgMain text-ink font-sans antialiased selection:bg-brand selection:text-white">
+
+  <!-- Skip to Content Link for Accessibility -->
+  <a href="#mainContent" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-brand focus:text-white focus:px-4 focus:py-2 focus:rounded-lg">
+    본문으로 바로가기
+  </a>
 
   <!-- ==========================================
-       MAINTENANCE / UPDATE GATE (minhyuk.site 점검 및 업데이트 안내 화면)
+       1. STICKY GLASSMORPHISM HEADER
        ========================================== -->
-  <section class="maintenance-gate" id="maintenanceGate" aria-live="polite" aria-label="사이트 업데이트 및 점검 안내">
-    <div class="maintenance-ambient" aria-hidden="true">
-      <div class="gold-grid-lines"></div>
-      <div class="gold-particles">
-        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+  <header id="siteHeader" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-bgMain/80 backdrop-blur-md border-b border-transparent">
+    <div class="max-w-6xl mx-auto px-6 md:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Left: Logo & Left-Drawer Menu Trigger (모니터 좌측에서 열림) -->
+      <div id="logoNavContainer" class="relative">
+        <button
+          type="button"
+          id="headerLogoBtn"
+          class="font-display font-extrabold text-xl tracking-tight text-ink flex items-center gap-2 py-1.5 px-3 -ml-3 rounded-xl hover:bg-surface/80 transition-all focus-ring group"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+          aria-controls="leftNavDrawer"
+          aria-label="화면 좌측 메뉴 열기"
+        >
+          <span>MINHYUK</span>
+          <span class="w-2 h-2 rounded-full bg-brand inline-block"></span>
+        </button>
       </div>
+
+      <!-- Right: Contact Me Quick Action Button -->
+      <div class="flex items-center gap-4">
+        <a href="#contact" class="btn-primary inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl bg-brand text-white text-sm font-semibold hover:bg-brand-hover transition-all shadow-sm focus-ring">
+          <span>Contact Me</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </a>
+      </div>
+
     </div>
+  </header>
 
-    <div class="maintenance-card">
-      <div class="luxury-frame-corners" aria-hidden="true">
-        <span class="corner tl"></span>
-        <span class="corner tr"></span>
-        <span class="corner bl"></span>
-        <span class="corner br"></span>
-      </div>
-
-      <!-- 1. 첨부한 MINHYUK 로고 -->
-      <div class="maintenance-logo-wrap">
-        <div class="maintenance-logo-aura" aria-hidden="true"></div>
-        <img src="assets/images/minhyuk_logo.png" alt="MINHYUK Logo" class="maintenance-logo-img">
-      </div>
-
-      <!-- 2. 망치 2개가 모루(Anvil)를 번갈아가며 때리는 애니메이션 일러스트 -->
-      <div class="forge-illustration" aria-hidden="true">
-        <svg class="forge-svg" viewBox="0 0 360 210" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#F5DF98" />
-              <stop offset="50%" stop-color="#B8860B" />
-              <stop offset="100%" stop-color="#7A5805" />
-            </linearGradient>
-            <linearGradient id="anvilGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#2E2A22" />
-              <stop offset="55%" stop-color="#171510" />
-              <stop offset="100%" stop-color="#0A0907" />
-            </linearGradient>
-            <linearGradient id="handleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#C8961E" />
-              <stop offset="100%" stop-color="#5C4004" />
-            </linearGradient>
-            <radialGradient id="sparkGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#FFF2B2" stop-opacity="0.95" />
-              <stop offset="45%" stop-color="#B8860B" stop-opacity="0.55" />
-              <stop offset="100%" stop-color="#B8860B" stop-opacity="0" />
-            </radialGradient>
-          </defs>
-
-          <!-- Anvil Shadow / Base Pedestal Line -->
-          <line x1="50" y1="186" x2="310" y2="186" stroke="url(#goldGrad)" stroke-width="1.5" stroke-opacity="0.5" />
-          <ellipse cx="180" cy="186" rx="76" ry="6" fill="#B8860B" fill-opacity="0.18" />
-
-          <!-- Impact Glow & Sparks at Anvil Center (x=180, y=114) -->
-          <g class="forge-impact-group">
-            <circle class="impact-halo" cx="180" cy="112" r="28" fill="url(#sparkGlow)" />
-            <g class="spark-burst">
-              <line x1="180" y1="110" x2="152" y2="82" stroke="#F5DF98" stroke-width="2.2" stroke-linecap="round" />
-              <line x1="180" y1="110" x2="208" y2="80" stroke="#F5DF98" stroke-width="2.2" stroke-linecap="round" />
-              <line x1="180" y1="110" x2="180" y2="72" stroke="#B8860B" stroke-width="2.4" stroke-linecap="round" />
-              <line x1="180" y1="110" x2="140" y2="102" stroke="#B8860B" stroke-width="1.8" stroke-linecap="round" />
-              <line x1="180" y1="110" x2="220" y2="102" stroke="#B8860B" stroke-width="1.8" stroke-linecap="round" />
-              <circle cx="158" cy="76" r="2.5" fill="#FFF6CC" />
-              <circle cx="202" cy="74" r="2.5" fill="#FFF6CC" />
-              <circle cx="180" cy="65" r="2" fill="#E8C86B" />
-              <circle cx="136" cy="96" r="2" fill="#B8860B" />
-              <circle cx="224" cy="96" r="2" fill="#B8860B" />
-            </g>
-          </g>
-
-          <!-- Left Hammer (망치 1 - 왼쪽에서 내려침) -->
-          <g class="hammer-left">
-            <!-- Handle -->
-            <rect x="68" y="88" width="88" height="9" rx="4.5" fill="url(#handleGrad)" stroke="#F5DF98" stroke-width="0.8" />
-            <rect x="64" y="86.5" width="12" height="12" rx="3" fill="#2A2419" stroke="#B8860B" stroke-width="1" />
-            <!-- Hammer Head -->
-            <g transform="translate(142, 68)">
-              <rect x="0" y="0" width="28" height="48" rx="4" fill="url(#anvilGrad)" stroke="url(#goldGrad)" stroke-width="1.8" />
-              <rect x="3" y="4" width="22" height="6" rx="1.5" fill="#B8860B" fill-opacity="0.45" />
-              <rect x="2" y="40" width="24" height="6" rx="1.5" fill="url(#goldGrad)" />
-            </g>
-          </g>
-
-          <!-- Right Hammer (망치 2 - 오른쪽에서 번갈아 내려침) -->
-          <g class="hammer-right">
-            <!-- Handle -->
-            <rect x="204" y="88" width="88" height="9" rx="4.5" fill="url(#handleGrad)" stroke="#F5DF98" stroke-width="0.8" />
-            <rect x="284" y="86.5" width="12" height="12" rx="3" fill="#2A2419" stroke="#B8860B" stroke-width="1" />
-            <!-- Hammer Head -->
-            <g transform="translate(190, 68)">
-              <rect x="0" y="0" width="28" height="48" rx="4" fill="url(#anvilGrad)" stroke="url(#goldGrad)" stroke-width="1.8" />
-              <rect x="3" y="4" width="22" height="6" rx="1.5" fill="#B8860B" fill-opacity="0.45" />
-              <rect x="2" y="40" width="24" height="6" rx="1.5" fill="url(#goldGrad)" />
-            </g>
-          </g>
-
-          <!-- Center Blacksmith Anvil (모루) -->
-          <g class="anvil-body">
-            <!-- Glowing Heated的金 Bar on Anvil Face -->
-            <rect class="heated-ingot" x="158" y="113" width="44" height="6" rx="3" fill="url(#goldGrad)" />
-            <!-- Anvil Horn (Left) & Top Face & Heel (Right) -->
-            <path d="M96 125 C112 119, 126 118, 134 118 L234 118 L234 130 L214 134 C202 138, 198 152, 206 164 L224 172 L224 184 L136 184 L136 172 L154 164 C162 152, 158 138, 144 134 L132 132 C118 131, 104 129, 96 125 Z"
-                  fill="url(#anvilGrad)"
-                  stroke="url(#goldGrad)"
-                  stroke-width="1.8"
-                  stroke-linejoin="round" />
-            <!-- Anvil Top Plate Highlight -->
-            <line x1="134" y1="120" x2="232" y2="120" stroke="#F5DF98" stroke-width="1.5" stroke-opacity="0.8" />
-            <!-- Anvil Waist Detail -->
-            <rect x="164" y="144" width="32" height="10" rx="2" fill="#0D0C09" stroke="#B8860B" stroke-width="1" stroke-opacity="0.65" />
-            <!-- Anvil Base Feet Highlights -->
-            <line x1="140" y1="182" x2="220" y2="182" stroke="#B8860B" stroke-width="1.2" stroke-opacity="0.7" />
-          </g>
-        </svg>
-      </div>
-
-      <!-- 3. 사이트 업데이트 및 점검 안내 문구 -->
-      <div class="maintenance-copy">
-        <span class="maintenance-badge">
-          <i class="fa-solid fa-hammer"></i>
-          <span>MINHYUK.SITE · UNDER UPDATE</span>
-        </span>
-        <h1 class="maintenance-title">현재 사이트 업데이트 중입니다<span class="gold-dot">.</span></h1>
-        <p class="maintenance-desc">
-          접속해 주셔서 감사합니다. 현재 <strong>minhyuk.site</strong>는 더 완성도 높은 디자인과 콘텐츠를 선보이기 위해 전체 리뉴얼 및 점검 작업을 진행하고 있습니다.<br>
-          빠른 시일 내에 새로운 모습으로 찾아뵙겠습니다.
-        </p>
-      </div>
-    </div>
-  </section>
 
   <!-- ==========================================
-       0. LUXURY AMBIENT OVERLAYS & SCENE TRANSITION SHUTTER
+       LEFT NAVIGATION DRAWER (모니터 화면 좌측에서 심플하게 나오는 메뉴 창)
        ========================================== -->
-  <!-- Custom Golden Cursor Ring (Desktop) -->
-  <div class="luxury-cursor-dot" id="luxuryCursorDot" aria-hidden="true"></div>
-  <div class="luxury-cursor-ring" id="luxuryCursorRing" aria-hidden="true"></div>
+  <!-- Transparent Click-Outside Layer (화면을 어둡게 만들지 않음) -->
+  <div id="leftNavBackdrop" class="left-nav-backdrop fixed inset-0 bg-transparent z-40" aria-hidden="true"></div>
 
-  <!-- Golden Shutter Slash for Scene Transitions -->
-  <div class="scene-shutter" id="sceneShutter" aria-hidden="true">
-    <div class="shutter-line"></div>
-    <div class="shutter-glow"></div>
-  </div>
-
-  <!-- Right-Side Vertical Stage Progress Indicator -->
-  <aside class="stage-rail" id="stageRail" aria-label="화면 전환 인디케이터">
-    <button class="rail-dot active" data-target-scene="0" aria-label="Intro Logo">
-      <span class="rail-num">00</span>
-      <span class="rail-label">LOGO</span>
-    </button>
-    <button class="rail-dot" data-target-scene="1" aria-label="About">
-      <span class="rail-num">01</span>
-      <span class="rail-label">ABOUT</span>
-    </button>
-    <button class="rail-dot" data-target-scene="2" aria-label="Philosophy">
-      <span class="rail-num">02</span>
-      <span class="rail-label">PHILOSOPHY</span>
-    </button>
-    <button class="rail-dot" data-target-scene="3" aria-label="Experience">
-      <span class="rail-num">03</span>
-      <span class="rail-label">ROADMAP</span>
-    </button>
-    <button class="rail-dot" data-target-scene="4" aria-label="Works">
-      <span class="rail-num">04</span>
-      <span class="rail-label">WORKS</span>
-    </button>
-    <button class="rail-dot" data-target-scene="5" aria-label="Contact">
-      <span class="rail-num">05</span>
-      <span class="rail-label">CONTACT</span>
-    </button>
+  <!-- Minimal Left Side Drawer Panel (불필요한 요소 없이 메뉴 선택지만 깔끔하게 배치) -->
+  <aside
+    id="leftNavDrawer"
+    class="left-nav-drawer fixed top-0 left-0 bottom-0 w-60 sm:w-64 bg-bgMain/95 backdrop-blur-xl border-r border-line z-50 flex flex-col justify-center px-8 sm:px-10"
+    aria-label="좌측 사이드 내비게이션"
+  >
+    <nav aria-label="사이드 메뉴">
+      <ul class="flex flex-col gap-3">
+        <li>
+          <a href="#home" class="logo-drawer-item block py-3 px-4 rounded-xl font-display text-xl sm:text-2xl font-bold text-inkSub hover:text-brand hover:bg-surface transition-all focus-ring" data-nav="home">
+            Home
+          </a>
+        </li>
+        <li>
+          <a href="#projects" class="logo-drawer-item block py-3 px-4 rounded-xl font-display text-xl sm:text-2xl font-bold text-inkSub hover:text-brand hover:bg-surface transition-all focus-ring" data-nav="projects">
+            Projects
+          </a>
+        </li>
+        <li>
+          <a href="#about" class="logo-drawer-item block py-3 px-4 rounded-xl font-display text-xl sm:text-2xl font-bold text-inkSub hover:text-brand hover:bg-surface transition-all focus-ring" data-nav="about">
+            About
+          </a>
+        </li>
+        <li>
+          <a href="#contact" class="logo-drawer-item block py-3 px-4 rounded-xl font-display text-xl sm:text-2xl font-bold text-inkSub hover:text-brand hover:bg-surface transition-all focus-ring" data-nav="contact">
+            Contact
+          </a>
+        </li>
+      </ul>
+    </nav>
   </aside>
 
 
   <!-- ==========================================
-       1. NAVIGATION BAR (Home 삭제 & 우측 상단에 메뉴 배치)
+       MAIN CONTENT AREA (Home View / Projects Page View / About Page View / Contact Page View / Project Detail View)
        ========================================== -->
-  <header class="navbar" id="mainNavbar">
-    <div class="container nav-container">
-      
-      <!-- 좌측 상단: MINHYUK 시그니처 (클릭 시 첫 번째 로고 화면으로 이동) -->
-      <a href="#hero" class="logo" id="mainLogo" data-scene-link="0" aria-label="첫 로고 화면으로 이동">
-        <img src="assets/images/logo_real.jpg" id="logoSignImg" alt="MINHYUK Signature Symbol" class="logo-symbol-img">
-        <span class="logo-text">MINHYUK</span><span class="logo-dot"></span>
-      </a>
+  <main id="mainContent" class="pt-20 overflow-x-hidden">
 
-      <!-- 우측 상단: 기존 테마 전환 버튼 & Connect 버튼 자리에 위치 (Home 삭제) -->
-      <nav class="nav-right-Menu" aria-label="주요 메뉴">
-        <ul class="nav-links" id="navLinksList">
-          <li><a href="#about" class="nav-link" data-scene-link="1">About</a></li>
-          <li><a href="#features" class="nav-link" data-scene-link="2">Philosophy</a></li>
-          <li><a href="#timeline" class="nav-link" data-scene-link="3">Experience</a></li>
-          <li><a href="#works" class="nav-link" data-scene-link="4">Works</a></li>
-          <li><a href="#contact" class="nav-link" data-scene-link="5">Contact</a></li>
-        </ul>
-      </nav>
+    <!-- 1) HOME PAGE VIEW (Hero & Quick Explore Navigation) -->
+    <div id="homePageView">
+      <!-- HERO SECTION (중심 타이포그래피 강조 레이아웃) -->
+      <section id="home" class="py-24 md:py-32 lg:py-36 border-b border-line relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-6 md:px-8" id="heroContainer">
+          <!-- Rendered by main.js renderHeroComponent() -->
+        </div>
+      </section>
 
-      <!-- Mobile Menu Toggle -->
-      <div class="mobile-toggle" id="mobileToggle" aria-label="메뉴 열기">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+      <!-- HOME QUICK NAVIGATION SECTION (스크롤 다운 시 노출되는 Projects, About, Contact 바로가기 버튼 3개) -->
+      <section id="homeNavSection" class="py-20 md:py-28 bg-bgSub/40">
+        <div class="max-w-5xl mx-auto px-6 md:px-8">
+          <div class="text-center mb-12">
+            <span class="inline-block font-mono text-xs font-semibold uppercase tracking-widest text-brand bg-brand-light px-3 py-1 rounded-full mb-3">
+              Explore
+            </span>
+            <h2 class="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-ink">
+              포트폴리오 바로가기
+            </h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- 1. Projects Link Card Button -->
+            <a href="#projects" class="group flex flex-col justify-between p-7 sm:p-8 rounded-2xl bg-surface border border-line hover:border-brand hover:shadow-md transition-all focus-ring">
+              <div>
+                <div class="flex items-center justify-between mb-6">
+                  <span class="w-12 h-12 rounded-xl bg-brand-light text-brand group-hover:bg-brand group-hover:text-white transition-colors flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-layer-group"></i>
+                  </span>
+                  <span class="font-mono text-xs font-semibold px-2.5 py-1 rounded-full bg-bgSub text-inkSub border border-line">
+                    4 Works
+                  </span>
+                </div>
+                <h3 class="font-display text-2xl font-bold text-ink group-hover:text-brand transition-colors mb-2">
+                  Projects
+                </h3>
+                <p class="text-sm text-inkSub leading-relaxed mb-6">
+                  직접 기획하고 구현한 대표 웹 서비스와 프로젝트를 확인해 보세요.
+                </p>
+              </div>
+              <div class="inline-flex items-center gap-2 text-sm font-semibold text-brand group-hover:translate-x-1.5 transition-transform">
+                <span>프로젝트 둘러보기</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </div>
+            </a>
+
+            <!-- 2. About Link Card Button -->
+            <a href="#about" class="group flex flex-col justify-between p-7 sm:p-8 rounded-2xl bg-surface border border-line hover:border-brand hover:shadow-md transition-all focus-ring">
+              <div>
+                <div class="flex items-center justify-between mb-6">
+                  <span class="w-12 h-12 rounded-xl bg-brand-light text-brand group-hover:bg-brand group-hover:text-white transition-colors flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-user"></i>
+                  </span>
+                  <span class="font-mono text-xs font-semibold px-2.5 py-1 rounded-full bg-bgSub text-inkSub border border-line">
+                    Profile
+                  </span>
+                </div>
+                <h3 class="font-display text-2xl font-bold text-ink group-hover:text-brand transition-colors mb-2">
+                  About
+                </h3>
+                <p class="text-sm text-inkSub leading-relaxed mb-6">
+                  문제 해결을 향한 가치관, 기술 스택, 성장 여정을 담았습니다.
+                </p>
+              </div>
+              <div class="inline-flex items-center gap-2 text-sm font-semibold text-brand group-hover:translate-x-1.5 transition-transform">
+                <span>소개 및 이력 보기</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </div>
+            </a>
+
+            <!-- 3. Contact Link Card Button -->
+            <a href="#contact" class="group flex flex-col justify-between p-7 sm:p-8 rounded-2xl bg-surface border border-line hover:border-brand hover:shadow-md transition-all focus-ring">
+              <div>
+                <div class="flex items-center justify-between mb-6">
+                  <span class="w-12 h-12 rounded-xl bg-brand-light text-brand group-hover:bg-brand group-hover:text-white transition-colors flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-paper-plane"></i>
+                  </span>
+                  <span class="font-mono text-xs font-semibold px-2.5 py-1 rounded-full bg-brand-light text-brand border border-brand-border">
+                    Get In Touch
+                  </span>
+                </div>
+                <h3 class="font-display text-2xl font-bold text-ink group-hover:text-brand transition-colors mb-2">
+                  Contact
+                </h3>
+                <p class="text-sm text-inkSub leading-relaxed mb-6">
+                  프로젝트 협업, 피드백, 나누고 싶은 이야기를 편하게 남겨주세요.
+                </p>
+              </div>
+              <div class="inline-flex items-center gap-2 text-sm font-semibold text-brand group-hover:translate-x-1.5 transition-transform">
+                <span>메시지 보내기</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
-  </header>
-  
-  <!-- Mobile Menu Backdrop Overlay -->
-  <div class="nav-overlay" id="navOverlay"></div>
 
 
-  <!-- ==========================================
-       FULL-VIEWPORT SCENE DECK (스크롤 시 화면 전환 구조)
-       ========================================== -->
-  <main class="scene-viewport" id="sceneViewport">
-
-    <!-- ==========================================
-         SCENE 0: GRAND LOGO GATE (접속 시 첨부 로고 대형 표시 + 무브먼트 제스처)
-         ========================================== -->
-    <section class="scene scene-intro active" id="hero" data-scene-index="0" aria-label="MINHYUK 메인 로고 화면">
-      <!-- Ambient Goldenrod Spotlight & Particles -->
-      <div class="intro-ambient" aria-hidden="true">
-        <div class="gold-radial-stage"></div>
-        <div class="gold-grid-lines"></div>
-        <div class="gold-particles">
-          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-        </div>
-      </div>
-
-      <div class="scene-inner intro-stage-inner">
-        <!-- Architectural Frame Corners -->
-        <div class="luxury-frame-corners" aria-hidden="true">
-          <span class="corner tl"></span>
-          <span class="corner tr"></span>
-          <span class="corner bl"></span>
-          <span class="corner br"></span>
-        </div>
-
-        <div class="intro-eyebrow-row">
-          <span class="gold-roman">EDITION · 2026</span>
-          <span class="gold-divider-line"></span>
-          <span class="gold-roman">AI CREATOR &amp; PIONEER</span>
-        </div>
-
-        <!-- Centerpiece: Attached MINHYUK Logo (Large & Interactive 3D Poise) -->
-        <div class="grand-logo-stage" id="grandLogoStage">
-          <div class="grand-logo-aura" aria-hidden="true"></div>
-          <img src="assets/images/minhyuk_logo.png" alt="MINHYUK Signature Logo" class="grand-logo-img" id="grandLogoImg">
-        </div>
-
-        <p class="intro-manifesto">
-          나는 성장합니다. AI기술을 토대로 미래를 향해 나아가는 고등학생 김민혁입니다.
-        </p>
-
-        <!-- Scroll Movement Gesture Indicator -->
-        <button type="button" class="scroll-gesture-trigger" id="scrollUnlockBtn" aria-label="다음 화면으로 전환">
-          <span class="gesture-label">SCROLL TO ENTER</span>
-          <span class="gesture-mouse">
-            <span class="gesture-wheel"></span>
-          </span>
-          <span class="gesture-line"></span>
-        </button>
-      </div>
-    </section>
-
-
-    <!-- ==========================================
-         SCENE 1: ABOUT ME & VISION SLIDER (내 소개 + 4대 비전 배너)
-         ========================================== -->
-    <section class="scene" id="about" data-scene-index="1" aria-label="About Me">
-      <div class="scene-inner container">
+    <!-- 2) SEPARATE PROJECTS PAGE VIEW (독립 페이지 - 페이지 자체에 집중) -->
+    <section id="projectsPageView" class="hidden py-16 md:py-24 min-h-[82vh]" aria-live="polite">
+      <div class="max-w-6xl mx-auto px-6 md:px-8">
         
-        <div class="scene-header-bar">
-          <span class="scene-index-tag">CHAPTER I · IDENTITY &amp; VISION</span>
-          <span class="scene-line-accent"></span>
-        </div>
-
-        <div class="about-vision-layout">
-          <!-- Left: About Me Content (Injected/Synced by main.js) -->
-          <div class="about-grid" id="aboutContainer">
-            <div class="about-img-wrapper">
-              <div class="about-img-card">
-                <img src="assets/images/profile_ava.jpg" id="profileAvatarImg" alt="고등학생 김민혁 프로필 캐릭터">
-              </div>
-            </div>
-
-            <div class="about-text-content">
-              <div class="section-tag">
-                <i class="fa-solid fa-crown"></i>
-                <span>About Me</span>
-              </div>
-
-              <h2 class="section-title">
-                나는 <span class="highlight-txt">성장</span>합니다.
-              </h2>
-
-              <p class="about-lead">
-                만나서 반갑습니다. 저는 AI기술을 토대로 미래를 향한 비전을 세우고 하나하나 배우며 성장하고 있는 고등학생 김민혁입니다.
-              </p>
-
-              <p class="about-body">
-                저의 비전은 단순한 구상에서 끝나는 것이 아닌 실질적 구현을 통해 세상 밖으로 나옵니다. 아직 미숙하지만 수많은 연습을 통해 사람들에게 긍정적인 영향을 주는 것이 목표입니다.
-              </p>
-
-              <div class="skills-tags-wrapper">
-                <span class="skill-tag"><i class="fa-solid fa-sparkles"></i> AI 비전</span>
-                <span class="skill-tag"><i class="fa-solid fa-sparkles"></i> 고등학생 크리에이터</span>
-                <span class="skill-tag"><i class="fa-solid fa-sparkles"></i> 지속적인 성장</span>
-                <span class="skill-tag"><i class="fa-solid fa-sparkles"></i> 실질적 구현</span>
-                <span class="skill-tag"><i class="fa-solid fa-sparkles"></i> 긍정적 영향력</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right: 4-Slide Vision Showcase (Preserving all 4 Hero Slides & Images) -->
-          <div class="hero-slider-container">
-            <div class="hero-slider-track" id="sliderTrack">
-              
-              <!-- Slide 1 -->
-              <div class="hero-slide active">
-                <img src="assets/images/hero-1.jpg" alt="환영합니다." class="hero-slide-img">
-                <div class="hero-slide-overlay">
-                  <div class="hero-slide-content">
-                    <span class="hero-badge">Welcome 01</span>
-                    <h2 class="hero-slide-title">환영합니다.</h2>
-                    <p class="hero-slide-desc">이곳은 고등학생 김민혁 개인이 제작한 포트폴리오 겸 작업물 공유 사이트입니다.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Slide 2 -->
-              <div class="hero-slide">
-                <img src="assets/images/hero-2.jpg" alt="AI와 인간은 서로에게 적이 아니다." class="hero-slide-img">
-                <div class="hero-slide-overlay">
-                  <div class="hero-slide-content">
-                    <span class="hero-badge">Coexistence 02</span>
-                    <h2 class="hero-slide-title">AI와 인간은 서로에게 적이 아니다.</h2>
-                    <p class="hero-slide-desc">AI가 모든걸 대체하는 세상에서, 저는 AI를 두려워하기보다 AI와 공존할 방법을 찾았습니다.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Slide 3 -->
-              <div class="hero-slide">
-                <img src="assets/images/hero-3.jpg" alt="공존을 뛰어넘어 삶의 일부가 되도록" class="hero-slide-img">
-                <div class="hero-slide-overlay">
-                  <div class="hero-slide-content">
-                    <span class="hero-badge">Vision 03</span>
-                    <h2 class="hero-slide-title">공존을 뛰어넘어 삶의 일부가 되도록</h2>
-                    <p class="hero-slide-desc">AI기술의 발전에 힘 입어 전보다 더 나은 삶을 꿈 꿉니다.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Slide 4 -->
-              <div class="hero-slide">
-                <img src="assets/images/hero-4.jpg" alt="미래 사회를 이끄는 선구자" class="hero-slide-img">
-                <div class="hero-slide-overlay">
-                  <div class="hero-slide-content">
-                    <span class="hero-badge">Pioneer 04</span>
-                    <h2 class="hero-slide-title">미래 사회를 이끄는 선구자</h2>
-                    <p class="hero-slide-desc">기술 발전은 그냥 이루어지지 않습니다. 저는 이런 미래를 먼저 개척하는 선구자가 되고 싶습니다.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Slide 1 Clone -->
-              <div class="hero-slide">
-                <img src="assets/images/hero-1.jpg" alt="환영합니다." class="hero-slide-img">
-                <div class="hero-slide-overlay">
-                  <div class="hero-slide-content">
-                    <span class="hero-badge">Welcome 01</span>
-                    <h2 class="hero-slide-title">환영합니다.</h2>
-                    <p class="hero-slide-desc">이곳은 고등학생 김민혁 개인이 제작한 포트폴리오 겸 작업물 공유 사이트입니다.</p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            <div class="hero-controls">
-              <div class="hero-counter">
-                <span id="carouselCurrent">01</span> / <span id="carouselTotal">04</span>
-              </div>
-
-              <div class="hero-progress-bar">
-                <div class="hero-progress-fill" id="carouselProgress"></div>
-              </div>
-
-              <button class="hero-btn-nav" id="carouselPrev" aria-label="이전 사진">
-                <i class="fa-solid fa-chevron-left"></i>
-              </button>
-              <button class="hero-btn-nav" id="carouselNext" aria-label="다음 사진">
-                <i class="fa-solid fa-chevron-right"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- ==========================================
-         SCENE 2: PHILOSOPHY / CORE VALUES (나의 철학)
-         ========================================== -->
-    <section class="scene" id="features" data-scene-index="2" aria-label="Philosophy">
-      <div class="scene-inner container">
-        
-        <div class="scene-header-bar">
-          <span class="scene-index-tag">CHAPTER II · PHILOSOPHY</span>
-          <span class="scene-line-accent"></span>
-        </div>
-
-        <div class="text-center center-block scene-title-block">
-          <div class="section-tag">
-            <i class="fa-solid fa-compass"></i>
-            <span>Core Values</span>
-          </div>
-          <h2 class="section-title">내가 생각하는 가치 3가지</h2>
-          <p class="section-subtitle center-block">항상 마음에 새기고 실천하는 저의 핵심 가치관입니다.</p>
-        </div>
-
-        <div class="features-grid" id="featuresContainer">
-          <!-- Card 1 -->
-          <div class="feature-card">
-            <span class="card-roman-num">I</span>
-            <div class="feature-icon">
-              <i class="fa-solid fa-award"></i>
-            </div>
-            <h3 class="feature-title">1. 성실함(WORKETHIC)</h3>
-            <p class="feature-desc">어떤 일을 하든지 성실함은 반드시 필요한 덕목 중 하나라고 생각합니다. 저는 제가 참여하는 모든 일에 책임을 가지고 성실히 업무를 수행해 나가는 장점을 가지고 있습니다.</p>
-          </div>
-
-          <!-- Card 2 -->
-          <div class="feature-card">
-            <span class="card-roman-num">II</span>
-            <div class="feature-icon">
-              <i class="fa-solid fa-handshake-angle"></i>
-            </div>
-            <h3 class="feature-title">2. 상호 존중(RESPECT)</h3>
-            <p class="feature-desc">비욘 나티코 린네블라드의 "내가 틀릴 수도 있습니다" 라는 책을 읽고 깊은 감명을 받은 기억이 있습니다. 모든 갈등은 상호 존중의 부재에서 일어난다는 것을 인지하고 나와 다른 의견에도 귀 기울이고 존중하는 자세를 가집니다.</p>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="feature-card">
-            <span class="card-roman-num">III</span>
-            <div class="feature-icon">
-              <i class="fa-solid fa-seedling"></i>
-            </div>
-            <h3 class="feature-title">3. 회복 탄력성(RESILIENCE)</h3>
-            <p class="feature-desc">실패를 통해 배우고 성장하는 것 또한 매우 중요하다고 생각합니다. 저는 제가 계획한 일이 예상대로 되지 않더라도 이를 통해 배우고 앞으로를 기약합니다.</p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- ==========================================
-         SCENE 3: TIMELINE / ROADMAP (나의 성장과정 로드맵)
-         ========================================== -->
-    <section class="scene" id="timeline" data-scene-index="3" aria-label="Experience Roadmap">
-      <div class="scene-inner container">
-        
-        <div class="scene-header-bar">
-          <span class="scene-index-tag">CHAPTER III · ROADMAP &amp; JOURNEY</span>
-          <span class="scene-line-accent"></span>
-        </div>
-
-        <div class="text-center center-block scene-title-block">
-          <div class="section-tag">
-            <i class="fa-solid fa-timeline"></i>
-            <span>Career Journey</span>
-          </div>
-          <h2 class="section-title">나의 성장과정</h2>
-          <p class="section-subtitle center-block">다양한 경험을 통해 계속 성장해왔습니다.</p>
-        </div>
-
-        <div class="timeline" id="timelineContainer">
-          
-          <!-- Item 1: 태봉초등학교 -->
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <div class="timeline-date">2018 - 2020</div>
-              <h3 class="timeline-role">취미로 첫 코딩 시작, 엔트리를 이용한 프로그램 만들기</h3>
-              <div class="timeline-company">태봉초등학교 (Taebong Elementary School)</div>
-              <p class="timeline-desc">초등학교 2학년 때 취미로 코딩을 시작하였고, 엔트리를 이용한 블록코딩으로 작품을 만든 후 공유하였음.</p>
-            </div>
-          </div>
-
-          <!-- Item 2: 금호중앙중학교 -->
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <div class="timeline-date">2021 - 2025</div>
-              <h3 class="timeline-role">MICROBIT, C언어 학습 및 심화 구현하기</h3>
-              <div class="timeline-company">금호중앙중학교 (Kumho Jungang Middle School)</div>
-              <p class="timeline-desc">microbit를 이용하여 회로의 기본적 원리를 학습했고 그 후 C언어를 배워 기본 코딩 능력을 배양하였음.</p>
-            </div>
-          </div>
-
-          <!-- Item 3: 금호고등학교 -->
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <div class="timeline-date">2026 - Present</div>
-              <h3 class="timeline-role">인공지능을 활용한 웹 앱 개발하기</h3>
-              <div class="timeline-company">금호고등학교 (Kumho High School)</div>
-              <p class="timeline-desc">Google Antigravity를 이용한 웹 앱 개발을 통해 떠오르는 아이디어를 실제로 구현해내고 있음.</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- ==========================================
-         SCENE 4: WORKS / PORTFOLIO SHOWCASE (작품 전시관)
-         ========================================== -->
-    <section class="scene works-section" id="works" data-scene-index="4" aria-label="Works Showcase">
-      <div class="scene-inner container">
-        
-        <div class="scene-header-bar">
-          <span class="scene-index-tag">CHAPTER IV · SELECTED WORKS</span>
-          <span class="scene-line-accent"></span>
-        </div>
-
-        <div class="works-top-header">
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <div class="section-tag">
-              <i class="fa-solid fa-briefcase"></i>
-              <span>Featured Works</span>
-            </div>
-            <h2 class="section-title">작품 전시관</h2>
-            <p class="section-subtitle">제가 자체 제작한 모든 작업물들을 공유합니다.</p>
+            <span class="inline-block font-mono text-xs font-semibold uppercase tracking-widest text-brand bg-brand-light px-3 py-1 rounded-full mb-3">
+              Selected Works
+            </span>
+            <h1 class="font-display text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-ink">
+              Featured Projects
+            </h1>
           </div>
-
-          <div class="filter-bar" id="filterBar">
-            <button class="filter-btn active" data-filter="all">All Works</button>
-            <button class="filter-btn" data-filter="Web App">Web App</button>
-          </div>
+          <p class="text-inkSub text-base md:text-lg max-w-md">
+            일상의 불편함과 질문에서 출발해 직접 기획·디자인·개발까지 완성한 대표 프로젝트입니다.
+          </p>
         </div>
 
-        <div class="works-grid" id="worksContainer">
-          
-          <!-- Work Card 1: 서울 투어 가이드 -->
-          <div class="work-card" data-category="Web App" data-id="1" data-link="https://minhyuk-k1m.github.io/SEOUL-TOUR-GUIDE/">
-            <div class="work-img-box">
-              <span class="work-date-badge"><i class="fa-regular fa-calendar-days" style="margin-right:0.25rem;"></i>2026.06</span>
-              <img src="assets/images/seoultourguide.jpg" alt="서울 투어 가이드(SEOUL TOUR GUIDE)">
-              <div class="work-overlay">
-                <div class="work-view-icon" title="작품 링크로 접속"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-              </div>
-            </div>
-            <div class="work-info">
-              <span class="work-category">Web App</span>
-              <h3 class="work-title">서울 투어 가이드(SEOUL TOUR GUIDE)</h3>
-              <p class="work-desc">서울특별시를 관광하고자 하는 모든 사람들에게 관광 정보를 제공합니다.</p>
-            </div>
-          </div>
-
-          <!-- Work Card 2: VOCABMASTER(보캅마스터) -->
-          <div class="work-card" data-category="Web App" data-id="2" data-link="https://minhyuk-k1m.github.io/Vocabmaster/">
-            <div class="work-img-box">
-              <span class="work-date-badge"><i class="fa-regular fa-calendar-days" style="margin-right:0.25rem;"></i>2026.07</span>
-              <img src="assets/images/vocabmaster.jpg" alt="VOCABMASTER(보캅마스터)">
-              <div class="work-overlay">
-                <div class="work-view-icon" title="작품 링크로 접속"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-              </div>
-            </div>
-            <div class="work-info">
-              <span class="work-category">Web App</span>
-              <h3 class="work-title">VOCABMASTER(보캅마스터)</h3>
-              <p class="work-desc">언제나 함께하는 나만의 작은 단어장</p>
-            </div>
-          </div>
-
-          <!-- Work Card 3: 오늘 뭐 먹지? -->
-          <div class="work-card" data-category="Web App" data-id="3" data-link="https://minhyuk-k1m.github.io/menu-recommender/">
-            <div class="work-img-box">
-              <span class="work-date-badge"><i class="fa-regular fa-calendar-days" style="margin-right:0.25rem;"></i>2026.08</span>
-              <img src="assets/images/today_menu.jpg" alt="오늘 뭐 먹지?">
-              <div class="work-overlay">
-                <div class="work-view-icon" title="작품 링크로 접속"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-              </div>
-            </div>
-            <div class="work-info">
-              <span class="work-category">Web App</span>
-              <h3 class="work-title">오늘 뭐 먹지?</h3>
-              <p class="work-desc">사소하지만 제일 고통스러운 일상의 고민을 해결하세요.</p>
-            </div>
-          </div>
-
-          <!-- Work Card 4: 금호고 스쿨메이트(KUMHO SCHOOLMATE) -->
-          <div class="work-card" data-category="Web App" data-id="4" data-link="https://kumho-schoolmate.com">
-            <div class="work-img-box">
-              <span class="work-date-badge"><i class="fa-regular fa-calendar-days" style="margin-right:0.25rem;"></i>2026.10</span>
-              <img src="assets/images/kumho_schoolmate.jpg" alt="금호고 스쿨메이트(KUMHO SCHOOLMATE)">
-              <div class="work-overlay">
-                <div class="work-view-icon" title="작품 링크로 접속"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-              </div>
-            </div>
-            <div class="work-info">
-              <span class="work-category">Web App</span>
-              <h3 class="work-title">금호고 스쿨메이트(KUMHO SCHOOLMATE)</h3>
-              <p class="work-desc">금호고등학교 학생과 교실 전자칠판을 위한 올인원 학사·시간표·급식·날씨 플랫폼</p>
-            </div>
-          </div>
-
+        <!-- Projects Grid (3~6 Cards, Oldest to Newest) -->
+        <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Rendered by main.js renderProjectsComponent() -->
         </div>
 
       </div>
     </section>
 
 
-    <!-- ==========================================
-         SCENE 5: CONTACT & FOOTER
-         ========================================== -->
-    <section class="scene contact-section" id="contact" data-scene-index="5" aria-label="Contact">
-      <div class="scene-inner container">
+    <!-- 3) SEPARATE ABOUT PAGE VIEW (독립 페이지 - 스크롤 기반 섹션 분리 레이아웃) -->
+    <section id="aboutPageView" class="hidden py-20 md:py-28 min-h-[85vh]" aria-live="polite">
+      <div class="max-w-6xl mx-auto px-6 md:px-8">
         
-        <div class="scene-header-bar">
-          <span class="scene-index-tag">CHAPTER V · PRIVATE INQUIRY</span>
-          <span class="scene-line-accent"></span>
+        <!-- Page Top Header -->
+        <div class="mb-16 md:mb-24 fade-up">
+          <span class="inline-block font-mono text-xs font-semibold uppercase tracking-widest text-brand bg-brand-light px-3 py-1 rounded-full mb-3">
+            About Me
+          </span>
+          <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-ink mb-3 leading-tight">
+            배움을 실행으로 옮기는 학생입니다
+          </h1>
+          <p class="text-inkSub text-base md:text-lg max-w-2xl leading-relaxed">
+            AI와 웹 기술을 토대로 일상의 문제를 정의하고, 직접 작동하는 결과물로 구현하며 성장하고 있습니다.
+          </p>
         </div>
 
-        <div class="contact-card">
-          <div class="contact-info">
-            <div class="section-tag">
-              <i class="fa-solid fa-envelope-open-text"></i>
-              <span>Contact</span>
-            </div>
-            <h2>새로운 프로젝트나<br>이야기를 나누어봐요.</h2>
-            <p>프로젝트 상담, 웹사이트 제작 관련 어떤 문의든 환영합니다. 아래 문의 폼으로 편하게 연락주세요.</p>
-
-            <div class="contact-footer-meta">
-              <ul class="social-links">
-                <li><a href="https://github.com/minhyuk-k1m" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a></li>
-                <li><a href="https://www.instagram.com/minlnxuk_/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
-              </ul>
-              <p class="copyright-txt">&copy; 2026 MINHYUK Portfolio. All Rights Reserved.</p>
-            </div>
-          </div>
-
-          <form class="contact-form" id="contactForm">
-            <div class="form-group">
-              <label class="form-label" for="senderName">이름 / 회사명</label>
-              <input type="text" id="senderName" class="form-input" placeholder="홍길동" required>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="senderEmail">이메일 주소</label>
-              <input type="email" id="senderEmail" class="form-input" placeholder="example@domain.com" required>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="senderMessage">문의 내용</label>
-              <textarea id="senderMessage" class="form-textarea" placeholder="제작하고자 하시는 사이트 성격이나 구체적인 문의사항을 적어주세요." required></textarea>
-            </div>
-
-            <button type="submit" class="btn-submit">
-              메시지 보내기 <i class="fa-solid fa-paper-plane" style="margin-left: 0.5rem;"></i>
-            </button>
-          </form>
+        <!-- Scroll-Separated Sections Container -->
+        <div id="aboutContainer" class="space-y-20 md:space-y-28 pb-12">
+          <!-- Rendered by main.js renderAboutComponent() -->
         </div>
 
+      </div>
+    </section>
+
+
+    <!-- 4) SEPARATE CONTACT PAGE VIEW (독립 페이지 - 페이지 자체에 집중) -->
+    <section id="contactPageView" class="hidden py-16 md:py-24 min-h-[82vh]" aria-live="polite">
+      <div class="max-w-6xl mx-auto px-6 md:px-8">
+        <div id="contactContainer" class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <!-- Rendered by main.js renderContactComponent() -->
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 5) PROJECT DETAIL PAGE VIEW (SPA Case Study View)
+         문제 정의 · 내 역할 · 사용 도구 · 과정 · 결과 -->
+    <section id="projectDetailView" class="hidden py-12 md:py-20 min-h-[82vh]" aria-live="polite">
+      <div class="max-w-4xl mx-auto px-6 md:px-8" id="projectDetailContainer">
+        <!-- Rendered dynamically by main.js renderProjectDetailPage(projectId) -->
       </div>
     </section>
 
@@ -699,55 +315,24 @@
 
 
   <!-- ==========================================
-       WORK DETAILS MODAL
+       6. FOOTER
        ========================================== -->
-  <div class="modal-backdrop" id="portfolioModal" role="dialog" aria-modal="true">
-    <div class="modal-box">
-      <button class="modal-close-btn" id="modalCloseBtn" aria-label="모달 닫기">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-
-      <img src="assets/images/seoultourguide.jpg" alt="작품 세부 이미지" class="modal-header-img" id="modalImg">
-
-      <div class="modal-body-content">
-        <span class="modal-category" id="modalCategory">Category</span>
-        <h2 class="modal-title" id="modalTitle">Project Title</h2>
-
-        <div class="modal-details-grid">
-          <div class="modal-long-desc" id="modalDesc">
-            프로젝트 세부 설명이 들어가는 공간입니다.
-          </div>
-
-          <div class="modal-meta-box">
-            <div>
-              <div class="meta-item-title">Client</div>
-              <div class="meta-item-value" id="modalClient">Client Name</div>
-            </div>
-            <div>
-              <div class="meta-item-title">Year</div>
-              <div class="meta-item-value" id="modalYear">2026.08</div>
-            </div>
-            <div>
-              <div class="meta-item-title">Role</div>
-              <div class="meta-item-value" id="modalRole">Design &amp; Development</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
+  <footer class="bg-bgSub border-t border-line py-12">
+    <div class="max-w-6xl mx-auto px-6 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-6" id="footerContainer">
+      <!-- Rendered by main.js renderFooterComponent() -->
     </div>
-  </div>
+  </footer>
 
 
   <!-- ==========================================
        TOAST NOTIFICATION
        ========================================== -->
-  <div class="toast" id="toast">
-    <i class="fa-solid fa-circle-check toast-icon"></i>
-    <span id="toastMsg">알림 메시지입니다.</span>
+  <div id="toast" class="fixed bottom-6 right-6 z-50 pointer-events-none opacity-0 translate-y-3 transition-all duration-300 bg-ink text-white px-5 py-3.5 rounded-xl shadow-lg flex items-center gap-3 text-sm font-medium" role="status" aria-live="polite">
+    <i class="fa-solid fa-circle-check text-brand-border"></i>
+    <span id="toastMessage">메시지가 전송되었습니다.</span>
   </div>
 
-  <!-- Main JavaScript File -->
+  <!-- Main Application Script (Separated Data + Modular Components) -->
   <script src="main.js"></script>
 </body>
 </html>

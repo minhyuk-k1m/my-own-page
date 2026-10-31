@@ -1,794 +1,1535 @@
 /**
- * MINHYUK PORTFOLIO — DARKGOLDENROD (#B8860B) & BLACK SCENE SWITCHER ENGINE
- * Preserves 100% of Portfolio Data & Powers Full-Screen Scene Transitions + Movement Gestures
+ * ============================================================================
+ * MINHYUK PORTFOLIO — DATA & MODULAR COMPONENT ARCHITECTURE
+ * 1. PORTFOLIO_DATA 객체를 수정하면 화면 전체 텍스트·프로젝트·스킬이 자동 반영됩니다.
+ * 2. 각 섹션은 독립된 렌더 함수(Component)로 분리되어 있습니다.
+ * ============================================================================
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+const PORTFOLIO_DATA = {
+  profile: {
+    name: '김민혁',
+    englishName: 'Minhyuk',
+    role: 'Student Creator & Problem Solver',
+    headline: '문제를 해결하는 학생, 김민혁입니다.',
+    headlines: [
+      "문제를 해결하는 학생,\n김민혁입니다.",
+      "학생 개발자,\n김민혁입니다.",
+      "안녕하세요,\n김민혁입니다.",
+      "열정적인 해결사,\n김민혁입니다.",
+      "차세대 선구자,\n김민혁입니다.",
+      "금호인,\n김민혁입니다."
+    ],
+    subheadline: '디자인, 개발, 프로젝트 경험을 통해 가치를 만듭니다.',
+    heroBadge: 'Academic · Project · Competency Portfolio',
+    avatarImg: 'assets/images/profile_ava.jpg',
+    avatarFallback: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
+    email: 'minhyuk.contact@gmail.com',
+    location: 'Gwangju, Republic of Korea',
+    school: '금호고등학교 재학'
+  },
 
   /* ==========================================
-     1. DEFAULT PORTFOLIO CMS DATA MODEL
+     대표 프로젝트 데이터 (오래된 순부터 순차 배치)
+     1. 서울 투어 가이드 (2026.06)
+     2. 보캅마스터 (2026.07)
+     3. 오늘 뭐 먹지? (2026.08)
+     4. 금호고 스쿨메이트 (2026.10)
      ========================================== */
-  const DEFAULT_DATA = {
-    heroSlides: [
-      {
-        badge: 'Welcome 01',
-        title: '환영합니다.',
-        desc: '이곳은 고등학생 김민혁 개인이 제작한 포트폴리오 겸 작업물 공유 사이트입니다.',
-        img: 'assets/images/hero-1.jpg'
-      },
-      {
-        badge: 'Coexistence 02',
-        title: 'AI와 인간은 서로에게 적이 아니다.',
-        desc: 'AI가 모든걸 대체하는 세상에서, 저는 AI를 두려워하기보다 AI와 공존할 방법을 찾았습니다.',
-        img: 'assets/images/hero-2.jpg'
-      },
-      {
-        badge: 'Vision 03',
-        title: '공존을 뛰어넘어 삶의 일부가 되도록',
-        desc: 'AI기술의 발전에 힘 입어 전보다 더 나은 삶을 꿈 꿉니다.',
-        img: 'assets/images/hero-3.jpg'
-      },
-      {
-        badge: 'Pioneer 04',
-        title: '미래 사회를 이끄는 선구자',
-        desc: '기술 발전은 그냥 이루어지지 않습니다. 저는 이런 미래를 먼저 개척하는 선구자가 되고 싶습니다.',
-        img: 'assets/images/hero-4.jpg'
-      }
-    ],
-    about: {
-      avatarImg: 'assets/images/profile_ava.jpg',
-      avatarFallback: 'assets/images/profile_ava.svg',
-      titlePrefix: '나는 ',
-      highlightTxt: '성장',
-      titleSuffix: '합니다.',
-      lead: '만나서 반갑습니다. 저는 AI기술을 토대로 미래를 향한 비전을 세우고 하나하나 배우며 성장하고 있는 고등학생 김민혁입니다.',
-      body: '저의 비전은 단순한 구상에서 끝나는 것이 아닌 실질적 구현을 통해 세상 밖으로 나옵니다. 아직 미숙하지만 수많은 연습을 통해 사람들에게 긍정적인 영향을 주는 것이 목표입니다.',
-      tags: ['AI 비전', '고등학생 크리에이터', '지속적인 성장', '실질적 구현', '긍정적 영향력']
+  projects: [
+    {
+      id: 'seoul-tour-guide',
+      title: '서울 투어 가이드 (SEOUL TOUR GUIDE)',
+      category: 'Tourism Information Web',
+      period: '2026.06',
+      summary: '서울특별시를 방문하는 여행객들에게 핵심 명소와 관광 정보를 한눈에 제공하는 큐레이션 웹 서비스입니다.',
+      thumbnail: 'assets/images/seoultourguide.jpg',
+      fallbackThumbnail: 'https://images.unsplash.com/photo-1538485399081-7191377e8241?auto=format&fit=crop&w=1000&q=80',
+      tags: ['Antigravity', 'Javascript', 'HTML'],
+      liveUrl: 'https://minhyuk-k1m.github.io/SEOUL-TOUR-GUIDE/',
+      problem: '서울의 방대한 관광 정보가 여러 블로그와 사이트에 흩어져 있어, 처음 방문하는 여행자가 핵심 코스와 명소 특징을 빠르게 파악하기 어려웠습니다.',
+      role: '콘텐츠 큐레이션, 레이아웃 디자인, 웹 앱 개발 및 배포',
+      tools: ['Antigravity', 'Javascript', 'HTML'],
+      process: [
+        '서울 주요 권역 및 테마별 대표 명소 정보를 선정하고 시각적 위계가 뚜렷한 카드 레이아웃으로 재구성',
+        '사진 중심의 비주얼 프리젠테이션과 핵심 요약 설명을 결합해 정보 탐색 피로도 감소',
+        '데스크톱과 모바일 환경 모두에서 깨짐 없이 탐색 가능한 반응형 그리드 적용'
+      ],
+      outcome: '처음 시행한 프로젝트 치고 반응이 좋았으며, 앞으로 더 확대해 나갈 계획임.'
     },
-    features: [
+    {
+      id: 'vocabmaster',
+      title: '보캅마스터 (VOCABMASTER)',
+      category: 'EdTech Study Tool',
+      period: '2026.07',
+      summary: '언제 어디서나 나만의 단어를 정리하고 암기 효율을 높일 수 있는 디지털 단어장 웹 애플리케이션입니다.',
+      thumbnail: 'assets/images/vocabmaster.jpg',
+      fallbackThumbnail: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=1000&q=80',
+      tags: ['Antigravity', 'Javascript', 'HTML'],
+      liveUrl: 'https://minhyuk-k1m.github.io/Vocabmaster/',
+      problem: '종이 단어장은 휴대와 검색이 불편하고, 기존 대형 어학 앱은 기능이 복잡해 학생이 시험 범위나 개인 학습 단어를 빠르게 등록하고 복습하기에 진입장벽이 높았습니다.',
+      role: '콘텐츠 큐레이션, 레이아웃 디자인, 웹 앱 개발 및 배포',
+      tools: ['Antigravity', 'Javascript', 'HTML'],
+      process: [
+        '단어 추가·수정·삭제 및 암기 여부 체크에 집중한 미니멀 학습 인터페이스 설계',
+        '별도의 서버 로그인 없이도 브라우저에서 즉시 데이터를 유지할 수 있도록 클라이언트 저장소 구조화',
+        '이동 중 스마트폰 한 손 조작으로도 편리하게 단어를 넘겨볼 수 있는 반응형 카드 UI 구현'
+      ],
+      outcome: '학습자의 시선 분산을 최소화한 깔끔한 UI를 통해 자기주도적 어휘 학습 효율을 높이는 개인 맞춤형 에듀테크 웹 도구를 구축했습니다.'
+    },
+    {
+      id: 'menu-recommender',
+      title: '오늘 뭐 먹지? (Menu Recommender)',
+      category: 'Lifestyle Web Application',
+      period: '2026.08',
+      summary: '사소하지만 제일 고통스러운 일상의 메뉴 선택 고민을 빠르게 해결해 주는 맞춤형 추천 웹 앱입니다.',
+      thumbnail: 'assets/images/today_menu.jpg',
+      fallbackThumbnail: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1000&q=80',
+      tags: ['Antigravity', 'Javascript', 'HTML'],
+      liveUrl: 'https://minhyuk-k1m.github.io/menu-recommender/',
+      problem: '매일 반복되는 "오늘 뭐 먹지?"라는 고민에 불필요하게 많은 시간이 소모되며, 사용자의 상황이나 취향에 맞춰 즉각적이고 재미있게 메뉴를 제안해 주는 가벼운 웹 도구가 필요했습니다.',
+      role: '콘텐츠 큐레이션, 레이아웃 디자인, 웹 앱 개발 및 배포',
+      tools: ['Antigravity', 'Javascript', 'HTML'],
+      process: [
+        '한식·중식·일식·양식·분식 등 카테고리 및 상황별 메뉴 데이터베이스 구조화',
+        '복잡한 가입이나 설정 없이 접속 즉시 클릭 한 번으로 결과를 확인할 수 있는 직관적인 사용자 흐름(User Flow) 설계',
+        '선택의 즐거움을 높이는 부드러운 전환 애니메이션과 모바일 친화적 버튼 레이아웃 적용'
+      ],
+      outcome: '누구나 링크 하나로 접속해 식사 메뉴를 추천받을 수 있는 직관적인 웹 애플리케이션을 배포하여 일상 속 사소하지만 중요한 문제를 해결했습니다.'
+    },
+    {
+      id: 'kumho-schoolmate',
+      title: '금호고 스쿨메이트 (KUMHO SCHOOLMATE)',
+      category: 'Smart School Web Platform',
+      period: '2026.10',
+      summary: '금호고등학교 학생과 교실 전자칠판을 위한 올인원 학사·시간표·급식·날씨 플랫폼입니다.',
+      thumbnail: 'assets/images/kumho_schoolmate.jpg',
+      fallbackThumbnail: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1000&q=80',
+      tags: ['Antigravity', 'Javascript', 'HTML'],
+      liveUrl: 'https://kumho-schoolmate.com',
+      problem: '학교 생활 중 시간표, 오늘의 급식, 학사 일정, 실시간 날씨 정보를 확인하려면 각각 다른 앱이나 게시판을 찾아야 하는 번거로움이 있었고, 교실 전자칠판에서 한눈에 볼 수 있는 통합 대시보드가 부족했습니다.',
+      role: '콘텐츠 큐레이션, 레이아웃 디자인, 웹 앱 개발 및 배포',
+      tools: ['Antigravity', 'Javascript', 'HTML'],
+      process: [
+        '교실 전자칠판(대화면)과 학생 개인 스마트폰(모바일) 두 가지 사용 환경을 동시에 고려한 반응형 정보 구조(IA) 설계',
+        '급식 식단·알레르기 정보, 학급별 시간표, 주요 학사 일정, 실시간 날씨 데이터를 한 화면에 직관적으로 배치',
+        '가독성이 뛰어난 카드형 레이아웃과 빠른 로딩 속도를 위한 경량 프론트엔드 아키텍처 구현'
+      ],
+      outcome: '실제 도메인(kumho-schoolmate.com)으로 배포하여 학생들이 등교 후 교실과 모바일에서 매일 편리하게 학사·급식·시간표 정보를 확인할 수 있는 실용적인 교내 웹 서비스로 완성했습니다.'
+    }
+  ],
+
+  /* ==========================================
+     ABOUT & 역량 / 경력 데이터 (모던 스크롤 섹션 분리 구조)
+     ========================================== */
+  about: {
+    introLead: '만나서 반갑습니다. AI와 웹 기술을 토대로 일상의 문제를 정의하고, 직접 작동하는 결과물로 구현하며 성장하고 있는 고등학생 김민혁입니다.',
+    introBody: '저의 목표는 아이디어를 단순한 구상에서 끝내지 않고, 실질적인 웹 서비스와 프로젝트로 세상 밖에 내놓아 사람들에게 긍정적인 영향을 주는 것입니다. 작은 불편함을 관찰하는 시선과 끝까지 완성해내는 실행력을 가장 중요하게 생각합니다.',
+    highlights: [
+      { label: 'Focus', value: '실생활 문제 해결형 웹 앱 제작', icon: 'fa-solid fa-bullseye' },
+      { label: 'Workflow', value: 'AI 기반 바이브코딩 & 빠른 실행', icon: 'fa-solid fa-bolt' },
+      { label: 'Mindset', value: '꾸준한 기록과 사용자 중심 개선', icon: 'fa-solid fa-layer-group' }
+    ],
+    interests: [
       {
-        roman: 'I',
-        icon: 'fa-award',
-        title: '1. 성실함(WORKETHIC)',
-        desc: '어떤 일을 하든지 성실함은 반드시 필요한 덕목 중 하나라고 생각합니다. 저는 제가 참여하는 모든 일에 책임을 가지고 성실히 업무를 수행해 나가는 장점을 가지고 있습니다.'
+        badge: 'UI/UX & Product',
+        icon: 'fa-solid fa-compass-drafting',
+        title: '사용자 중심 웹 애플리케이션 기획 및 UI/UX 설계'
       },
       {
-        roman: 'II',
-        icon: 'fa-handshake-angle',
-        title: '2. 상호 존중(RESPECT)',
-        desc: '비욘 나티코 린네블라드의 "내가 틀릴 수도 있습니다" 라는 책을 읽고 깊은 감명을 받은 기억이 있습니다. 모든 갈등은 상호 존중의 부재에서 일어난다는 것을 인지하고 나와 다른 의견에도 귀 기울이고 존중하는 자세를 가집니다.'
+        badge: 'AI Web App',
+        icon: 'fa-solid fa-wand-magic-sparkles',
+        title: 'AI 도구를 활용한 웹 앱 개발 및 문제 해결'
       },
       {
-        roman: 'III',
-        icon: 'fa-seedling',
-        title: '3. 회복 탄력성(RESILIENCE)',
-        desc: '실패를 통해 배우고 성장하는 것 또한 매우 중요하다고 생각합니다. 저는 제가 계획한 일이 예상대로 되지 않더라도 이를 통해 배우고 앞으로를 기약합니다.'
+        badge: 'Practical Solution',
+        icon: 'fa-solid fa-lightbulb',
+        title: '학교·일상 현장의 불편함을 개선하는 실용적 소프트웨어 개발'
       }
     ],
-    works: [
+    currentlyLearning: [
       {
-        id: '1',
-        category: 'Web App',
-        title: '서울 투어 가이드(SEOUL TOUR GUIDE)',
-        img: 'assets/images/seoultourguide.jpg',
-        desc: '서울특별시를 관광하고자 하는 모든 사람들에게 관광 정보를 제공합니다.',
-        link: 'https://minhyuk-k1m.github.io/SEOUL-TOUR-GUIDE/',
-        client: 'Seoul Tour Project',
-        year: '2026.06',
-        role: 'Full Stack Creator'
+        step: '01',
+        badge: 'Vibe Coding',
+        icon: 'fa-solid fa-rocket',
+        title: 'Antigravity 툴을 이용한 바이브코딩 기술'
       },
       {
-        id: '2',
-        category: 'Web App',
-        title: 'VOCABMASTER(보캅마스터)',
-        img: 'assets/images/vocabmaster.jpg',
-        desc: '언제나 함께하는 나만의 작은 단어장',
-        link: 'https://minhyuk-k1m.github.io/Vocabmaster/',
-        client: 'VocabMaster Project',
-        year: '2026.07',
-        role: 'Web Application Dev'
+        step: '02',
+        badge: 'Languages',
+        icon: 'fa-solid fa-code',
+        title: 'C, PYTHON 등 컴퓨터 프로그래밍 언어'
       },
       {
-        id: '3',
-        category: 'Web App',
-        title: '오늘 뭐 먹지?',
-        img: 'assets/images/today_menu.jpg',
-        desc: '사소하지만 제일 고통스러운 일상의 고민을 해결하세요.',
-        link: 'https://minhyuk-k1m.github.io/menu-recommender/',
-        client: 'Menu Recommender Project',
-        year: '2026.08',
-        role: 'AI Web Application Dev'
+        step: '03',
+        badge: 'Mathematics',
+        icon: 'fa-solid fa-square-root-variable',
+        title: '기초 인공지능 수학'
       },
       {
-        id: '4',
-        category: 'Web App',
-        title: '금호고 스쿨메이트(KUMHO SCHOOLMATE)',
-        img: 'assets/images/kumho_schoolmate.jpg',
-        desc: '금호고등학교 학생과 교실 전자칠판을 위한 올인원 학사·시간표·급식·날씨 플랫폼',
-        link: 'https://kumho-schoolmate.com',
-        client: 'Kumho High School',
-        year: '2026.10',
-        role: 'All-in-One Smart School Platform Dev'
+        step: '04',
+        badge: 'CS Fundamentals',
+        icon: 'fa-solid fa-microchip',
+        title: '컴퓨터 과학'
       }
     ],
+    collaborationValues: [
+      {
+        badge: 'Work Ethic',
+        icon: 'fa-solid fa-shield-halved',
+        title: '성실함 (Work Ethic)',
+        desc: '참여하는 모든 프로젝트와 역할에 책임감을 가지고 약속한 끝까지 성실하게 완수합니다.'
+      },
+      {
+        badge: 'Mutual Respect',
+        icon: 'fa-solid fa-comments',
+        title: '상호 존중 (Respect)',
+        desc: '열린 자세로 다양한 의견에 귀 기울이고 소통하며 더 나은 해답을 찾습니다'
+      },
+      {
+        badge: 'Resilience',
+        icon: 'fa-solid fa-arrows-rotate',
+        title: '회복 탄력성 (Resilience)',
+        desc: '예상치 못한 오류나 실패를 마주하더라도 원인을 분석하고 배움의 발판으로 삼아 다시 도전합니다.'
+      }
+    ],
+    /* 좌에서 우로 이어지는 가로형 화살표 연표 (과거 -> 현재 순) */
     timeline: [
       {
-        date: '2018 - 2020',
-        role: '취미로 첫 코딩 시작, 엔트리를 이용한 프로그램 만들기',
-        company: '태봉초등학교 (Taebong Elementary School)',
-        desc: '초등학교 2학년 때 취미로 코딩을 시작하였고, 엔트리를 이용한 블록코딩으로 작품을 만든 후 공유하였음.'
+        period: '2018 - 2020',
+        keyword: '블록 코딩 입문 · 창작 시작',
+        organization: '태봉초등학교 (Taebong Elementary School)',
+        role: '블록 코딩 입문 및 창작 프로그램 제작·공유',
+        desc: '초등학교 2학년 때 취미로 코딩을 시작하여 엔트리(Entry) 기반의 작품을 스스로 기획·제작하고 공유하며 창작의 즐거움을 배움.',
+        positionPercent: 16.67
       },
       {
-        date: '2021 - 2025',
-        role: 'MICROBIT, C언어 학습 및 심화 구현하기',
-        company: '금호중앙중학교 (Kumho Jungang Middle School)',
-        desc: 'microbit를 이용하여 회로의 기본적 원리를 학습했고 그 후 C언어를 배워 기본 코딩 능력을 배양하였음.'
+        period: '2021 - 2025',
+        keyword: '피지컬 컴퓨팅 & C언어 알고리즘',
+        organization: '금호중앙중학교 (Kumho Jungang Middle School)',
+        role: 'Micro:bit 피지컬 컴퓨팅 및 C언어 알고리즘 학습',
+        desc: 'Micro:bit를 통해 하드웨어·회로의 기본 원리를 익히고, C언어 학습으로 프로그래밍의 기초 논리와 문제 해결력을 배양함.',
+        positionPercent: 50
       },
       {
-        date: '2026 - Present',
-        role: '인공지능을 활용한 웹 앱 개발하기',
-        company: '금호고등학교 (Kumho High School)',
-        desc: 'Google Antigravity를 이용한 웹 앱 개발을 통해 떠오르는 아이디어를 실제로 구현해내고 있음.'
+        period: '2026 - Present',
+        keyword: 'AI 웹 앱 개발 · 실전 배포',
+        organization: '금호고등학교 (Kumho High School)',
+        role: 'AI 활용 웹 애플리케이션 개발 및 실전 프로젝트 배포',
+        desc: '금호고 스쿨메이트, 오늘 뭐 먹지?, 보캅마스터 등 실생활 문제를 해결하는 웹 서비스를 기획·개발하여 운영 중.',
+        positionPercent: 83.33
       }
     ]
-  };
-
-  const STORAGE_KEY = 'minhyuk_portfolio_cms_v300_goldenrod_scene';
-  let portfolioData = loadData();
-
-  function sanitizeImgPath(pathStr, defaultPath) {
-    if (!pathStr || typeof pathStr !== 'string') return defaultPath;
-    let clean = pathStr.replace(/^\.\//, '');
-    if (clean.endsWith('.svg') && !clean.includes('profile')) {
-      return defaultPath;
-    }
-    return clean;
-  }
-
-  function loadData() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed.heroSlides) {
-          parsed.heroSlides.forEach((s, idx) => {
-            s.img = sanitizeImgPath(s.img, DEFAULT_DATA.heroSlides[idx % 4]?.img || 'assets/images/hero-1.jpg');
-          });
-        }
-        if (!parsed.works || parsed.works.length < DEFAULT_DATA.works.length) {
-          parsed.works = JSON.parse(JSON.stringify(DEFAULT_DATA.works));
-        } else {
-          parsed.works.forEach((w, idx) => {
-            w.img = sanitizeImgPath(w.img, DEFAULT_DATA.works[idx % DEFAULT_DATA.works.length]?.img || 'assets/images/kumho_schoolmate.jpg');
-          });
-        }
-        if (parsed.about) {
-          parsed.about.avatarImg = sanitizeImgPath(parsed.about.avatarImg, 'assets/images/profile_ava.jpg');
-        }
-        return parsed;
-      }
-    } catch (e) {
-      console.error('Failed to load storage data:', e);
-    }
-    return JSON.parse(JSON.stringify(DEFAULT_DATA));
-  }
-
+  },
 
   /* ==========================================
-     2. DYNAMIC CONTENT RENDERING
+     CONTACT & SNS 데이터 (GitHub & Instagram @minlnxuk_ 만 표시)
      ========================================== */
-  function renderSite() {
-    renderHero();
-    renderAbout();
-    renderFeatures();
-    renderWorks();
-    renderTimeline();
+  contact: {
+    title: "Let's Work Together",
+    description: '프로젝트 협업, 학업 및 개발 관련 이야기, 혹은 웹사이트에 대한 피드백 등 어떤 연락이든 환영합니다. 아래 이메일이나 문의 폼, 또는 SNS로 편하게 연락해 주세요.',
+    email: 'minhyuk.contact@gmail.com',
+    socials: [
+      {
+        name: 'GitHub',
+        handle: 'github.com/minhyuk-k1m',
+        url: 'https://github.com/minhyuk-k1m',
+        icon: 'fa-brands fa-github'
+      },
+      {
+        name: 'Instagram',
+        handle: '@minlnxuk_',
+        url: 'https://www.instagram.com/minlnxuk_/',
+        icon: 'fa-brands fa-instagram'
+      }
+    ]
   }
+};
 
-  // 1) VISION SLIDER RENDER (Inside Scene 1)
-  let currentSlideIndex = 0;
-  let slideTimer = null;
-  let isAnimating = false;
 
-  function renderHero() {
-    const track = document.getElementById('sliderTrack');
-    const counterTotal = document.getElementById('carouselTotal');
-    if (!track) return;
+/* ============================================================================
+   COMPONENT RENDERERS
+   ============================================================================ */
 
-    const slides = portfolioData.heroSlides || [];
-    const realTotal = slides.length;
-    if (counterTotal) counterTotal.textContent = String(realTotal).padStart(2, '0');
-    if (realTotal === 0) return;
+/**
+ * 1. Hero Section Component (Centered Typography-First Layout, No Profile Photo Card)
+ */
+function renderHeroComponent() {
+  const container = document.getElementById('heroContainer');
+  if (!container) return;
 
-    let html = '';
-    slides.forEach(s => {
-      const cleanImg = sanitizeImgPath(s.img, 'assets/images/hero-1.jpg');
-      html += `
-        <div class="hero-slide">
-          <img src="${cleanImg}" alt="${s.title}" class="hero-slide-img">
-          <div class="hero-slide-overlay">
-            <div class="hero-slide-content">
-              <span class="hero-badge">${s.badge}</span>
-              <h2 class="hero-slide-title">${s.title}</h2>
-              <p class="hero-slide-desc">${s.desc}</p>
+  const { profile, projects } = PORTFOLIO_DATA;
+
+  container.innerHTML = `
+    <div class="flex flex-col items-center text-center fade-up">
+      <!-- Top Eyebrow Status Pill (금호고등학교 재학 제거, 역할만 깔끔하게 표시) -->
+      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-brand-light border border-brand-border text-brand text-xs sm:text-sm font-semibold tracking-wide mb-9">
+        <span class="w-2 h-2 rounded-full bg-brand"></span>
+        <span>${profile.role}</span>
+      </div>
+
+      <!-- Extra-Large Centered Headline with Typewriter Motion -->
+      <h1 class="font-display text-5xl sm:text-7xl lg:text-[84px] font-extrabold text-ink tracking-tight leading-[1.15] mb-8 min-h-[124px] sm:min-h-[172px] lg:min-h-[202px] flex items-center justify-center">
+        <span>
+          <span id="heroTypingText"></span><span id="heroTypingCursor" class="typing-cursor inline-block w-[4px] h-[0.88em] bg-brand ml-1.5 align-middle" aria-hidden="true"></span>
+        </span>
+      </h1>
+
+      <!-- Centered Subheadline -->
+      <p class="text-lg sm:text-xl md:text-2xl text-inkSub font-normal leading-relaxed max-w-2xl mx-auto mb-11">
+        ${profile.subheadline}
+      </p>
+
+      <!-- Centered Core Focus Pills (View Projects / Contact Me 버튼 제거 후 핵심 역량 배지 배치) -->
+      <div class="flex flex-wrap items-center justify-center gap-3.5 mb-12">
+        <div class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-surface border border-line shadow-2xs">
+          <span class="w-7 h-7 rounded-lg bg-brand-light text-brand flex items-center justify-center text-xs shrink-0">
+            <i class="fa-solid fa-lightbulb"></i>
+          </span>
+          <span class="text-xs sm:text-sm font-medium text-ink">일상의 문제를 발견하고 정의하는 기획력</span>
+        </div>
+        <div class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-surface border border-line shadow-2xs">
+          <span class="w-7 h-7 rounded-lg bg-brand-light text-brand flex items-center justify-center text-xs shrink-0">
+            <i class="fa-solid fa-code"></i>
+          </span>
+          <span class="text-xs sm:text-sm font-medium text-ink">직접 동작하는 웹 서비스로 구현하는 실행력</span>
+        </div>
+      </div>
+
+      <!-- Centered 3-Column Summary Metrics Card (Count-up Animation) -->
+      <div class="w-full max-w-2xl bg-surface rounded-2xl border border-line px-6 py-7 shadow-2xs grid grid-cols-3 divide-x divide-line" id="heroMetricsContainer">
+        <div class="px-2 sm:px-4">
+          <div class="font-display text-2xl sm:text-4xl font-extrabold text-ink metric-counter" data-target="${projects.length}" data-suffix="+">0+</div>
+          <div class="text-xs sm:text-sm text-inkMuted mt-1">Live Web Projects</div>
+        </div>
+        <div class="px-2 sm:px-4">
+          <div class="font-display text-2xl sm:text-4xl font-extrabold text-ink metric-counter" data-target="3" data-suffix=" Core">0 Core</div>
+          <div class="text-xs sm:text-sm text-inkMuted mt-1">성실 · 존중 · 회복탄력성</div>
+        </div>
+        <div class="px-2 sm:px-4">
+          <div class="font-display text-2xl sm:text-4xl font-extrabold text-brand metric-counter" data-target="8" data-suffix="+년">0+년</div>
+          <div class="text-xs sm:text-sm text-inkMuted mt-1">2018~ 코딩 &amp; 성장 여정</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+
+/**
+ * 2. Featured Projects Grid Component
+ */
+function renderProjectsComponent() {
+  const grid = document.getElementById('projectsGrid');
+  if (!grid) return;
+
+  grid.innerHTML = PORTFOLIO_DATA.projects.map((project, idx) => {
+    const tagsHtml = project.tags.map(tag => `
+      <span class="font-mono text-[11px] font-medium px-2 py-0.5 rounded bg-bgSub text-inkSub border border-line">
+        ${tag}
+      </span>
+    `).join('');
+
+    return `
+      <article class="project-card bg-surface rounded-xl border border-line overflow-hidden flex flex-col fade-up delay-${(idx % 3) * 100}">
+        <!-- Thumbnail Wrapper -->
+        <a href="#project/${project.id}" class="block relative aspect-[16/10] overflow-hidden bg-bgSub border-b border-line focus-ring" aria-label="${project.title} 상세 보기">
+          <img
+            src="${project.thumbnail}"
+            alt="${project.title}"
+            onerror="this.onerror=null; this.src='${project.fallbackThumbnail}';"
+            class="project-thumb w-full h-full object-cover"
+          >
+          <span class="absolute top-2.5 left-2.5 font-mono text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-surface/90 backdrop-blur-sm text-ink border border-line shadow-2xs">
+            ${project.period}
+          </span>
+        </a>
+
+        <!-- Card Body -->
+        <div class="p-5 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="text-[11px] font-mono font-semibold text-brand uppercase tracking-wider mb-1">
+              ${project.category}
+            </div>
+            <h3 class="font-display text-lg font-bold text-ink mb-1.5 leading-snug">
+              <a href="#project/${project.id}" class="hover:text-brand transition-colors focus-ring rounded">
+                ${project.title}
+              </a>
+            </h3>
+            <p class="text-inkSub text-[13.5px] leading-relaxed mb-4">
+              ${project.summary}
+            </p>
+          </div>
+
+          <div>
+            <!-- Tech Tags -->
+            <div class="flex flex-wrap gap-1 mb-4">
+              ${tagsHtml}
+            </div>
+
+            <!-- Card Footer Actions -->
+            <div class="pt-3 border-t border-line flex items-center justify-between gap-3">
+              <a href="#project/${project.id}" class="inline-flex items-center gap-1.5 text-xs font-bold text-brand hover:underline focus-ring rounded py-1">
+                <span>자세히 보기</span>
+                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </a>
+
+              ${project.liveUrl ? `
+                <a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-inkMuted hover:text-ink transition-colors focus-ring rounded py-1" title="배포된 사이트 새 창으로 열기">
+                  <span>Live Site</span>
+                  <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+              ` : ''}
             </div>
           </div>
         </div>
-      `;
-    });
+      </article>
+    `;
+  }).join('');
+}
 
-    const firstSlide = slides[0];
-    const cleanFirstImg = sanitizeImgPath(firstSlide.img, 'assets/images/hero-1.jpg');
-    html += `
-      <div class="hero-slide">
-        <img src="${cleanFirstImg}" alt="${firstSlide.title}" class="hero-slide-img">
-        <div class="hero-slide-overlay">
-          <div class="hero-slide-content">
-            <span class="hero-badge">${firstSlide.badge}</span>
-            <h2 class="hero-slide-title">${firstSlide.title}</h2>
-            <p class="hero-slide-desc">${firstSlide.desc}</p>
+
+/**
+ * 3. Project Detail Page Component (문제 정의 · 내 역할 · 사용 도구 · 과정 · 결과)
+ */
+function renderProjectDetailPage(projectId) {
+  const container = document.getElementById('projectDetailContainer');
+  if (!container) return;
+
+  const projects = PORTFOLIO_DATA.projects;
+  const currentIndex = projects.findIndex(p => p.id === projectId);
+  const project = projects[currentIndex];
+
+  if (!project) {
+    window.location.hash = '#projects';
+    return;
+  }
+
+  const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
+  const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
+
+  const toolsHtml = project.tools.map(tool => `
+    <span class="font-mono text-xs font-medium px-3 py-1.5 rounded-lg bg-brand-light text-brand border border-brand-border">
+      ${tool}
+    </span>
+  `).join('');
+
+  const processHtml = project.process.map((step, i) => `
+    <li class="flex items-start gap-3.5">
+      <span class="w-6 h-6 rounded-full bg-brand text-white font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+        ${i + 1}
+      </span>
+      <span class="text-inkSub text-base leading-relaxed">${step}</span>
+    </li>
+  `).join('');
+
+  container.innerHTML = `
+    <!-- Top Back Navigation -->
+    <div class="mb-8 flex items-center justify-between gap-4">
+      <a href="#projects" class="inline-flex items-center gap-2 text-sm font-semibold text-inkSub hover:text-brand transition-colors focus-ring rounded-lg px-3 py-2 bg-surface border border-line">
+        <i class="fa-solid fa-arrow-left text-xs"></i>
+        <span>프로젝트 목록으로 돌아가기</span>
+      </a>
+      <span class="font-mono text-xs font-semibold text-inkMuted">${project.period} · ${project.category}</span>
+    </div>
+
+    <!-- Project Title & Summary Header -->
+    <div class="bg-surface rounded-2xl border border-line p-7 sm:p-10 shadow-sm mb-8">
+      <span class="inline-block font-mono text-xs font-semibold uppercase tracking-widest text-brand bg-brand-light px-3 py-1 rounded-full mb-3">
+        Project Case Study
+      </span>
+      <h1 class="font-display text-2xl sm:text-4xl font-extrabold text-ink tracking-tight mb-4">
+        ${project.title}
+      </h1>
+      <p class="text-lg text-inkSub leading-relaxed mb-6">
+        ${project.summary}
+      </p>
+
+      <div class="flex flex-wrap items-center gap-4 pt-6 border-t border-line">
+        ${project.liveUrl ? `
+          <a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn-primary inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand text-white text-sm font-semibold focus-ring">
+            <span>배포된 사이트 방문하기</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          </a>
+        ` : ''}
+      </div>
+    </div>
+
+    <!-- Main Thumbnail Showcase -->
+    <div class="rounded-2xl overflow-hidden border border-line bg-surface shadow-sm mb-8 aspect-[16/10]">
+      <img
+        src="${project.thumbnail}"
+        alt="${project.title} 화면 이미지"
+        onerror="this.onerror=null; this.src='${project.fallbackThumbnail}';"
+        class="w-full h-full object-cover"
+      >
+    </div>
+
+    <!-- Case Study 5 Structured Blocks: 문제 정의 / 내 역할 / 사용 도구 / 과정 / 결과 -->
+    <div class="space-y-6">
+      
+      <!-- 1. 문제 정의 (Problem) -->
+      <div class="bg-surface rounded-2xl border border-line p-7 sm:p-8">
+        <div class="flex items-center gap-2.5 text-brand font-display font-bold text-lg mb-3">
+          <i class="fa-solid fa-circle-question"></i>
+          <h2>1. 문제 정의 (Problem)</h2>
+        </div>
+        <p class="text-inkSub text-base leading-relaxed">
+          ${project.problem}
+        </p>
+      </div>
+
+      <!-- 2. 내 역할 (My Role) & 3. 사용 도구 (Tools) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-surface rounded-2xl border border-line p-7 sm:p-8">
+          <div class="flex items-center gap-2.5 text-brand font-display font-bold text-lg mb-3">
+            <i class="fa-solid fa-user-check"></i>
+            <h2>2. 내 역할 (My Role)</h2>
+          </div>
+          <p class="text-ink font-semibold text-base leading-relaxed">
+            ${project.role}
+          </p>
+        </div>
+
+        <div class="bg-surface rounded-2xl border border-line p-7 sm:p-8">
+          <div class="flex items-center gap-2.5 text-brand font-display font-bold text-lg mb-3">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            <h2>3. 사용 도구 및 기술 (Tools)</h2>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            ${toolsHtml}
           </div>
         </div>
       </div>
-    `;
 
-    track.innerHTML = html;
-    currentSlideIndex = 0;
-    startAutoPlay(realTotal);
-  }
-
-  function goToSlide(targetIndex, realTotal) {
-    const track = document.getElementById('sliderTrack');
-    const counterCurrent = document.getElementById('carouselCurrent');
-    if (!track || realTotal === 0 || isAnimating) return;
-
-    isAnimating = true;
-    currentSlideIndex = targetIndex;
-
-    const slideWidthPercent = 100 / (realTotal + 1);
-    const offsetPercentage = -(currentSlideIndex * slideWidthPercent);
-
-    track.style.transition = 'transform 0.85s cubic-bezier(0.16, 1, 0.3, 1)';
-    track.style.transform = `translateX(${offsetPercentage}%)`;
-
-    const displayIndex = (currentSlideIndex % realTotal) + 1;
-    if (counterCurrent) counterCurrent.textContent = String(displayIndex).padStart(2, '0');
-
-    resetProgressBar();
-
-    setTimeout(() => {
-      if (currentSlideIndex === realTotal) {
-        track.style.transition = 'none';
-        track.style.transform = 'translateX(0%)';
-        currentSlideIndex = 0;
-      }
-      isAnimating = false;
-    }, 850);
-  }
-
-  function startAutoPlay(realTotal) {
-    stopAutoPlay();
-    resetProgressBar();
-    if (realTotal <= 1) return;
-    slideTimer = setInterval(() => {
-      goToSlide(currentSlideIndex + 1, realTotal);
-    }, 4500);
-  }
-
-  function stopAutoPlay() {
-    if (slideTimer) clearInterval(slideTimer);
-    const progressFill = document.getElementById('carouselProgress');
-    if (progressFill) {
-      progressFill.style.transition = 'none';
-      progressFill.style.width = '0%';
-    }
-  }
-
-  function resetProgressBar() {
-    const progressFill = document.getElementById('carouselProgress');
-    if (!progressFill) return;
-    progressFill.style.transition = 'none';
-    progressFill.style.width = '0%';
-    void progressFill.offsetWidth;
-    progressFill.style.transition = 'width 4500ms linear';
-    progressFill.style.width = '100%';
-  }
-
-  const btnPrev = document.getElementById('carouselPrev');
-  const btnNext = document.getElementById('carouselNext');
-  if (btnPrev && btnNext) {
-    btnPrev.onclick = () => {
-      const realTotal = (portfolioData.heroSlides || []).length;
-      if (currentSlideIndex === 0) {
-        const track = document.getElementById('sliderTrack');
-        const slideWidthPercent = 100 / (realTotal + 1);
-        track.style.transition = 'none';
-        track.style.transform = `translateX(-${realTotal * slideWidthPercent}%)`;
-        currentSlideIndex = realTotal;
-        void track.offsetWidth;
-        goToSlide(realTotal - 1, realTotal);
-      } else {
-        goToSlide(currentSlideIndex - 1, realTotal);
-      }
-      startAutoPlay(realTotal);
-    };
-
-    btnNext.onclick = () => {
-      const realTotal = (portfolioData.heroSlides || []).length;
-      goToSlide(currentSlideIndex + 1, realTotal);
-      startAutoPlay(realTotal);
-    };
-  }
-
-  // 2) ABOUT SECTION RENDER
-  function renderAbout() {
-    const container = document.getElementById('aboutContainer');
-    if (!container) return;
-    const a = portfolioData.about || DEFAULT_DATA.about;
-
-    let tagsHtml = '';
-    (a.tags || []).forEach(t => {
-      tagsHtml += `<span class="skill-tag"><i class="fa-solid fa-sparkles"></i> ${t}</span>`;
-    });
-
-    const primaryImg = sanitizeImgPath(a.avatarImg, 'assets/images/profile_ava.jpg');
-
-    container.innerHTML = `
-      <div class="about-img-wrapper">
-        <div class="about-img-card">
-          <img src="${primaryImg}" id="profileAvatarImg" alt="김민혁 프로필 캐릭터">
+      <!-- 4. 과정 (Process) -->
+      <div class="bg-surface rounded-2xl border border-line p-7 sm:p-8">
+        <div class="flex items-center gap-2.5 text-brand font-display font-bold text-lg mb-4">
+          <i class="fa-solid fa-diagram-project"></i>
+          <h2>4. 해결 과정 (Process)</h2>
         </div>
+        <ul class="space-y-3.5">
+          ${processHtml}
+        </ul>
       </div>
 
-      <div class="about-text-content">
-        <div class="section-tag">
-          <i class="fa-solid fa-crown"></i>
-          <span>About Me</span>
+      <!-- 5. 결과 (Outcome) -->
+      <div class="bg-brand-light/70 rounded-2xl border border-brand-border p-7 sm:p-8">
+        <div class="flex items-center gap-2.5 text-brand font-display font-bold text-lg mb-3">
+          <i class="fa-solid fa-trophy"></i>
+          <h2>5. 결과 및 성과 (Outcome)</h2>
+        </div>
+        <p class="text-ink text-base leading-relaxed font-medium">
+          ${project.outcome}
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Bottom Prev / Next Project Navigation -->
+    <div class="mt-10 pt-8 border-t border-line flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+      ${prevProject ? `
+        <a href="#project/${prevProject.id}" class="flex-1 bg-surface border border-line rounded-xl p-4 hover:border-brand transition-colors focus-ring">
+          <div class="text-xs font-mono text-inkMuted mb-1">← 이전 프로젝트</div>
+          <div class="font-bold text-ink text-sm sm:text-base">${prevProject.title}</div>
+        </a>
+      ` : '<div class="flex-1"></div>'}
+
+      ${nextProject ? `
+        <a href="#project/${nextProject.id}" class="flex-1 bg-surface border border-line rounded-xl p-4 hover:border-brand transition-colors text-right focus-ring">
+          <div class="text-xs font-mono text-inkMuted mb-1">다음 프로젝트 →</div>
+          <div class="font-bold text-ink text-sm sm:text-base">${nextProject.title}</div>
+        </a>
+      ` : '<div class="flex-1"></div>'}
+    </div>
+  `;
+}
+
+
+/**
+ * 4. About Section Component (깔끔하게 통합된 카드 구조 + 가로형 화살표 연표)
+ */
+let aboutTimelineTimers = [];
+let aboutTimelineCurrentIndex = 0;
+let aboutTimelineResizeBound = false;
+
+function clearAboutTimelineTimers() {
+  aboutTimelineTimers.forEach(id => clearTimeout(id));
+  aboutTimelineTimers = [];
+}
+
+function addAboutTimelineTimer(fn, delay) {
+  const id = setTimeout(fn, delay);
+  aboutTimelineTimers.push(id);
+  return id;
+}
+
+function renderAboutComponent() {
+  const container = document.getElementById('aboutContainer');
+  if (!container) return;
+
+  const { profile, about } = PORTFOLIO_DATA;
+
+  // Section 2 Left: 관심 분야 (단일 카드 내부의 깔끔한 리스트)
+  const interestsListHtml = about.interests.map(item => `
+    <li class="flex items-center gap-4 p-4 rounded-2xl bg-bgMain border border-line/80">
+      <div class="w-10 h-10 rounded-xl bg-brand-light text-brand flex items-center justify-center shrink-0">
+        <i class="${item.icon} text-sm"></i>
+      </div>
+      <span class="font-medium text-ink text-[15px] sm:text-base leading-snug">
+        ${item.title}
+      </span>
+    </li>
+  `).join('');
+
+  // Section 2 Right: 현재 배우고 있는 기술 (단일 카드 내부의 깔끔한 리스트)
+  const learningListHtml = about.currentlyLearning.map(item => `
+    <li class="flex items-center gap-4 p-4 rounded-2xl bg-bgMain border border-line/80">
+      <div class="w-10 h-10 rounded-xl bg-brand-light text-brand flex items-center justify-center shrink-0">
+        <i class="${item.icon} text-sm"></i>
+      </div>
+      <span class="font-medium text-ink text-[15px] sm:text-base leading-snug">
+        ${item.title}
+      </span>
+    </li>
+  `).join('');
+
+  // Section 3: 협업 방식 및 핵심 가치관 (불필요한 영문 배지/하단 문구 없이 깔끔하게 정리)
+  const valuesItemsHtml = about.collaborationValues.map(val => `
+    <div class="p-6 sm:p-7 rounded-2xl bg-bgMain border border-line/90 flex flex-col">
+      <div class="flex items-center gap-3 mb-3.5">
+        <div class="w-10 h-10 rounded-xl bg-brand-light text-brand flex items-center justify-center shrink-0">
+          <i class="${val.icon} text-sm"></i>
+        </div>
+        <h3 class="font-display text-lg font-bold text-ink">
+          ${val.title}
+        </h3>
+      </div>
+      <p class="text-inkSub text-sm sm:text-[15px] leading-relaxed">
+        ${val.desc}
+      </p>
+    </div>
+  `).join('');
+
+  // Section 4: 가로형 화살표 연표 말풍선 (불필요한 Step 문구·아이콘 제거, 꼬리 중앙 정렬)
+  const timelineMilestonesHtml = about.timeline.map((item, idx) => `
+    <div
+      class="timeline-milestone relative flex flex-col items-center justify-end ${idx === 0 ? 'is-active' : ''}"
+      data-timeline-index="${idx}"
+      tabindex="0"
+      role="button"
+      aria-label="${item.period} ${item.keyword}"
+    >
+      <div class="timeline-bubble w-full text-left">
+        <div class="mb-1.5">
+          <span class="inline-block font-mono text-xs font-bold text-brand bg-brand-light px-2.5 py-0.5 rounded-full">
+            ${item.period}
+          </span>
         </div>
 
-        <h2 class="section-title">
-          ${a.titlePrefix || '나는 '}<span class="highlight-txt">${a.highlightTxt || '성장'}</span>${a.titleSuffix || '합니다.'}
+        <div class="font-display font-bold text-ink text-sm sm:text-base leading-snug">
+          ${item.keyword}
+        </div>
+
+        <div class="timeline-bubble-details border-t border-line/80 pt-3">
+          <div class="text-xs font-bold text-brand mb-1">
+            ${item.organization}
+          </div>
+          <div class="font-bold text-ink text-sm mb-1.5">
+            ${item.role}
+          </div>
+          <p class="text-xs sm:text-[13.5px] text-inkSub leading-relaxed">
+            ${item.desc}
+          </p>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  const timelineTrackAnchorsHtml = about.timeline.map((_, idx) => `
+    <div
+      class="timeline-track-anchor ${idx === 0 ? 'is-active' : ''}"
+      data-anchor-index="${idx}"
+    ></div>
+  `).join('');
+
+  container.innerHTML = `
+    <!-- SECTION 1: 프로필 & 자기소개 -->
+    <div class="fade-up scroll-mt-28">
+      <div class="bg-surface rounded-3xl border border-line p-7 sm:p-10 md:p-12 shadow-sm">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <!-- Left: Profile Photo & Name (불필요한 버튼 제거) -->
+          <div class="lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <div class="w-48 sm:w-56 lg:w-full aspect-square rounded-2xl overflow-hidden bg-bgSub border border-line mb-5">
+              <img
+                src="${profile.avatarImg}"
+                alt="${profile.name} 프로필"
+                onerror="this.onerror=null; this.src='${profile.avatarFallback}';"
+                class="w-full h-full object-cover"
+              >
+            </div>
+            <h2 class="font-display text-2xl font-extrabold text-ink mb-1">${profile.name} (${profile.englishName})</h2>
+            <p class="text-sm text-inkMuted">${profile.school} · ${profile.role}</p>
+          </div>
+
+          <!-- Right: Clean Bio -->
+          <div class="lg:col-span-8">
+            <h3 class="font-display text-xl sm:text-2xl font-extrabold text-ink mb-4">
+              자기소개
+            </h3>
+            <p class="text-ink font-medium text-base sm:text-lg leading-relaxed mb-4">
+              ${about.introLead}
+            </p>
+            <p class="text-inkSub text-[15.5px] sm:text-base leading-relaxed">
+              ${about.introBody}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: 관심 분야 & 현재 배우고 있는 기술 (하나의 통합 카드로 깔끔하게 정리) -->
+    <div class="fade-up scroll-mt-28">
+      <div class="bg-surface rounded-3xl border border-line p-7 sm:p-10 md:p-12 shadow-sm">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 divide-y lg:divide-y-0 lg:divide-x divide-line">
+          <!-- Left: 관심 분야 -->
+          <div>
+            <h2 class="font-display text-xl sm:text-2xl font-extrabold text-ink mb-6 flex items-center gap-2.5">
+              <i class="fa-solid fa-compass text-brand text-lg"></i>
+              <span>관심 분야</span>
+            </h2>
+            <ul class="space-y-3.5">
+              ${interestsListHtml}
+            </ul>
+          </div>
+
+          <!-- Right: 현재 배우고 있는 기술 -->
+          <div class="pt-8 lg:pt-0 lg:pl-12">
+            <h2 class="font-display text-xl sm:text-2xl font-extrabold text-ink mb-6 flex items-center gap-2.5">
+              <i class="fa-solid fa-seedling text-brand text-lg"></i>
+              <span>현재 배우고 있는 기술</span>
+            </h2>
+            <ul class="space-y-3.5">
+              ${learningListHtml}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: 협업 방식 및 핵심 가치관 (하나의 통합 카드로 깔끔하게 정리) -->
+    <div class="fade-up scroll-mt-28">
+      <div class="bg-surface rounded-3xl border border-line p-7 sm:p-10 md:p-12 shadow-sm">
+        <h2 class="font-display text-xl sm:text-2xl font-extrabold text-ink mb-7 flex items-center gap-2.5">
+          <i class="fa-solid fa-handshake-simple text-brand text-lg"></i>
+          <span>협업 방식 및 핵심 가치관</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          ${valuesItemsHtml}
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: 경력 및 성장 과정 (가로형 화살표 연표) -->
+    <div class="fade-up scroll-mt-28" id="aboutTimelineSection">
+      <div class="bg-surface rounded-3xl border border-line p-7 sm:p-10 md:p-12 shadow-sm">
+        <h2 class="font-display text-xl sm:text-2xl font-extrabold text-ink mb-8 flex items-center gap-2.5">
+          <i class="fa-solid fa-route text-brand text-lg"></i>
+          <span>경력 및 성장 과정</span>
         </h2>
 
-        <p class="about-lead">${a.lead || ''}</p>
-        <p class="about-body">${a.body || ''}</p>
-
-        <div class="skills-tags-wrapper">
-          ${tagsHtml}
-        </div>
-      </div>
-    `;
-  }
-
-  // 3) FEATURES (PHILOSOPHY) RENDER
-  function renderFeatures() {
-    const container = document.getElementById('featuresContainer');
-    if (!container) return;
-    const list = portfolioData.features || DEFAULT_DATA.features;
-    const romans = ['I', 'II', 'III', 'IV'];
-
-    let html = '';
-    list.forEach((f, idx) => {
-      const roman = f.roman || romans[idx % romans.length];
-      html += `
-        <div class="feature-card">
-          <span class="card-roman-num">${roman}</span>
-          <div class="feature-icon">
-            <i class="fa-solid ${f.icon}"></i>
+        <!-- Horizontal Arrow Timeline Wrapper -->
+        <div class="relative pt-2 pb-4" id="horizontalTimelineWrapper">
+          <!-- 3 Speech Bubbles Row (고정 높이로 외부 경력 및 성장 과정 네모 칸 크기 고정) -->
+          <div class="grid grid-cols-3 gap-3 sm:gap-6 md:gap-8 items-end h-[280px] sm:h-[265px] md:h-[255px]">
+            ${timelineMilestonesHtml}
           </div>
-          <h3 class="feature-title">${f.title}</h3>
-          <p class="feature-desc">${f.desc}</p>
-        </div>
-      `;
-    });
-    container.innerHTML = html;
-  }
 
-  // 4) WORKS RENDER
-  function renderWorks() {
-    const container = document.getElementById('worksContainer');
-    if (!container) return;
-    const list = portfolioData.works || DEFAULT_DATA.works;
+          <!-- Horizontal Arrow Track positioned directly beneath the Speech Bubble tails -->
+          <div class="mt-5">
+            <div class="timeline-arrow-track w-full" id="timelineArrowTrack">
+              <!-- Progress Fill Bar -->
+              <div
+                id="timelineProgressFill"
+                class="timeline-progress-fill"
+                style="width: 16%;"
+              ></div>
 
-    let html = '';
-    list.forEach((w, idx) => {
-      const targetLink = w.link ? w.link : '#';
-      const createdDate = w.year || '2026.08';
-      const defaultImg = DEFAULT_DATA.works[idx % DEFAULT_DATA.works.length]?.img || 'assets/images/kumho_schoolmate.jpg';
-      const cleanImg = sanitizeImgPath(w.img, defaultImg);
+              <!-- Static Anchor Points directly under each speech bubble tail -->
+              ${timelineTrackAnchorsHtml}
 
-      html += `
-        <div class="work-card" data-category="${w.category}" data-id="${w.id}" data-link="${targetLink}">
-          <div class="work-img-box">
-            <span class="work-date-badge"><i class="fa-regular fa-calendar-days" style="margin-right:0.25rem;"></i>${createdDate}</span>
-            <img src="${cleanImg}" alt="${w.title}">
-            <div class="work-overlay">
-              <div class="work-view-icon" title="작품 링크로 접속"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+              <!-- Moving Indicator Dot -->
+              <div
+                id="timelineMovingDot"
+                class="timeline-moving-dot"
+                style="left: 16%;"
+                aria-hidden="true"
+              ></div>
+
+              <!-- Right Arrowhead -->
+              <div class="timeline-arrow-head" aria-hidden="true"></div>
             </div>
           </div>
-          <div class="work-info">
-            <span class="work-category">${w.category}</span>
-            <h3 class="work-title">${w.title}</h3>
-            <p class="work-desc">${w.desc}</p>
-          </div>
         </div>
-      `;
-    });
-    container.innerHTML = html;
 
-    const cards = container.querySelectorAll('.work-card');
-    cards.forEach(card => {
-      card.addEventListener('click', () => {
-        const linkUrl = card.getAttribute('data-link');
-        if (linkUrl && linkUrl !== '#' && linkUrl.trim() !== '') {
-          window.open(linkUrl, '_blank');
-        } else {
-          const id = card.getAttribute('data-id');
-          openWorkModal(id);
-        }
-      });
-    });
-  }
+      </div>
+    </div>
+  `;
 
-  // 5) TIMELINE RENDER
-  function renderTimeline() {
-    const container = document.getElementById('timelineContainer');
-    if (!container) return;
-    const list = portfolioData.timeline || DEFAULT_DATA.timeline;
+  initAboutHorizontalTimeline();
+}
 
-    let html = '';
-    list.forEach((t) => {
-      html += `
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-date">${t.date}</div>
-            <h3 class="timeline-role">${t.role}</h3>
-            <div class="timeline-company">${t.company}</div>
-            <p class="timeline-desc">${t.desc}</p>
-          </div>
-        </div>
-      `;
-    });
-    container.innerHTML = html;
-  }
+/**
+ * 각 말풍선 꼬리(가로 중앙)의 정확한 좌표를 계산하여 화살표 트랙 위의 점 위치를 동기화하고,
+ * 각 말풍선에서 정확히 5초(5000ms) 동안 머무른 뒤 다음 말풍선 꼬리 아래로 천천히 이동합니다.
+ * 마지막 말풍선이 끝나면 화살표 끝(100%)까지 이동한 뒤 자연스럽게 처음(0%)으로 돌아와 다시 진행합니다.
+ */
+function getAboutTimelineCentersPercent() {
+  const wrapper = document.getElementById('horizontalTimelineWrapper');
+  const track = document.getElementById('timelineArrowTrack');
+  if (!wrapper || !track) return [15.5, 50, 84.5];
 
+  const milestones = Array.from(wrapper.querySelectorAll('.timeline-milestone'));
+  const anchors = Array.from(track.querySelectorAll('.timeline-track-anchor'));
+  const trackRect = track.getBoundingClientRect();
 
-  /* ==========================================
-     3. FULL-SCREEN SCENE TRANSITION ENGINE & GESTURES
-     ========================================== */
-  // Allow local development preview bypass via ?preview=1 while live site shows Maintenance Gate
-  if (window.location.search.includes('preview=1')) {
-    document.body.classList.remove('maintenance-active');
-  }
-
-  const scenes = Array.from(document.querySelectorAll('.scene'));
-  const navLinks = Array.from(document.querySelectorAll('.nav-links .nav-link'));
-  const railDots = Array.from(document.querySelectorAll('.stage-rail .rail-dot'));
-  const mainLogo = document.getElementById('mainLogo');
-  const scrollUnlockBtn = document.getElementById('scrollUnlockBtn');
-
-  let currentSceneIndex = 0;
-  let isSceneTransitioning = false;
-  const TRANSITION_COOLDOWN_MS = 860;
-
-  function syncSceneStates(targetIndex, direction) {
-    document.body.setAttribute('data-active-scene', String(targetIndex));
-
-    // Trigger Golden Shutter Slash gesture
-    if (direction !== 0) {
-      document.body.classList.remove('is-transitioning-down', 'is-transitioning-up');
-      void document.body.offsetWidth;
-      document.body.classList.add(direction > 0 ? 'is-transitioning-down' : 'is-transitioning-up');
-      setTimeout(() => {
-        document.body.classList.remove('is-transitioning-down', 'is-transitioning-up');
-      }, TRANSITION_COOLDOWN_MS);
+  const centersPercent = milestones.map((el, idx) => {
+    const rect = el.getBoundingClientRect();
+    if (trackRect.width > 0 && rect.width > 0) {
+      const centerX = (rect.left + rect.width / 2) - trackRect.left;
+      return (centerX / trackRect.width) * 100;
     }
+    return idx === 0 ? 15.5 : idx === 1 ? 50 : 84.5;
+  });
 
-    scenes.forEach((scene, idx) => {
-      scene.classList.remove('active', 'is-above', 'is-below');
-      if (idx === targetIndex) {
-        scene.classList.add('active');
-        scene.scrollTop = 0;
-      } else if (idx < targetIndex) {
-        scene.classList.add('is-above');
-      } else {
-        scene.classList.add('is-below');
+  anchors.forEach((anchorEl, idx) => {
+    if (centersPercent[idx] !== undefined) {
+      anchorEl.style.left = `${centersPercent[idx]}%`;
+    }
+  });
+
+  return centersPercent;
+}
+
+function syncAboutTimelinePositions(activeIndex) {
+  const wrapper = document.getElementById('horizontalTimelineWrapper');
+  const track = document.getElementById('timelineArrowTrack');
+  const dot = document.getElementById('timelineMovingDot');
+  const fill = document.getElementById('timelineProgressFill');
+  if (!wrapper || !track || !dot || !fill) return;
+
+  const milestones = Array.from(wrapper.querySelectorAll('.timeline-milestone'));
+  const anchors = Array.from(track.querySelectorAll('.timeline-track-anchor'));
+  if (!milestones.length) return;
+
+  const centersPercent = getAboutTimelineCentersPercent();
+  const safeIndex = ((activeIndex % milestones.length) + milestones.length) % milestones.length;
+  const targetPercent = centersPercent[safeIndex];
+
+  anchors.forEach((anchorEl, idx) => {
+    anchorEl.classList.toggle('is-active', idx === safeIndex);
+  });
+
+  dot.style.left = `${targetPercent}%`;
+  fill.style.width = `${targetPercent}%`;
+}
+
+function setAboutTimelineStep(index, immediate = false) {
+  const wrapper = document.getElementById('horizontalTimelineWrapper');
+  const track = document.getElementById('timelineArrowTrack');
+  const dot = document.getElementById('timelineMovingDot');
+  const fill = document.getElementById('timelineProgressFill');
+  if (!wrapper || !track || !dot || !fill) return;
+
+  const milestones = Array.from(wrapper.querySelectorAll('.timeline-milestone'));
+  const anchors = Array.from(track.querySelectorAll('.timeline-track-anchor'));
+  if (!milestones.length) return;
+
+  const safeIndex = ((index % milestones.length) + milestones.length) % milestones.length;
+  aboutTimelineCurrentIndex = safeIndex;
+
+  clearAboutTimelineTimers();
+  dot.classList.remove('no-transition');
+  fill.classList.remove('no-transition');
+  dot.style.opacity = '1';
+  fill.style.opacity = '1';
+
+  if (immediate) {
+    milestones.forEach((el, idx) => {
+      el.classList.toggle('is-active', idx === safeIndex);
+    });
+    syncAboutTimelinePositions(safeIndex);
+
+    // 현재 말풍선에서 5초(5000ms) 동안 멈추었다가 다음 단계로 진행
+    addAboutTimelineTimer(() => {
+      advanceToNextAboutMilestone();
+    }, 5000);
+  } else {
+    // 1. 먼저 이전 말풍선을 부드럽게 접으면서 점을 다음 말풍선 꼬리 아래로 천천히 이동 (1.75s)
+    milestones.forEach(el => el.classList.remove('is-active'));
+    anchors.forEach(a => a.classList.remove('is-active'));
+
+    const centersPercent = getAboutTimelineCentersPercent();
+    const targetPercent = centersPercent[safeIndex];
+    dot.style.left = `${targetPercent}%`;
+    fill.style.width = `${targetPercent}%`;
+
+    // 2. 점이 말풍선 꼬리 아래에 도착할 무렵(1.35초 후) 말풍선을 천천히 펼치고, 그 상태 그대로 5초(5000ms) 동안 정지
+    addAboutTimelineTimer(() => {
+      milestones.forEach((el, idx) => {
+        el.classList.toggle('is-active', idx === safeIndex);
+      });
+      anchors.forEach((a, idx) => {
+        a.classList.toggle('is-active', idx === safeIndex);
+      });
+
+      addAboutTimelineTimer(() => {
+        advanceToNextAboutMilestone();
+      }, 5000);
+    }, 1350);
+  }
+}
+
+function advanceToNextAboutMilestone() {
+  const wrapper = document.getElementById('horizontalTimelineWrapper');
+  const track = document.getElementById('timelineArrowTrack');
+  const dot = document.getElementById('timelineMovingDot');
+  const fill = document.getElementById('timelineProgressFill');
+  if (!wrapper || !track || !dot || !fill) return;
+
+  const milestones = Array.from(wrapper.querySelectorAll('.timeline-milestone'));
+  const anchors = Array.from(track.querySelectorAll('.timeline-track-anchor'));
+  if (!milestones.length) return;
+
+  // 마지막 말풍선(3번째)이 끝난 경우:
+  // 1. 말풍선을 천천히 접고 화살표 끝(100%)까지 이동하는 모션 수행
+  // 2. 화살표 끝에 도달한 뒤 자연스럽게 처음(0%)으로 돌아와 첫 번째 말풍선으로 다시 진행
+  if (aboutTimelineCurrentIndex >= milestones.length - 1) {
+    clearAboutTimelineTimers();
+
+    // 마지막 말풍선 접기 + 화살표 끝(100%)까지 천천히 이동
+    milestones.forEach(el => el.classList.remove('is-active'));
+    anchors.forEach(a => a.classList.remove('is-active'));
+    dot.style.left = '100%';
+    fill.style.width = '100%';
+
+    // 화살표 끝(100%)에 도달한 후 부드럽게 페이드아웃하며 시작점(0%)으로 리셋
+    addAboutTimelineTimer(() => {
+      dot.style.opacity = '0';
+      fill.style.opacity = '0';
+
+      addAboutTimelineTimer(() => {
+        dot.classList.add('no-transition');
+        fill.classList.add('no-transition');
+        dot.style.left = '0%';
+        fill.style.width = '0%';
+
+        // 강제 리플로우 후 트랜지션 복구 및 시작점(0%)에서 페이드인하며 첫 번째 말풍선으로 자연스럽게 이동
+        void dot.offsetWidth;
+        dot.classList.remove('no-transition');
+        fill.classList.remove('no-transition');
+        dot.style.opacity = '1';
+        fill.style.opacity = '1';
+
+        addAboutTimelineTimer(() => {
+          setAboutTimelineStep(0, false);
+        }, 120);
+      }, 550);
+    }, 1750);
+  } else {
+    setAboutTimelineStep(aboutTimelineCurrentIndex + 1, false);
+  }
+}
+
+function initAboutHorizontalTimeline() {
+  const wrapper = document.getElementById('horizontalTimelineWrapper');
+  const section = document.getElementById('aboutTimelineSection');
+  if (!wrapper) return;
+
+  const milestones = Array.from(wrapper.querySelectorAll('.timeline-milestone'));
+  if (!milestones.length) return;
+
+  // 말풍선 클릭 시 해당 말풍선으로 즉시 이동 후 5초 정지 타이머 재시작 (마우스 호버로 자동 이동이 멈추지 않도록 유지)
+  milestones.forEach((el, idx) => {
+    el.addEventListener('click', () => {
+      setAboutTimelineStep(idx, false);
+    });
+
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        setAboutTimelineStep(idx, false);
       }
     });
+  });
 
-    // Update Top-Right Navigation Active State (No Home item; Scene 1..5 map to nav links)
-    navLinks.forEach(link => {
-      const linkScene = parseInt(link.getAttribute('data-scene-link'), 10);
-      link.classList.toggle('active', linkScene === targetIndex);
-    });
-
-    // Update Right-Side Rail Dots
-    railDots.forEach(dot => {
-      const dotScene = parseInt(dot.getAttribute('data-target-scene'), 10);
-      dot.classList.toggle('active', dotScene === targetIndex);
+  if (!aboutTimelineResizeBound) {
+    aboutTimelineResizeBound = true;
+    window.addEventListener('resize', () => {
+      syncAboutTimelinePositions(aboutTimelineCurrentIndex);
     });
   }
 
-  function goToScene(targetIndex) {
-    if (document.body.classList.contains('maintenance-active')) return;
-    if (targetIndex < 0 || targetIndex >= scenes.length) return;
-    if (targetIndex === currentSceneIndex || isSceneTransitioning) return;
+  // 스크롤하여 경력 섹션이 화면에 보일 때 첫 번째 말풍선 꼬리 아래에서 시작하여 5초 후 자동 이동
+  if (section && 'IntersectionObserver' in window) {
+    const timelineObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setAboutTimelineStep(0, true);
+        }
+      });
+    }, { threshold: 0.25 });
+    timelineObserver.observe(section);
+  }
 
-    const portfolioModal = document.getElementById('portfolioModal');
-    if (portfolioModal && portfolioModal.classList.contains('active')) return;
+  setAboutTimelineStep(0, true);
+}
 
-    isSceneTransitioning = true;
-    const direction = targetIndex > currentSceneIndex ? 1 : -1;
-    currentSceneIndex = targetIndex;
 
-    syncSceneStates(targetIndex, direction);
+/**
+ * 5. Contact Section Component (SNS: ONLY GitHub & Instagram @minlnxuk_)
+ */
+function renderContactComponent() {
+  const container = document.getElementById('contactContainer');
+  if (!container) return;
+
+  const { contact } = PORTFOLIO_DATA;
+
+  const socialsHtml = contact.socials.map(social => `
+    <a
+      href="${social.url}"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="${social.name}"
+      class="flex items-center gap-3.5 p-4 rounded-xl bg-surface border border-line hover:border-brand hover:bg-brand-light/40 transition-all focus-ring group"
+    >
+      <span class="w-10 h-10 rounded-lg bg-brand-light text-brand group-hover:bg-brand group-hover:text-white transition-colors flex items-center justify-center text-lg">
+        <i class="${social.icon}"></i>
+      </span>
+      <div>
+        <div class="text-sm font-bold text-ink">${social.name}</div>
+        <div class="text-xs font-mono text-inkMuted">${social.handle}</div>
+      </div>
+    </a>
+  `).join('');
+
+  container.innerHTML = `
+    <!-- Left Column: Title, Guide, Email, GitHub & Instagram Links -->
+    <div class="lg:col-span-5 fade-up">
+      <span class="inline-block font-mono text-xs font-semibold uppercase tracking-widest text-brand bg-brand-light px-3 py-1 rounded-full mb-3">
+        Get In Touch
+      </span>
+      <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-ink mb-4">
+        ${contact.title}
+      </h2>
+      <p class="text-inkSub text-base leading-relaxed mb-8">
+        ${contact.description}
+      </p>
+
+      <!-- Direct Email Box -->
+      <div class="p-5 rounded-2xl bg-surface border border-line mb-6">
+        <div class="text-xs font-mono uppercase tracking-wider text-inkMuted mb-1">Direct Email</div>
+        <a href="mailto:${contact.email}" class="font-display text-lg font-bold text-brand hover:underline break-all focus-ring rounded">
+          ${contact.email}
+        </a>
+      </div>
+
+      <!-- SNS Links (Strictly GitHub & Instagram @minlnxuk_) -->
+      <div class="space-y-3">
+        <div class="text-xs font-mono uppercase tracking-wider text-inkMuted font-semibold">Social Channels</div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+          ${socialsHtml}
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Contact Form -->
+    <div class="lg:col-span-7 fade-up delay-100">
+      <form id="contactForm" class="bg-surface rounded-2xl border border-line p-7 sm:p-9 shadow-sm space-y-5">
+        <div>
+          <label for="senderName" class="block text-sm font-semibold text-ink mb-2">이름</label>
+          <input
+            type="text"
+            id="senderName"
+            name="senderName"
+            required
+            placeholder="홍길동"
+            class="w-full px-4 py-3 rounded-xl bg-bgMain border border-line text-ink placeholder:text-inkMuted text-sm focus:bg-surface transition-colors"
+          >
+        </div>
+
+        <div>
+          <label for="senderEmail" class="block text-sm font-semibold text-ink mb-2">이메일</label>
+          <input
+            type="email"
+            id="senderEmail"
+            name="senderEmail"
+            required
+            placeholder="example@email.com"
+            class="w-full px-4 py-3 rounded-xl bg-bgMain border border-line text-ink placeholder:text-inkMuted text-sm focus:bg-surface transition-colors"
+          >
+        </div>
+
+        <div>
+          <label for="senderMessage" class="block text-sm font-semibold text-ink mb-2">메시지</label>
+          <textarea
+            id="senderMessage"
+            name="senderMessage"
+            rows="5"
+            required
+            placeholder="나누고 싶은 이야기나 문의 내용을 편하게 작성해 주세요."
+            class="w-full px-4 py-3 rounded-xl bg-bgMain border border-line text-ink placeholder:text-inkMuted text-sm focus:bg-surface transition-colors resize-y"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-brand text-white text-sm font-semibold focus-ring"
+        >
+          <span>메시지 보내기</span>
+          <i class="fa-solid fa-paper-plane text-xs"></i>
+        </button>
+      </form>
+    </div>
+  `;
+
+  const form = document.getElementById('contactForm');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalHtml = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>전송 중...</span>';
+
+      setTimeout(() => {
+        form.reset();
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalHtml;
+        showToast('메시지가 성공적으로 전달되었습니다. 감사합니다!');
+      }, 800);
+    });
+  }
+}
+
+
+/**
+ * 6. Footer Component (Copyright + Email + GitHub & Instagram @minlnxuk_)
+ */
+function renderFooterComponent() {
+  const container = document.getElementById('footerContainer');
+  if (!container) return;
+
+  const { profile, contact } = PORTFOLIO_DATA;
+
+  const socialIconsHtml = contact.socials.map(social => `
+    <a
+      href="${social.url}"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="${social.name} (${social.handle})"
+      title="${social.name} (${social.handle})"
+      class="w-9 h-9 rounded-lg bg-surface border border-line text-inkSub hover:text-brand hover:border-brand flex items-center justify-center transition-colors focus-ring"
+    >
+      <i class="${social.icon}"></i>
+    </a>
+  `).join('');
+
+  container.innerHTML = `
+    <div class="text-sm text-inkSub text-center sm:text-left">
+      <p class="font-semibold text-ink">&copy; 2026 ${profile.englishName} (${profile.name}). All rights reserved.</p>
+      <p class="text-xs text-inkMuted mt-0.5">Designed &amp; built with clarity and purpose.</p>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-center gap-4">
+      <a href="mailto:${contact.email}" class="text-sm font-medium text-inkSub hover:text-brand transition-colors focus-ring rounded px-1">
+        ${contact.email}
+      </a>
+      <div class="flex items-center gap-2">
+        ${socialIconsHtml}
+      </div>
+    </div>
+  `;
+}
+
+
+/* ============================================================================
+   INTERACTIONS, ROUTER & INITIALIZATION
+   ============================================================================ */
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  const toastMessage = document.getElementById('toastMessage');
+  if (!toast || !toastMessage) return;
+
+  toastMessage.textContent = message;
+  toast.classList.add('is-shown');
+  setTimeout(() => {
+    toast.classList.remove('is-shown');
+  }, 3200);
+}
+
+function observeFadeUpElements() {
+  const elements = document.querySelectorAll('.fade-up');
+  if (!('IntersectionObserver' in window)) {
+    elements.forEach(el => el.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+
+  elements.forEach(el => observer.observe(el));
+}
+
+function handleRouteChange() {
+  const hash = window.location.hash || '#home';
+  const homeView = document.getElementById('homePageView');
+  const projectsView = document.getElementById('projectsPageView');
+  const aboutView = document.getElementById('aboutPageView');
+  const contactView = document.getElementById('contactPageView');
+  const detailView = document.getElementById('projectDetailView');
+
+  // Close left navigation drawer whenever route changes
+  closeLeftNavDrawerImmediately();
+
+  if (hash === '#projects') {
+    // 1. Projects Page View (페이드 효과 없이 즉시 전환)
+    if (homeView) homeView.classList.add('hidden');
+    if (aboutView) aboutView.classList.add('hidden');
+    if (contactView) contactView.classList.add('hidden');
+    if (detailView) detailView.classList.add('hidden');
+    if (projectsView) {
+      projectsView.classList.remove('hidden');
+      projectsView.querySelectorAll('.fade-up').forEach(el => el.classList.add('is-visible'));
+    }
+    window.scrollTo(0, 0);
+    updateActiveNavItem('projects');
+  } else if (hash === '#about') {
+    // 2. About Page View (페이드 효과 없이 즉시 전환 + 스크롤에 따른 섹션별 순차 Fade-in 인터랙션)
+    if (homeView) homeView.classList.add('hidden');
+    if (projectsView) projectsView.classList.add('hidden');
+    if (contactView) contactView.classList.add('hidden');
+    if (detailView) detailView.classList.add('hidden');
+    window.scrollTo(0, 0);
+    if (aboutView) {
+      aboutView.querySelectorAll('.fade-up').forEach(el => el.classList.remove('is-visible'));
+      aboutView.classList.remove('hidden');
+      observeFadeUpElements();
+      window.requestAnimationFrame(() => {
+        setAboutTimelineStep(0, true);
+      });
+    }
+    updateActiveNavItem('about');
+  } else if (hash === '#contact') {
+    // 3. Contact Page View (독립 페이지 - 페이드 효과 없이 즉시 전환)
+    if (homeView) homeView.classList.add('hidden');
+    if (projectsView) projectsView.classList.add('hidden');
+    if (aboutView) aboutView.classList.add('hidden');
+    if (detailView) detailView.classList.add('hidden');
+    if (contactView) {
+      contactView.classList.remove('hidden');
+      contactView.querySelectorAll('.fade-up').forEach(el => el.classList.add('is-visible'));
+    }
+    window.scrollTo(0, 0);
+    updateActiveNavItem('contact');
+  } else if (hash.startsWith('#project/')) {
+    // 4. Individual Project Detail View (페이드 효과 없이 즉시 전환)
+    const projectId = hash.replace('#project/', '').trim();
+    if (homeView) homeView.classList.add('hidden');
+    if (projectsView) projectsView.classList.add('hidden');
+    if (aboutView) aboutView.classList.add('hidden');
+    if (contactView) contactView.classList.add('hidden');
+    if (detailView) {
+      detailView.classList.remove('hidden');
+      renderProjectDetailPage(projectId);
+    }
+    window.scrollTo(0, 0);
+    updateActiveNavItem('projects');
+  } else {
+    // 5. Home View (처음 진입을 제외하면 페이드 효과 없이 즉시 전환, 타이핑 문구 무작위 갱신)
+    const wasSubPageVisible =
+      (projectsView && !projectsView.classList.contains('hidden')) ||
+      (aboutView && !aboutView.classList.contains('hidden')) ||
+      (contactView && !contactView.classList.contains('hidden')) ||
+      (detailView && !detailView.classList.contains('hidden'));
+
+    if (projectsView) projectsView.classList.add('hidden');
+    if (aboutView) aboutView.classList.add('hidden');
+    if (contactView) contactView.classList.add('hidden');
+    if (detailView) detailView.classList.add('hidden');
+    if (homeView) {
+      homeView.classList.remove('hidden');
+      if (wasSubPageVisible) {
+        initHeroTypewriter();
+      }
+    }
+    window.scrollTo(0, 0);
+    updateActiveNavItem('home');
+  }
+}
+
+function updateActiveNavItem(sectionId) {
+  document.querySelectorAll('.logo-drawer-item').forEach(link => {
+    const navTarget = link.getAttribute('data-nav');
+    const isActive = navTarget === sectionId;
+    link.classList.toggle('active', isActive);
+    link.setAttribute('aria-current', isActive ? 'page' : 'false');
+  });
+}
+
+let closeLeftNavTimer = null;
+
+function openLeftNavDrawer() {
+  if (closeLeftNavTimer) clearTimeout(closeLeftNavTimer);
+  const drawer = document.getElementById('leftNavDrawer');
+  const backdrop = document.getElementById('leftNavBackdrop');
+  const trigger = document.getElementById('headerLogoBtn');
+  if (drawer) drawer.classList.add('is-open');
+  if (backdrop) backdrop.classList.add('is-open');
+  if (trigger) trigger.setAttribute('aria-expanded', 'true');
+}
+
+function scheduleCloseLeftNav() {
+  if (closeLeftNavTimer) clearTimeout(closeLeftNavTimer);
+  closeLeftNavTimer = setTimeout(() => {
+    closeLeftNavDrawerImmediately();
+  }, 500);
+}
+
+function closeLeftNavDrawerImmediately() {
+  if (closeLeftNavTimer) clearTimeout(closeLeftNavTimer);
+  const drawer = document.getElementById('leftNavDrawer');
+  const backdrop = document.getElementById('leftNavBackdrop');
+  const trigger = document.getElementById('headerLogoBtn');
+  if (drawer) drawer.classList.remove('is-open');
+  if (backdrop) backdrop.classList.remove('is-open');
+  if (trigger) trigger.setAttribute('aria-expanded', 'false');
+}
+
+function initLeftNavDrawer() {
+  const trigger = document.getElementById('headerLogoBtn');
+  const logoContainer = document.getElementById('logoNavContainer');
+  const drawer = document.getElementById('leftNavDrawer');
+  const backdrop = document.getElementById('leftNavBackdrop');
+
+  if (!drawer) return;
+
+  // 1. Mouse hover on logo triggers drawer smoothly
+  if (logoContainer) {
+    logoContainer.addEventListener('mouseenter', () => {
+      openLeftNavDrawer();
+    });
+    logoContainer.addEventListener('mouseleave', () => {
+      scheduleCloseLeftNav();
+    });
+  }
+
+  // 2. Mouse hover inside drawer keeps it open; mouseleave schedules close
+  drawer.addEventListener('mouseenter', () => {
+    if (closeLeftNavTimer) clearTimeout(closeLeftNavTimer);
+  });
+  drawer.addEventListener('mouseleave', () => {
+    scheduleCloseLeftNav();
+  });
+
+  // 3. Click on logo button toggles drawer
+  if (trigger) {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      const isOpen = drawer.classList.contains('is-open');
+      if (isOpen) {
+        closeLeftNavDrawerImmediately();
+      } else {
+        openLeftNavDrawer();
+      }
+    });
+  }
+
+  // 4. Backdrop click closes drawer
+  if (backdrop) {
+    backdrop.addEventListener('click', closeLeftNavDrawerImmediately);
+  }
+
+  // 5. Drawer menu links close drawer immediately; clicking Home re-runs random headline if already on Home
+  drawer.querySelectorAll('.logo-drawer-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const targetNav = item.getAttribute('data-nav');
+      const currentHash = window.location.hash || '#home';
+      closeLeftNavDrawerImmediately();
+      if (targetNav === 'home' && (currentHash === '#home' || currentHash === '')) {
+        initHeroTypewriter();
+        window.scrollTo(0, 0);
+      }
+    });
+  });
+
+  // 6. Escape key closes drawer
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeLeftNavDrawerImmediately();
+    }
+  });
+}
+
+function initHeaderAndScrollSpy() {
+  const header = document.getElementById('siteHeader');
+
+  function onScroll() {
+    const scrollY = window.scrollY || window.pageYOffset;
+    if (header) {
+      header.classList.toggle('is-scrolled', scrollY > 16);
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
+
+function initMobileMenu() {
+  // Unified into initLeftNavDrawer()
+}
+
+/* ============================================================================
+   HERO MOTIONS: RANDOM HEADLINE TYPEWRITER & COUNT-UP ANIMATION
+   ============================================================================ */
+let typewriterTimer = null;
+let lastHeadlineIndex = -1;
+
+function pickRandomHeadline() {
+  const list = PORTFOLIO_DATA.profile.headlines;
+  if (!Array.isArray(list) || list.length === 0) {
+    return "문제를 해결하는 학생,\n김민혁입니다.";
+  }
+  if (list.length === 1) return list[0];
+
+  let nextIdx = Math.floor(Math.random() * list.length);
+  if (lastHeadlineIndex !== -1 && nextIdx === lastHeadlineIndex) {
+    nextIdx = (nextIdx + 1 + Math.floor(Math.random() * (list.length - 1))) % list.length;
+  }
+  lastHeadlineIndex = nextIdx;
+  return list[nextIdx];
+}
+
+function initHeroTypewriter() {
+  const targetEl = document.getElementById('heroTypingText');
+  const cursorEl = document.getElementById('heroTypingCursor');
+  if (!targetEl) return;
+
+  if (typewriterTimer) clearTimeout(typewriterTimer);
+
+  const fullText = pickRandomHeadline();
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const parts = fullText.split('\n');
+    targetEl.innerHTML = `${parts[0]}<br><span class="text-brand">김민혁</span>입니다.`;
+    if (cursorEl) cursorEl.style.display = 'none';
+    return;
+  }
+
+  if (cursorEl) cursorEl.style.display = 'inline-block';
+
+  let charIndex = 0;
+  targetEl.innerHTML = '';
+
+  function typeNextChar() {
+    if (charIndex <= fullText.length) {
+      const currentRaw = fullText.slice(0, charIndex);
+      let formattedHtml = currentRaw;
+
+      if (currentRaw.includes('\n')) {
+        const parts = currentRaw.split('\n');
+        const line1 = parts[0];
+        const line2 = parts[1] || '';
+
+        let nameFormatted = '';
+        if (line2.length <= 3) {
+          nameFormatted = `<span class="text-brand">${line2}</span>`;
+        } else {
+          nameFormatted = `<span class="text-brand">${line2.slice(0, 3)}</span>${line2.slice(3)}`;
+        }
+        formattedHtml = `${line1}<br>${nameFormatted}`;
+      }
+
+      targetEl.innerHTML = formattedHtml;
+      charIndex++;
+
+      if (charIndex <= fullText.length) {
+        const isBreak = currentRaw.endsWith('\n');
+        const delay = isBreak ? 240 : 65;
+        typewriterTimer = setTimeout(typeNextChar, delay);
+      } else {
+        // 타이핑 완료 시 깜빡이는 입력 커서 선 즉시 제거
+        if (cursorEl) cursorEl.style.display = 'none';
+      }
+    }
+  }
+
+  typewriterTimer = setTimeout(typeNextChar, 200);
+}
+
+function initHeroCounters() {
+  const counterEls = document.querySelectorAll('.metric-counter');
+  if (!counterEls.length) return;
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    counterEls.forEach(el => {
+      const target = el.getAttribute('data-target') || '0';
+      const suffix = el.getAttribute('data-suffix') || '';
+      el.textContent = target + suffix;
+    });
+    return;
+  }
+
+  counterEls.forEach(el => {
+    const target = parseInt(el.getAttribute('data-target'), 10) || 0;
+    const suffix = el.getAttribute('data-suffix') || '';
+    const duration = 1500;
+    let startTimestamp = null;
+
+    function step(timestamp) {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const elapsed = timestamp - startTimestamp;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(ease * target);
+      el.textContent = current + suffix;
+
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        el.textContent = target + suffix;
+      }
+    }
 
     setTimeout(() => {
-      isSceneTransitioning = false;
-    }, TRANSITION_COOLDOWN_MS);
-  }
-
-  // Initialize Scene 0 (Intro Logo Gate)
-  syncSceneStates(0, 0);
-
-  // Wheel / Trackpad Gesture Handler
-  window.addEventListener('wheel', (e) => {
-    if (document.body.classList.contains('maintenance-active')) return;
-    const portfolioModal = document.getElementById('portfolioModal');
-    if (portfolioModal && portfolioModal.classList.contains('active')) return;
-    if (isSceneTransitioning) return;
-
-    const deltaY = e.deltaY;
-    if (Math.abs(deltaY) < 18) return;
-
-    const activeScene = scenes[currentSceneIndex];
-    if (activeScene) {
-      const canScrollDownInternally = activeScene.scrollHeight - activeScene.clientHeight - activeScene.scrollTop > 6;
-      const canScrollUpInternally = activeScene.scrollTop > 6;
-
-      if (deltaY > 0 && canScrollDownInternally) return;
-      if (deltaY < 0 && canScrollUpInternally) return;
-    }
-
-    if (deltaY > 0 && currentSceneIndex < scenes.length - 1) {
-      e.preventDefault();
-      goToScene(currentSceneIndex + 1);
-    } else if (deltaY < 0 && currentSceneIndex > 0) {
-      e.preventDefault();
-      goToScene(currentSceneIndex - 1);
-    }
-  }, { passive: false });
-
-  // Touch Swipe Vertical Gesture Handler (Mobile / Tablet)
-  let touchStartY = 0;
-  let touchStartX = 0;
-
-  window.addEventListener('touchstart', (e) => {
-    if (!e.touches || e.touches.length === 0) return;
-    touchStartY = e.touches[0].clientY;
-    touchStartX = e.touches[0].clientX;
-  }, { passive: true });
-
-  window.addEventListener('touchend', (e) => {
-    if (!e.changedTouches || e.changedTouches.length === 0 || isSceneTransitioning) return;
-    const deltaY = touchStartY - e.changedTouches[0].clientY;
-    const deltaX = Math.abs(touchStartX - e.changedTouches[0].clientX);
-
-    // Ignore horizontal swipes (e.g., Vision slider)
-    if (deltaX > Math.abs(deltaY) || Math.abs(deltaY) < 48) return;
-
-    const activeScene = scenes[currentSceneIndex];
-    if (activeScene) {
-      const canScrollDownInternally = activeScene.scrollHeight - activeScene.clientHeight - activeScene.scrollTop > 8;
-      const canScrollUpInternally = activeScene.scrollTop > 8;
-
-      if (deltaY > 0 && canScrollDownInternally) return;
-      if (deltaY < 0 && canScrollUpInternally) return;
-    }
-
-    if (deltaY > 0 && currentSceneIndex < scenes.length - 1) {
-      goToScene(currentSceneIndex + 1);
-    } else if (deltaY < 0 && currentSceneIndex > 0) {
-      goToScene(currentSceneIndex - 1);
-    }
-  }, { passive: true });
-
-  // Keyboard Navigation
-  window.addEventListener('keydown', (e) => {
-    const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
-    if (tag === 'input' || tag === 'textarea') return;
-
-    if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-      e.preventDefault();
-      goToScene(currentSceneIndex + 1);
-    } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-      e.preventDefault();
-      goToScene(currentSceneIndex - 1);
-    } else if (e.key === 'Home') {
-      e.preventDefault();
-      goToScene(0);
-    }
+      window.requestAnimationFrame(step);
+    }, 350);
   });
+}
 
-  // Top-Left Logo Click -> Return to Scene 0 (Intro Logo Gate)
-  if (mainLogo) {
-    mainLogo.addEventListener('click', (e) => {
-      e.preventDefault();
-      closeMobileDrawer();
-      goToScene(0);
-    });
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  renderHeroComponent();
+  renderProjectsComponent();
+  renderAboutComponent();
+  renderContactComponent();
+  renderFooterComponent();
 
-  // Intro Scroll Unlock Button Click -> Scene 1
-  if (scrollUnlockBtn) {
-    scrollUnlockBtn.addEventListener('click', () => {
-      goToScene(1);
-    });
-  }
+  initHeroTypewriter();
+  initHeroCounters();
 
-  // Top-Right Nav Links Click
-  navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = parseInt(link.getAttribute('data-scene-link'), 10);
-      closeMobileDrawer();
-      if (!isNaN(target)) {
-        goToScene(target);
-      }
-    });
-  });
+  observeFadeUpElements();
+  initLeftNavDrawer();
+  initHeaderAndScrollSpy();
+  initMobileMenu();
 
-  // Right-Side Rail Dots Click
-  railDots.forEach(dot => {
-    dot.addEventListener('click', () => {
-      const target = parseInt(dot.getAttribute('data-target-scene'), 10);
-      if (!isNaN(target)) {
-        goToScene(target);
-      }
-    });
-  });
-
-
-  /* ==========================================
-     4. INTRO LOGO 3D POISE TILT & LUXURY CURSOR
-     ========================================== */
-  const grandLogoStage = document.getElementById('grandLogoStage');
-  const cursorDot = document.getElementById('luxuryCursorDot');
-  const cursorRing = document.getElementById('luxuryCursorRing');
-
-  window.addEventListener('mousemove', (e) => {
-    if (cursorDot && cursorRing) {
-      cursorDot.style.transform = `translate3d(${e.clientX - 3}px, ${e.clientY - 3}px, 0)`;
-      cursorRing.style.transform = `translate3d(${e.clientX - 18}px, ${e.clientY - 18}px, 0)`;
-    }
-
-    if (grandLogoStage && currentSceneIndex === 0) {
-      const normX = (e.clientX / window.innerWidth - 0.5) * 2;
-      const normY = (e.clientY / window.innerHeight - 0.5) * 2;
-      grandLogoStage.style.setProperty('--tilt-y', `${(normX * 7).toFixed(2)}deg`);
-      grandLogoStage.style.setProperty('--tilt-x', `${(-normY * 6).toFixed(2)}deg`);
-    }
-  }, { passive: true });
-
-  document.querySelectorAll('a, button, .work-card, .feature-card').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      if (cursorRing) cursorRing.classList.add('hovered');
-    });
-    el.addEventListener('mouseleave', () => {
-      if (cursorRing) cursorRing.classList.remove('hovered');
-    });
-  });
-
-
-  /* ==========================================
-     5. PORTFOLIO FILTERING & WORK MODAL
-     ========================================== */
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filterValue = btn.getAttribute('data-filter');
-      const workCards = document.querySelectorAll('.work-card');
-
-      workCards.forEach(card => {
-        const cardCat = card.getAttribute('data-category');
-        if (filterValue === 'all' || filterValue === cardCat) {
-          card.style.display = 'flex';
-          setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0) scale(1)';
-          }, 40);
-        } else {
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(16px) scale(0.95)';
-          setTimeout(() => {
-            card.style.display = 'none';
-          }, 260);
-        }
-      });
-    });
-  });
-
-  const portfolioModal = document.getElementById('portfolioModal');
-  const modalCloseBtn = document.getElementById('modalCloseBtn');
-
-  function openWorkModal(id) {
-    const work = (portfolioData.works || []).find(w => String(w.id) === String(id));
-    if (!work || !portfolioModal) return;
-
-    document.getElementById('modalCategory').textContent = work.category;
-    document.getElementById('modalTitle').textContent = work.title;
-    document.getElementById('modalImg').src = sanitizeImgPath(work.img, 'assets/images/seoultourguide.jpg');
-    document.getElementById('modalDesc').textContent = work.desc;
-    document.getElementById('modalClient').textContent = work.client || 'Client';
-    document.getElementById('modalYear').textContent = work.year || '2026.08';
-    document.getElementById('modalRole').textContent = work.role || 'Design & Development';
-
-    portfolioModal.classList.add('active');
-  }
-
-  if (modalCloseBtn) {
-    modalCloseBtn.onclick = () => {
-      portfolioModal.classList.remove('active');
-    };
-  }
-
-
-  /* ==========================================
-     6. CONTACT FORM, TOAST & MOBILE DRAWER
-     ========================================== */
-  const toast = document.getElementById('toast');
-  function showToast(message) {
-    if (!toast) return;
-    const toastMsg = document.getElementById('toastMsg');
-    if (toastMsg) toastMsg.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3200);
-  }
-
-  const contactForm = document.getElementById('contactForm');
-  if (contactForm) {
-    contactForm.onsubmit = (e) => {
-      e.preventDefault();
-      const submitBtn = contactForm.querySelector('.btn-submit');
-      const orig = submitBtn.innerHTML;
-      submitBtn.textContent = '메시지 전송 중...';
-      submitBtn.disabled = true;
-
-      setTimeout(() => {
-        submitBtn.innerHTML = orig;
-        submitBtn.disabled = false;
-        contactForm.reset();
-        showToast('성공적으로 메시지가 전달되었습니다. 감사합니다!');
-      }, 1200);
-    };
-  }
-
-  const mobileToggle = document.getElementById('mobileToggle');
-  const navMenu = document.querySelector('.nav-links');
-  const navOverlay = document.getElementById('navOverlay');
-
-  function closeMobileDrawer() {
-    if (navMenu) navMenu.classList.remove('mobile-active');
-    if (mobileToggle) mobileToggle.classList.remove('active');
-    if (navOverlay) navOverlay.classList.remove('active');
-  }
-
-  if (mobileToggle && navMenu) {
-    mobileToggle.onclick = () => {
-      const isExpanded = navMenu.classList.toggle('mobile-active');
-      mobileToggle.classList.toggle('active', isExpanded);
-      if (navOverlay) navOverlay.classList.toggle('active', isExpanded);
-    };
-  }
-
-  if (navOverlay) {
-    navOverlay.onclick = closeMobileDrawer;
-  }
-
-  // Render Site Content
-  renderSite();
-
+  window.addEventListener('hashchange', handleRouteChange);
+  handleRouteChange();
 });
