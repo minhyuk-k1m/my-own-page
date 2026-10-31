@@ -1171,16 +1171,14 @@ function renderContactComponent() {
         <div>
           <label for="senderEmail" class="block text-sm font-semibold text-ink mb-2">이메일</label>
           <input
-            type="text"
+            type="email"
             id="senderEmail"
             name="senderEmail"
             required
-            inputmode="email"
             autocomplete="email"
             autocapitalize="none"
             autocorrect="off"
             spellcheck="false"
-            lang="en"
             placeholder="example@email.com"
             class="w-full px-4 py-3 rounded-xl bg-bgMain border border-line text-ink placeholder:text-inkMuted text-sm focus:bg-surface transition-colors"
           >
@@ -1217,42 +1215,30 @@ function renderContactComponent() {
   const nameInput = document.getElementById('senderName');
   const messageInput = document.getElementById('senderMessage');
 
-  // 전각 문자(전각 영문, 고리 온점 。 등)가 입력되는 즉시 일반 영문과 표준 마침표(.)로 실시간 자동 변환
+  // 타이핑 도중 input.value를 실시간 수정하면 한글/전각 IME 조합이 깨져 글자가 2번씩 중복 입력되므로,
+  // 포커스가 벗어날 때(blur) 및 입력 완료 시(change)에 안전하게 표준 문자/마침표로 자동 변환합니다.
   if (emailInput) {
-    emailInput.addEventListener('input', () => {
-      const start = emailInput.selectionStart;
-      const end = emailInput.selectionEnd;
-      const normalized = normalizeFullwidthChars(emailInput.value, true);
-      if (emailInput.value !== normalized) {
-        emailInput.value = normalized;
-        if (start !== null && end !== null) {
-          emailInput.setSelectionRange(start, end);
-        }
-      }
-    });
+    const cleanEmail = () => {
+      emailInput.value = normalizeFullwidthChars(emailInput.value, true);
+    };
+    emailInput.addEventListener('blur', cleanEmail);
+    emailInput.addEventListener('change', cleanEmail);
   }
 
   if (nameInput) {
-    nameInput.addEventListener('input', () => {
-      const normalized = normalizeFullwidthChars(nameInput.value, false);
-      if (nameInput.value !== normalized) {
-        nameInput.value = normalized;
-      }
-    });
+    const cleanName = () => {
+      nameInput.value = normalizeFullwidthChars(nameInput.value, false);
+    };
+    nameInput.addEventListener('blur', cleanName);
+    nameInput.addEventListener('change', cleanName);
   }
 
   if (messageInput) {
-    messageInput.addEventListener('input', () => {
-      const start = messageInput.selectionStart;
-      const end = messageInput.selectionEnd;
-      const normalized = normalizeFullwidthChars(messageInput.value, false);
-      if (messageInput.value !== normalized) {
-        messageInput.value = normalized;
-        if (start !== null && end !== null) {
-          messageInput.setSelectionRange(start, end);
-        }
-      }
-    });
+    const cleanMessage = () => {
+      messageInput.value = normalizeFullwidthChars(messageInput.value, false);
+    };
+    messageInput.addEventListener('blur', cleanMessage);
+    messageInput.addEventListener('change', cleanMessage);
   }
 
   if (form) {
