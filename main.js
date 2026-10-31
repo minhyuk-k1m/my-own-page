@@ -248,6 +248,24 @@ const PORTFOLIO_DATA = {
 
 
 /* ============================================================================
+   SMARTPHONE / MOBILE USER DETECTION HELPER
+   ============================================================================ */
+function isSmartphoneUser() {
+  const ua = navigator.userAgent || '';
+  const uaMobile = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua) || Boolean(navigator.userAgentData && navigator.userAgentData.mobile);
+  const smallViewport = window.innerWidth < 768;
+  return uaMobile || smallViewport;
+}
+
+function updateSmartphoneEnvironmentClass() {
+  const isMobile = isSmartphoneUser();
+  document.documentElement.classList.toggle('is-smartphone', isMobile);
+  if (document.body) {
+    document.body.classList.toggle('is-smartphone', isMobile);
+  }
+}
+
+/* ============================================================================
    COMPONENT RENDERERS
    ============================================================================ */
 
@@ -263,32 +281,32 @@ function renderHeroComponent() {
   container.innerHTML = `
     <div class="flex flex-col items-center text-center fade-up">
       <!-- Top Eyebrow Status Pill (금호고등학교 재학 제거, 역할만 깔끔하게 표시) -->
-      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-brand-light border border-brand-border text-brand text-xs sm:text-sm font-semibold tracking-wide mb-9">
+      <div class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-brand-light border border-brand-border text-brand text-xs sm:text-sm font-semibold tracking-wide mb-7 sm:mb-9">
         <span class="w-2 h-2 rounded-full bg-brand"></span>
         <span>${profile.role}</span>
       </div>
 
-      <!-- Extra-Large Centered Headline with Typewriter Motion -->
-      <h1 class="font-display text-5xl sm:text-7xl lg:text-[84px] font-extrabold text-ink tracking-tight leading-[1.15] mb-8 min-h-[124px] sm:min-h-[172px] lg:min-h-[202px] flex items-center justify-center">
+      <!-- Extra-Large Centered Headline with Typewriter Motion (모바일 2줄 고정 최적화) -->
+      <h1 class="font-display text-[31px] sm:text-6xl md:text-7xl lg:text-[84px] font-extrabold text-ink tracking-tight leading-[1.18] sm:leading-[1.15] mb-7 sm:mb-8 min-h-[84px] sm:min-h-[164px] lg:min-h-[202px] flex items-center justify-center">
         <span>
-          <span id="heroTypingText"></span><span id="heroTypingCursor" class="typing-cursor inline-block w-[4px] h-[0.88em] bg-brand ml-1.5 align-middle" aria-hidden="true"></span>
+          <span id="heroTypingText"></span><span id="heroTypingCursor" class="typing-cursor inline-block w-[3px] sm:w-[4px] h-[0.88em] bg-brand ml-1 sm:ml-1.5 align-middle" aria-hidden="true"></span>
         </span>
       </h1>
 
       <!-- Centered Subheadline -->
-      <p class="text-lg sm:text-xl md:text-2xl text-inkSub font-normal leading-relaxed max-w-2xl mx-auto mb-11">
+      <p class="text-base sm:text-xl md:text-2xl text-inkSub font-normal leading-relaxed max-w-2xl mx-auto mb-9 sm:mb-11 px-1">
         ${profile.subheadline}
       </p>
 
       <!-- Centered Core Focus Pills (View Projects / Contact Me 버튼 제거 후 핵심 역량 배지 배치) -->
-      <div class="flex flex-wrap items-center justify-center gap-3.5 mb-12">
-        <div class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-surface border border-line shadow-2xs">
+      <div class="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-3.5 mb-10 sm:mb-12 w-full sm:w-auto">
+        <div class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-surface border border-line shadow-2xs w-full sm:w-auto justify-center">
           <span class="w-7 h-7 rounded-lg bg-brand-light text-brand flex items-center justify-center text-xs shrink-0">
             <i class="fa-solid fa-lightbulb"></i>
           </span>
           <span class="text-xs sm:text-sm font-medium text-ink">일상의 문제를 발견하고 정의하는 기획력</span>
         </div>
-        <div class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-surface border border-line shadow-2xs">
+        <div class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-surface border border-line shadow-2xs w-full sm:w-auto justify-center">
           <span class="w-7 h-7 rounded-lg bg-brand-light text-brand flex items-center justify-center text-xs shrink-0">
             <i class="fa-solid fa-code"></i>
           </span>
@@ -297,18 +315,18 @@ function renderHeroComponent() {
       </div>
 
       <!-- Centered 3-Column Summary Metrics Card (Count-up Animation) -->
-      <div class="w-full max-w-2xl bg-surface rounded-2xl border border-line px-6 py-7 shadow-2xs grid grid-cols-3 divide-x divide-line" id="heroMetricsContainer">
-        <div class="px-2 sm:px-4">
-          <div class="font-display text-2xl sm:text-4xl font-extrabold text-ink metric-counter" data-target="${projects.length}" data-suffix="+">0+</div>
-          <div class="text-xs sm:text-sm text-inkMuted mt-1">Live Web Projects</div>
+      <div class="w-full max-w-2xl bg-surface rounded-2xl border border-line px-3 sm:px-6 py-5 sm:py-7 shadow-2xs grid grid-cols-3 divide-x divide-line" id="heroMetricsContainer">
+        <div class="px-1.5 sm:px-4">
+          <div class="font-display text-xl sm:text-4xl font-extrabold text-ink metric-counter" data-target="${projects.length}" data-suffix="+">0+</div>
+          <div class="text-[11px] sm:text-sm text-inkMuted mt-1 leading-tight">Live Web Projects</div>
         </div>
-        <div class="px-2 sm:px-4">
-          <div class="font-display text-2xl sm:text-4xl font-extrabold text-ink metric-counter" data-target="3" data-suffix=" Core">0 Core</div>
-          <div class="text-xs sm:text-sm text-inkMuted mt-1">성실 · 존중 · 회복탄력성</div>
+        <div class="px-1.5 sm:px-4">
+          <div class="font-display text-xl sm:text-4xl font-extrabold text-ink metric-counter" data-target="3" data-suffix=" Core">0 Core</div>
+          <div class="text-[11px] sm:text-sm text-inkMuted mt-1 leading-tight">성실 · 존중 · 회복탄력성</div>
         </div>
-        <div class="px-2 sm:px-4">
-          <div class="font-display text-2xl sm:text-4xl font-extrabold text-brand metric-counter" data-target="8" data-suffix="+년">0+년</div>
-          <div class="text-xs sm:text-sm text-inkMuted mt-1">2018~ 코딩 &amp; 성장 여정</div>
+        <div class="px-1.5 sm:px-4">
+          <div class="font-display text-xl sm:text-4xl font-extrabold text-brand metric-counter" data-target="8" data-suffix="+년">0+년</div>
+          <div class="text-[11px] sm:text-sm text-inkMuted mt-1 leading-tight">2018~ 코딩 &amp; 성장 여정</div>
         </div>
       </div>
     </div>
@@ -425,7 +443,7 @@ function renderProjectDetailPage(projectId) {
 
   container.innerHTML = `
     <!-- Top Back Navigation -->
-    <div class="mb-8 flex items-center justify-between gap-4">
+    <div class="mb-8 flex flex-wrap items-center justify-between gap-3">
       <a href="#projects" class="inline-flex items-center gap-2 text-sm font-semibold text-inkSub hover:text-brand transition-colors focus-ring rounded-lg px-3 py-2 bg-surface border border-line">
         <i class="fa-solid fa-arrow-left text-xs"></i>
         <span>프로젝트 목록으로 돌아가기</span>
@@ -669,7 +687,7 @@ function renderAboutComponent() {
               >
             </div>
             <h2 class="font-display text-2xl font-extrabold text-ink mb-1">${profile.name} (${profile.englishName})</h2>
-            <p class="text-sm text-inkMuted whitespace-nowrap">${profile.school} · ${profile.role}</p>
+            <p class="text-xs sm:text-sm text-inkMuted whitespace-nowrap">${profile.school} · ${profile.role}</p>
           </div>
 
           <!-- Right: Clean Bio -->
@@ -740,8 +758,30 @@ function renderAboutComponent() {
 
         <!-- Horizontal Arrow Timeline Wrapper -->
         <div class="relative pt-2 pb-4" id="horizontalTimelineWrapper">
+          <!-- 스마트폰 전용 전체 폭 상세 말풍선 카드 (모바일에서 글자 잘림 없이 전체 폭으로 표시) -->
+          <div id="mobileTimelineDetailSlot" class="md:hidden mb-4 flex items-stretch">
+            <div id="mobileTimelineDetailCard" class="mobile-timeline-detail-card w-full flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <span id="mobileTimelinePeriod" class="inline-block font-mono text-xs font-bold text-brand bg-brand-light px-2.5 py-0.5 rounded-full">
+                    ${about.timeline[0].period}
+                  </span>
+                  <span id="mobileTimelineOrg" class="text-xs font-bold text-brand">
+                    ${about.timeline[0].organization}
+                  </span>
+                </div>
+                <div id="mobileTimelineRole" class="font-display font-bold text-ink text-base mb-1.5 leading-snug">
+                  ${about.timeline[0].role}
+                </div>
+                <p id="mobileTimelineDesc" class="text-xs sm:text-sm text-inkSub leading-relaxed">
+                  ${about.timeline[0].desc}
+                </p>
+              </div>
+            </div>
+          </div>
+
           <!-- 3 Speech Bubbles Row (가장 긴 말풍선 펼침 높이를 기준으로 고정) -->
-          <div id="timelineBubblesRow" class="grid grid-cols-3 gap-3 sm:gap-6 md:gap-8 items-end" style="height: 335px;">
+          <div id="timelineBubblesRow" class="grid grid-cols-3 gap-2.5 sm:gap-6 md:gap-8 items-end" style="height: 335px;">
             ${timelineMilestonesHtml}
           </div>
 
@@ -789,6 +829,33 @@ function renderAboutComponent() {
  * 접힌 상태 높이(--bubble-collapsed-h), 펼쳐진 상태 높이(--bubble-expanded-h),
  * 그리고 타임라인 전체 행 높이(#timelineBubblesRow)를 가장 긴 말풍선 기준으로 고정합니다.
  */
+function updateMobileTimelineCard(index, isFolding = false) {
+  const card = document.getElementById('mobileTimelineDetailCard');
+  if (!card) return;
+
+  if (isFolding) {
+    card.classList.add('is-folding');
+    return;
+  }
+
+  const timeline = PORTFOLIO_DATA.about.timeline || [];
+  const safeIndex = ((index % timeline.length) + timeline.length) % timeline.length;
+  const item = timeline[safeIndex];
+  if (!item) return;
+
+  const periodEl = document.getElementById('mobileTimelinePeriod');
+  const orgEl = document.getElementById('mobileTimelineOrg');
+  const roleEl = document.getElementById('mobileTimelineRole');
+  const descEl = document.getElementById('mobileTimelineDesc');
+
+  if (periodEl) periodEl.textContent = item.period;
+  if (orgEl) orgEl.textContent = item.organization;
+  if (roleEl) roleEl.textContent = item.role;
+  if (descEl) descEl.textContent = item.description;
+
+  card.classList.remove('is-folding');
+}
+
 function measureAndLockAboutTimelineHeights() {
   const wrapper = document.getElementById('horizontalTimelineWrapper');
   const row = document.getElementById('timelineBubblesRow');
@@ -796,6 +863,44 @@ function measureAndLockAboutTimelineHeights() {
 
   // 숨겨진 상태(display: none)에서는 실측 생략
   if (wrapper.offsetParent === null) return;
+
+  // 모바일 화면(< 768px)에서는 상단 전용 상세 카드의 최대 높이를 실측하여 카드 높이 흔들림 방지
+  if (window.innerWidth < 768) {
+    row.style.height = 'auto';
+    const mobileSlot = document.getElementById('mobileTimelineDetailSlot');
+    const mobileCard = document.getElementById('mobileTimelineDetailCard');
+    const periodEl = document.getElementById('mobileTimelinePeriod');
+    const orgEl = document.getElementById('mobileTimelineOrg');
+    const roleEl = document.getElementById('mobileTimelineRole');
+    const descEl = document.getElementById('mobileTimelineDesc');
+    const timeline = PORTFOLIO_DATA.about.timeline || [];
+
+    if (mobileSlot && mobileCard && timeline.length) {
+      const savedPeriod = periodEl ? periodEl.textContent : '';
+      const savedOrg = orgEl ? orgEl.textContent : '';
+      const savedRole = roleEl ? roleEl.textContent : '';
+      const savedDesc = descEl ? descEl.textContent : '';
+
+      mobileCard.style.minHeight = '0px';
+      let maxMobileH = 156;
+      timeline.forEach(item => {
+        if (periodEl) periodEl.textContent = item.period;
+        if (orgEl) orgEl.textContent = item.organization;
+        if (roleEl) roleEl.textContent = item.role;
+        if (descEl) descEl.textContent = item.description;
+        const h = mobileCard.scrollHeight;
+        if (h > maxMobileH) maxMobileH = h;
+      });
+
+      if (periodEl) periodEl.textContent = savedPeriod;
+      if (orgEl) orgEl.textContent = savedOrg;
+      if (roleEl) roleEl.textContent = savedRole;
+      if (descEl) descEl.textContent = savedDesc;
+
+      mobileCard.style.minHeight = `${maxMobileH + 6}px`;
+    }
+    return;
+  }
 
   const bubbles = Array.from(wrapper.querySelectorAll('.timeline-bubble'));
   const detailsList = Array.from(wrapper.querySelectorAll('.timeline-bubble-details'));
@@ -945,6 +1050,7 @@ function setAboutTimelineStep(index, immediate = false) {
     milestones.forEach((el, idx) => {
       el.classList.toggle('is-active', idx === safeIndex);
     });
+    updateMobileTimelineCard(safeIndex, false);
     syncAboutTimelinePositions(safeIndex);
 
     // 현재 말풍선에서 5초(5000ms) 동안 멈추었다가 다음 단계로 진행
@@ -955,6 +1061,7 @@ function setAboutTimelineStep(index, immediate = false) {
     // 1. 먼저 이전 말풍선을 부드럽게 접으면서 점을 다음 말풍선 꼬리 아래로 천천히 이동 (1.75s)
     milestones.forEach(el => el.classList.remove('is-active'));
     anchors.forEach(a => a.classList.remove('is-active'));
+    updateMobileTimelineCard(safeIndex, true);
 
     const centersPercent = getAboutTimelineCentersPercent();
     const targetPercent = centersPercent[safeIndex];
@@ -969,6 +1076,7 @@ function setAboutTimelineStep(index, immediate = false) {
       anchors.forEach((a, idx) => {
         a.classList.toggle('is-active', idx === safeIndex);
       });
+      updateMobileTimelineCard(safeIndex, false);
 
       addAboutTimelineTimer(() => {
         advanceToNextAboutMilestone();
@@ -997,6 +1105,7 @@ function advanceToNextAboutMilestone() {
     // 마지막 말풍선 접기 + 화살표 끝(100%)까지 천천히 이동
     milestones.forEach(el => el.classList.remove('is-active'));
     anchors.forEach(a => a.classList.remove('is-active'));
+    updateMobileTimelineCard(aboutTimelineCurrentIndex, true);
     dot.style.left = '100%';
     fill.style.width = '100%';
 
@@ -1153,7 +1262,7 @@ function renderContactComponent() {
 
     <!-- Right Column: Contact Form -->
     <div class="lg:col-span-7 fade-up delay-100">
-      <form id="contactForm" class="bg-surface rounded-2xl border border-line p-7 sm:p-9 shadow-sm space-y-5">
+      <form id="contactForm" class="bg-surface rounded-2xl border border-line p-5 sm:p-9 shadow-sm space-y-5">
         <div>
           <label for="senderName" class="block text-sm font-semibold text-ink mb-2">이름</label>
           <input
@@ -1164,7 +1273,7 @@ function renderContactComponent() {
             autocomplete="name"
             spellcheck="false"
             placeholder="홍길동"
-            class="w-full px-4 py-3 rounded-xl bg-bgMain border border-line text-ink placeholder:text-inkMuted text-sm focus:bg-surface transition-colors"
+            class="w-full px-4 py-3 rounded-xl bg-bgMain border border-line text-ink placeholder:text-inkMuted text-base sm:text-sm focus:bg-surface transition-colors"
           >
         </div>
 
@@ -1180,7 +1289,7 @@ function renderContactComponent() {
             autocorrect="off"
             spellcheck="false"
             placeholder="example@email.com"
-            class="w-full px-4 py-3 rounded-xl bg-bgMain border border-line text-ink placeholder:text-inkMuted text-sm focus:bg-surface transition-colors"
+            class="w-full px-4 py-3 rounded-xl bg-bgMain border border-line text-ink placeholder:text-inkMuted text-base sm:text-sm focus:bg-surface transition-colors"
           >
         </div>
 
@@ -1195,7 +1304,7 @@ function renderContactComponent() {
             autocorrect="off"
             spellcheck="false"
             placeholder="나누고 싶은 이야기나 문의 내용을 편하게 작성해 주세요."
-            class="w-full px-4 py-3 rounded-xl bg-bgMain border border-line text-ink placeholder:text-inkMuted text-sm focus:bg-surface transition-colors resize-y break-words"
+            class="w-full px-4 py-3 rounded-xl bg-bgMain border border-line text-ink placeholder:text-inkMuted text-base sm:text-sm focus:bg-surface transition-colors resize-y break-words"
           ></textarea>
         </div>
 
@@ -1513,25 +1622,31 @@ function initLeftNavDrawer() {
 
   if (!drawer) return;
 
-  // 1. Mouse hover on logo triggers drawer smoothly
+  // 1. Mouse hover on logo triggers drawer smoothly (PC / 마우스 호버 지원 환경에서만 작동하여 스마트폰 터치 충돌 방지)
   if (logoContainer) {
     logoContainer.addEventListener('mouseenter', () => {
-      openLeftNavDrawer();
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !isSmartphoneUser()) {
+        openLeftNavDrawer();
+      }
     });
     logoContainer.addEventListener('mouseleave', () => {
-      scheduleCloseLeftNav();
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !isSmartphoneUser()) {
+        scheduleCloseLeftNav();
+      }
     });
   }
 
-  // 2. Mouse hover inside drawer keeps it open; mouseleave schedules close
+  // 2. Mouse hover inside drawer keeps it open; mouseleave schedules close (PC 환경 전용)
   drawer.addEventListener('mouseenter', () => {
     if (closeLeftNavTimer) clearTimeout(closeLeftNavTimer);
   });
   drawer.addEventListener('mouseleave', () => {
-    scheduleCloseLeftNav();
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !isSmartphoneUser()) {
+      scheduleCloseLeftNav();
+    }
   });
 
-  // 3. Click on logo button toggles drawer
+  // 3. Click / Tap on logo button toggles drawer cleanly on both PC and smartphones
   if (trigger) {
     trigger.addEventListener('click', (e) => {
       e.preventDefault();
@@ -1708,6 +1823,10 @@ function initHeroCounters() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  updateSmartphoneEnvironmentClass();
+  window.addEventListener('resize', updateSmartphoneEnvironmentClass, { passive: true });
+  window.addEventListener('orientationchange', updateSmartphoneEnvironmentClass, { passive: true });
+
   renderHeroComponent();
   renderProjectsComponent();
   renderAboutComponent();

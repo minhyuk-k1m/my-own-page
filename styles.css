@@ -208,6 +208,14 @@ textarea:focus-visible {
   pointer-events: auto;
 }
 
+@media (max-width: 767px) {
+  .left-nav-backdrop.is-open {
+    background-color: rgba(20, 24, 31, 0.22);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+}
+
 .logo-drawer-item {
   transition: color 0.25s ease, background-color 0.25s ease, padding-left 0.25s var(--ease-out-smooth);
 }
@@ -399,4 +407,48 @@ textarea:focus-visible {
   max-height: var(--bubble-details-max-h, 280px);
   opacity: 1;
   margin-top: 0.75rem;
+}
+
+/* ==========================================
+   8. SMARTPHONE / MOBILE RESPONSIVE TIMELINE (< 768px)
+   모바일에서는 3열 말풍선이 좁아 글자가 잘리는 현상을 방지하기 위해
+   상단에 전체 폭(100%) 말풍선 카드를 배치하고 하단 화살표 위에 3개의 시기 탭을 연결합니다.
+   ========================================== */
+.mobile-timeline-detail-card {
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--brand);
+  border-radius: 1.15rem;
+  padding: 1.15rem 1.25rem;
+  box-shadow: 0 16px 32px -12px rgba(27, 58, 92, 0.14);
+  transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mobile-timeline-detail-card.is-folding {
+  opacity: 0.35;
+  transform: translateY(4px) scale(0.985);
+}
+
+@media (max-width: 767px) {
+  #timelineBubblesRow {
+    height: auto !important;
+  }
+
+  .timeline-bubble {
+    height: 74px !important;
+    padding: 0.6rem 0.5rem !important;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .timeline-milestone.is-active .timeline-bubble {
+    height: 74px !important;
+    padding: 0.6rem 0.5rem !important;
+    transform: translateY(-2px);
+    background-color: var(--brand-light);
+  }
+
+  .timeline-bubble-details {
+    display: none !important;
+  }
 }
