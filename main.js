@@ -228,7 +228,7 @@ const PORTFOLIO_DATA = {
   contact: {
     title: "Let's Work Together",
     description: '프로젝트 협업, 학업 및 개발 관련 이야기, 혹은 웹사이트에 대한 피드백 등 어떤 연락이든 환영합니다. 아래 이메일이나 문의 폼, 또는 SNS로 편하게 연락해 주세요.',
-    email: 'minhyuk.contact@gmail.com',
+    email: 'career.minhyuk@gmail.com',
     socials: [
       {
         name: 'GitHub',
@@ -658,9 +658,9 @@ function renderAboutComponent() {
     <div class="fade-up scroll-mt-28">
       <div class="bg-surface rounded-3xl border border-line p-7 sm:p-10 md:p-12 shadow-sm">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          <!-- Left: Profile Photo & Name (불필요한 버튼 제거) -->
-          <div class="lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left">
-            <div class="w-48 sm:w-56 lg:w-full aspect-square rounded-2xl overflow-hidden bg-bgSub border border-line mb-5">
+          <!-- Left: Profile Photo & Name (불필요한 버튼 제거, 소속·역할 한 줄 표시) -->
+          <div class="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <div class="w-48 sm:w-56 lg:w-64 aspect-square rounded-2xl overflow-hidden bg-bgSub border border-line mb-5">
               <img
                 src="${profile.avatarImg}"
                 alt="${profile.name} 프로필"
@@ -669,11 +669,11 @@ function renderAboutComponent() {
               >
             </div>
             <h2 class="font-display text-2xl font-extrabold text-ink mb-1">${profile.name} (${profile.englishName})</h2>
-            <p class="text-sm text-inkMuted">${profile.school} · ${profile.role}</p>
+            <p class="text-sm text-inkMuted whitespace-nowrap">${profile.school} · ${profile.role}</p>
           </div>
 
           <!-- Right: Clean Bio -->
-          <div class="lg:col-span-8">
+          <div class="lg:col-span-7">
             <h3 class="font-display text-xl sm:text-2xl font-extrabold text-ink mb-4">
               자기소개
             </h3>
@@ -740,8 +740,8 @@ function renderAboutComponent() {
 
         <!-- Horizontal Arrow Timeline Wrapper -->
         <div class="relative pt-2 pb-4" id="horizontalTimelineWrapper">
-          <!-- 3 Speech Bubbles Row (고정 높이로 외부 경력 및 성장 과정 네모 칸 크기 고정) -->
-          <div class="grid grid-cols-3 gap-3 sm:gap-6 md:gap-8 items-end h-[280px] sm:h-[265px] md:h-[255px]">
+          <!-- 3 Speech Bubbles Row (가장 긴 말풍선 펼침 높이를 기준으로 고정) -->
+          <div id="timelineBubblesRow" class="grid grid-cols-3 gap-3 sm:gap-6 md:gap-8 items-end" style="height: 335px;">
             ${timelineMilestonesHtml}
           </div>
 
@@ -784,10 +784,97 @@ function renderAboutComponent() {
  * 각 말풍선에서 정확히 5초(5000ms) 동안 머무른 뒤 다음 말풍선 꼬리 아래로 천천히 이동합니다.
  * 마지막 말풍선이 끝나면 화살표 끝(100%)까지 이동한 뒤 자연스럽게 처음(0%)으로 돌아와 다시 진행합니다.
  */
+/**
+ * 모든 말풍선을 전부 펼쳤을 때 가장 길이가 긴 말풍선의 높이를 실측하여,
+ * 접힌 상태 높이(--bubble-collapsed-h), 펼쳐진 상태 높이(--bubble-expanded-h),
+ * 그리고 타임라인 전체 행 높이(#timelineBubblesRow)를 가장 긴 말풍선 기준으로 고정합니다.
+ */
+function measureAndLockAboutTimelineHeights() {
+  const wrapper = document.getElementById('horizontalTimelineWrapper');
+  const row = document.getElementById('timelineBubblesRow');
+  if (!wrapper || !row) return;
+
+  // 숨겨진 상태(display: none)에서는 실측 생략
+  if (wrapper.offsetParent === null) return;
+
+  const bubbles = Array.from(wrapper.querySelectorAll('.timeline-bubble'));
+  const detailsList = Array.from(wrapper.querySelectorAll('.timeline-bubble-details'));
+  if (!bubbles.length) return;
+
+  // 트랜지션 일시 중지 후 정확한 자연 높이 측정
+  bubbles.forEach(b => {
+    b.style.transition = 'none';
+  });
+  detailsList.forEach(d => {
+    d.style.transition = 'none';
+  });
+
+  // 1. 기본(접힌) 상태에서 가장 긴 말풍선 높이 측정
+  let maxCollapsedH = 88;
+  bubbles.forEach((b, i) => {
+    const d = detailsList[i];
+    b.style.height = 'auto';
+    b.style.padding = '1rem 1.2rem';
+    if (d) {
+      d.style.maxHeight = '0px';
+      d.style.opacity = '0';
+      d.style.marginTop = '0px';
+    }
+    const h = b.scrollHeight;
+    if (h > maxCollapsedH) maxCollapsedH = h;
+  });
+
+  // 2. 전부 펼쳤을 때 가장 길이가 긴 말풍선 높이 측정
+  let maxExpandedH = 260;
+  bubbles.forEach((b, i) => {
+    const d = detailsList[i];
+    b.style.height = 'auto';
+    b.style.padding = '1.25rem 1.35rem';
+    if (d) {
+      d.style.maxHeight = 'none';
+      d.style.opacity = '1';
+      d.style.marginTop = '0.75rem';
+    }
+    const h = b.scrollHeight;
+    if (h > maxExpandedH) maxExpandedH = h;
+  });
+
+  // 여유 버퍼 추가 (텍스트 잘림 완전 방지)
+  const lockedCollapsedH = maxCollapsedH + 4;
+  const lockedExpandedH = maxExpandedH + 10;
+
+  wrapper.style.setProperty('--bubble-collapsed-h', `${lockedCollapsedH}px`);
+  wrapper.style.setProperty('--bubble-expanded-h', `${lockedExpandedH}px`);
+  wrapper.style.setProperty('--bubble-details-max-h', `${lockedExpandedH}px`);
+  row.style.height = `${Math.ceil(lockedExpandedH * 1.03) + 16}px`;
+
+  // 인라인 측정 스타일 제거 및 리플로우 후 트랜지션 복원
+  bubbles.forEach(b => {
+    b.style.height = '';
+    b.style.padding = '';
+  });
+  detailsList.forEach(d => {
+    d.style.maxHeight = '';
+    d.style.opacity = '';
+    d.style.marginTop = '';
+  });
+
+  void wrapper.offsetWidth;
+
+  bubbles.forEach(b => {
+    b.style.transition = '';
+  });
+  detailsList.forEach(d => {
+    d.style.transition = '';
+  });
+}
+
 function getAboutTimelineCentersPercent() {
   const wrapper = document.getElementById('horizontalTimelineWrapper');
   const track = document.getElementById('timelineArrowTrack');
   if (!wrapper || !track) return [15.5, 50, 84.5];
+
+  measureAndLockAboutTimelineHeights();
 
   const milestones = Array.from(wrapper.querySelectorAll('.timeline-milestone'));
   const anchors = Array.from(track.querySelectorAll('.timeline-track-anchor'));
@@ -1053,6 +1140,8 @@ function renderContactComponent() {
             id="senderName"
             name="senderName"
             required
+            autocomplete="name"
+            spellcheck="false"
             placeholder="홍길동"
             class="w-full px-4 py-3 rounded-xl bg-bgMain border border-line text-ink placeholder:text-inkMuted text-sm focus:bg-surface transition-colors"
           >
@@ -1065,6 +1154,12 @@ function renderContactComponent() {
             id="senderEmail"
             name="senderEmail"
             required
+            inputmode="email"
+            autocomplete="email"
+            autocapitalize="none"
+            autocorrect="off"
+            spellcheck="false"
+            lang="en"
             placeholder="example@email.com"
             class="w-full px-4 py-3 rounded-xl bg-bgMain border border-line text-ink placeholder:text-inkMuted text-sm focus:bg-surface transition-colors"
           >
@@ -1077,8 +1172,11 @@ function renderContactComponent() {
             name="senderMessage"
             rows="5"
             required
+            autocomplete="off"
+            autocorrect="off"
+            spellcheck="false"
             placeholder="나누고 싶은 이야기나 문의 내용을 편하게 작성해 주세요."
-            class="w-full px-4 py-3 rounded-xl bg-bgMain border border-line text-ink placeholder:text-inkMuted text-sm focus:bg-surface transition-colors resize-y"
+            class="w-full px-4 py-3 rounded-xl bg-bgMain border border-line text-ink placeholder:text-inkMuted text-sm focus:bg-surface transition-colors resize-y break-words"
           ></textarea>
         </div>
 
@@ -1095,19 +1193,57 @@ function renderContactComponent() {
 
   const form = document.getElementById('contactForm');
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const submitBtn = form.querySelector('button[type="submit"]');
       const originalHtml = submitBtn.innerHTML;
+      const senderName = (document.getElementById('senderName')?.value || '').trim();
+      const senderEmail = (document.getElementById('senderEmail')?.value || '').trim();
+      const senderMessage = (document.getElementById('senderMessage')?.value || '').trim();
+
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<span>전송 중...</span>';
 
-      setTimeout(() => {
+      try {
+        const response = await fetch(`https://formsubmit.co/ajax/${contact.email}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name: senderName,
+            email: senderEmail,
+            message: senderMessage,
+            _subject: `[포트폴리오 새 메시지] ${senderName}님의 문의가 도착했습니다`,
+            _template: 'table',
+            _captcha: 'false'
+          })
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (response.ok && (result.success === 'true' || result.success === true)) {
+          form.reset();
+          showToast(`${contact.email}로 메시지와 알림이 즉시 전송되었습니다!`);
+        } else {
+          // 최초 1회 이메일 인증 전이거나 네트워크 제한 시 메일 앱으로도 즉시 연결 보장
+          const subject = encodeURIComponent(`[포트폴리오 문의] ${senderName}님의 메시지`);
+          const body = encodeURIComponent(`보낸 사람: ${senderName} (${senderEmail})\n\n메시지 내용:\n${senderMessage}`);
+          window.location.href = `mailto:${contact.email}?subject=${subject}&body=${body}`;
+          form.reset();
+          showToast(`${contact.email}로 알림 메일 전송을 요청했습니다.`);
+        }
+      } catch (err) {
+        const subject = encodeURIComponent(`[포트폴리오 문의] ${senderName}님의 메시지`);
+        const body = encodeURIComponent(`보낸 사람: ${senderName} (${senderEmail})\n\n메시지 내용:\n${senderMessage}`);
+        window.location.href = `mailto:${contact.email}?subject=${subject}&body=${body}`;
         form.reset();
+        showToast(`${contact.email}로 메일 전송 창을 열었습니다.`);
+      } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalHtml;
-        showToast('메시지가 성공적으로 전달되었습니다. 감사합니다!');
-      }, 800);
+      }
     });
   }
 }
