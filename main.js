@@ -1074,6 +1074,27 @@ function initAboutHorizontalTimeline() {
 
 
 /**
+ * 전각 문자(전각 영문 ａ-ｚ, 전각 기호, 고리 모양 전각 온점 。 등)를
+ * 일반 표준 반각 문자(a-z, 마침표 ., @ 등)로 실시간 정규화합니다.
+ */
+function normalizeFullwidthChars(str, removeSpaces = false) {
+  if (!str) return '';
+  // 1. 고리 온점(。 U+3002), 전각 마침표(． U+FF0E, ․ U+FE52) -> 표준 마침표(.)
+  let res = str.replace(/[\u3002\uFF0E\uFE52]/g, '.');
+  // 2. 전각 골뱅이(＠ U+FF20) -> 일반 @
+  res = res.replace(/\uFF20/g, '@');
+  // 3. 전각 영문/숫자/기호 (U+FF01~U+FF5E) -> 일반 ASCII (차이 0xFEE0)
+  res = res.replace(/[\uFF01-\uFF5E]/g, (ch) => String.fromCharCode(ch.charCodeAt(0) - 0xFEE0));
+  // 4. 전각 공백(U+3000) -> 일반 반각 공백
+  res = res.replace(/\u3000/g, ' ');
+  // 5. 이메일 전용: 알파벳 사이에 섞여 들어간 공백 제거
+  if (removeSpaces) {
+    res = res.replace(/\s+/g, '');
+  }
+  return res;
+}
+
+/**
  * 5. Contact Section Component (SNS: ONLY GitHub & Instagram @minlnxuk_)
  */
 function renderContactComponent() {
@@ -1150,7 +1171,7 @@ function renderContactComponent() {
         <div>
           <label for="senderEmail" class="block text-sm font-semibold text-ink mb-2">이메일</label>
           <input
-            type="email"
+            type="text"
             id="senderEmail"
             name="senderEmail"
             required
@@ -1192,14 +1213,63 @@ function renderContactComponent() {
   `;
 
   const form = document.getElementById('contactForm');
+  const emailInput = document.getElementById('senderEmail');
+  const nameInput = document.getElementById('senderName');
+  const messageInput = document.getElementById('senderMessage');
+
+  // 전각 문자(전각 영문, 고리 온점 。 등)가 입력되는 즉시 일반 영문과 표준 마침표(.)로 실시간 자동 변환
+  if (emailInput) {
+    emailInput.addEventListener('input', () => {
+      const start = emailInput.selectionStart;
+      const end = emailInput.selectionEnd;
+      const normalized = normalizeFullwidthChars(emailInput.value, true);
+      if (emailInput.value !== normalized) {
+        emailInput.value = normalized;
+        if (start !== null && end !== null) {
+          emailInput.setSelectionRange(start, end);
+        }
+      }
+    });
+  }
+
+  if (nameInput) {
+    nameInput.addEventListener('input', () => {
+      const normalized = normalizeFullwidthChars(nameInput.value, false);
+      if (nameInput.value !== normalized) {
+        nameInput.value = normalized;
+      }
+    });
+  }
+
+  if (messageInput) {
+    messageInput.addEventListener('input', () => {
+      const start = messageInput.selectionStart;
+      const end = messageInput.selectionEnd;
+      const normalized = normalizeFullwidthChars(messageInput.value, false);
+      if (messageInput.value !== normalized) {
+        messageInput.value = normalized;
+        if (start !== null && end !== null) {
+          messageInput.setSelectionRange(start, end);
+        }
+      }
+    });
+  }
+
   if (form) {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const submitBtn = form.querySelector('button[type="submit"]');
       const originalHtml = submitBtn.innerHTML;
-      const senderName = (document.getElementById('senderName')?.value || '').trim();
-      const senderEmail = (document.getElementById('senderEmail')?.value || '').trim();
-      const senderMessage = (document.getElementById('senderMessage')?.value || '').trim();
+      const senderName = normalizeFullwidthChars((document.getElementById('senderName')?.value || '').trim(), false);
+      const senderEmail = normalizeFullwidthChars((document.getElementById('senderEmail')?.value || '').trim(), true);
+      const senderMessage = normalizeFullwidthChars((document.getElementById('senderMessage')?.value || '').trim(), false);
+
+      // 이메일 기본 형식 검증 (@ 및 . 포함)
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(senderEmail)) {
+        showToast('올바른 이메일 형식을 입력해 주세요 (예: user@example.com)');
+        if (emailInput) emailInput.focus();
+        return;
+      }
 
       submitBtn.disabled = true;
       submitBtn.innerHTML = '<span>전송 중...</span>';
